@@ -1,14 +1,11 @@
 "use client";
 
 import { Button } from "./button";
-import { SyntheticEvent } from 'react'
-import { useRouter } from 'next/navigation'
 import { useActionState } from 'react';
 import { authenticate } from '@/app/lib/actions';
 import { useSearchParams } from 'next/navigation';
 
 export default function Login() {
-    const router = useRouter()
 
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
@@ -17,25 +14,6 @@ export default function Login() {
         undefined,
     );
 
-    async function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
-        event.preventDefault()
-
-        const formData = new FormData(event.currentTarget)
-        const email = formData.get('email')
-        const password = formData.get('password')
-
-        const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
-        })
-
-        if (response.ok) {
-            router.push('/profile')
-        } else {
-            // Handle errors
-        }
-    }
 
     return (
         <form action={formAction} className="box-border w-150 m-auto border mt-50">
