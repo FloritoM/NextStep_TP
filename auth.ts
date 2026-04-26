@@ -10,7 +10,12 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
-    const user = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
+    const user = await sql<User[]>`
+  SELECT users.*, roles."roleName" as role 
+  FROM users 
+  JOIN roles ON users."idRole" = roles."idRole"
+  WHERE users.email = ${email}
+`;
     return user[0];
   } catch (error) {
     console.error('Failed to fetch user:', error);
@@ -41,6 +46,7 @@ export const { auth, signIn, signOut } = NextAuth({
 
           console.log('USUARIO ENCONTRADO:', user.email);
           console.log('HASH EN BASE DE DATOS:', user.password);
+          console.log('ROL EN BASE DE DATOS:', user.role);
 
           const passwordsMatch = await bcrypt.compare(password, user.password);
 
@@ -61,4 +67,5 @@ export const { auth, signIn, signOut } = NextAuth({
       session.user.role = token.role as string  // lo pasa a la sesión
       return session
     }
-  }});
+  }
+});

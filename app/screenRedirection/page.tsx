@@ -5,12 +5,12 @@ export default async function ScreenRedirect() {
     const session = await auth()
     const userRole = session?.user?.role
 
-    if (userRole === 'admin') {
+    if (userRole === "admin") {
         redirect('/adminDashboard')
-    } else if (userRole === 'user') {
+    } else if (userRole === 'applicant' || userRole === 'recruiter') {
         redirect('/userDashboard')
     } else {
         redirect('/login')
     }
-    console.log(userRole)
 }
+
