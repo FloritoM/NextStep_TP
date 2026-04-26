@@ -28,48 +28,51 @@ export default function Login() {
     }
 
     return (
-        <form className="space-y-3">
-            <div className="w-full">
-                <div>
-                    <label
-                        className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-                        htmlFor="email"
-                    >
-                        Email
-                    </label>
-                    <div className="relative">
-                        <input
-                            className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                            id="email"
-                            type="email"
-                            name="email"
-                            placeholder="Ingrese email"
-                            required
-                        />
+        <form className="box-border w-150 m-auto border mt-50">
+            <h1 className="text-3xl p-4 text-center">Bienvenido!</h1>
+            <div className="w-120 m-auto">
+                <div className="mb-5 ">
+                    <div>
+                        <label
+                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                            htmlFor="email"
+                        >
+                            Email
+                        </label>
+                        <div className="relative">
+                            <input
+                                className="block w-full border border-black-200 py-[9px] pl-10 text-sm placeholder:text-gray-500"
+                                id="email"
+                                type="email"
+                                name="email"
+                                placeholder="Ingrese email"
+                                required
+                            />
+                        </div>
+                    </div>
+                    <div className="mt-4">
+                        <label
+                            className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+                            htmlFor="password"
+                        >
+                            Contraseña
+                        </label>
+                        <div className="relative">
+                            <input
+                                className="block w-full border border-black-200 py-[9px] pl-10 text-sm placeholder:text-gray-500"
+                                id="password"
+                                type="password"
+                                name="password"
+                                placeholder="Ingrese contraseña"
+                                required
+                                minLength={6}
+                            />
+                        </div>
                     </div>
                 </div>
-                <div className="mt-4">
-                    <label
-                        className="mb-3 mt-5 block text-xs font-medium text-gray-900"
-                        htmlFor="password"
-                    >
-                        Contraseña
-                    </label>
-                    <div className="relative">
-                        <input
-                            className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-                            id="password"
-                            type="password"
-                            name="password"
-                            placeholder="Ingrese contraseña"
-                            required
-                            minLength={6}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <Button className="cursor-pointer hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Enviar"} />
-                    <Button className="cursor-pointer hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Resetear"} />
+                <div className="flex justify-around mb-5">
+                    <Button className="cursor-pointer hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Enviar"} />
+                    <Button className="cursor-pointer hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Limpiar"} />
                 </div>
             </div>
         </form>
