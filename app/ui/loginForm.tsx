@@ -3,9 +3,19 @@
 import { Button } from "./button";
 import { SyntheticEvent } from 'react'
 import { useRouter } from 'next/navigation'
+import { useActionState } from 'react';
+import { authenticate } from '@/app/lib/actions';
+import { useSearchParams } from 'next/navigation';
 
 export default function Login() {
     const router = useRouter()
+
+    const searchParams = useSearchParams();
+    const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+    const [errorMessage, formAction, isPending] = useActionState(
+        authenticate,
+        undefined,
+    );
 
     async function handleSubmit(event: SyntheticEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -71,8 +81,14 @@ export default function Login() {
                     </div>
                 </div>
                 <div className="flex justify-around mb-5">
-                    <Button className="cursor-pointer hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Enviar"} />
+                    <input type="hidden" name="redirectTo" value={callbackUrl} />
+                    <Button aria-disabled={isPending} className="cursor-pointer hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Enviar"} />
                     <Button className="cursor-pointer hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Limpiar"} />
+                    {errorMessage && (
+                        <>
+                            <p className="text-sm text-red-500">{errorMessage}</p>
+                        </>
+                    )}
                 </div>
             </div>
         </form>
