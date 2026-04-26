@@ -5,9 +5,9 @@ import { z } from 'zod';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import postgres from 'postgres';
- 
+
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
- 
+
 async function getUser(email: string): Promise<User | undefined> {
   try {
     const user = await sql<User[]>`SELECT * FROM users WHERE email=${email}`;
@@ -17,7 +17,7 @@ async function getUser(email: string): Promise<User | undefined> {
     throw new Error('Failed to fetch user.');
   }
 }
- 
+
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
@@ -29,12 +29,10 @@ export const { auth, signIn, signOut } = NextAuth({
 
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
-          
+
           console.log('--- INTENTO DE LOGIN ---');
           console.log('Email recibido:', email);
-          
-          
-          
+
           const user = await getUser(email);
           if (!user) {
             console.log('ERROR: Usuario no encontrado en Neon');
@@ -43,7 +41,7 @@ export const { auth, signIn, signOut } = NextAuth({
 
           console.log('USUARIO ENCONTRADO:', user.email);
           console.log('HASH EN BASE DE DATOS:', user.password);
-          
+
           const passwordsMatch = await bcrypt.compare(password, user.password);
 
           if (passwordsMatch) return user;
@@ -54,9 +52,13 @@ export const { auth, signIn, signOut } = NextAuth({
       credentials: undefined
     }),
   ],
-});
-
-// {
-//         email: { label: "Email", type: "email" },
-//         password: { label: "Password", type: "password" },
-//       },
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) token.role = user.role  // guarda el rol al hacer login
+      return token
+    },
+    session({ session, token }) {
+      session.user.role = token.role as string  // lo pasa a la sesión
+      return session
+    }
+  }});
