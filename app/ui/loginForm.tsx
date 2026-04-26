@@ -28,7 +28,7 @@ export default function Login() {
     }
 
     return (
-        <form className="box-border w-150 m-auto border mt-50">
+        <form action={formAction} className="box-border w-150 m-auto border mt-50">
             <h1 className="text-3xl p-4 text-center">Bienvenido!</h1>
             <div className="w-120 m-auto">
                 <div className="mb-5 ">
