@@ -1,7 +1,7 @@
 export function Button({ className, buttonText }: { className: string, buttonText: string }) {
   return (
     <button className={className}>
-        {buttonText}    
+        <span className="p-10">{buttonText}</span>   
     </button>
   );
 }

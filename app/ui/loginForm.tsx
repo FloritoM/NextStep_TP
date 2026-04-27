@@ -16,20 +16,20 @@ export default function Login() {
 
     return (
         <div className="h-full bg-[url('/login-background.png')] bg-cover relative">
-            <form action={formAction} className="box-border w-130 h-100 m-auto border inline-block mt-70 ml-160 bg-zinc-100 rounded-s shadow-xl">
+            <form action={formAction} className="box-border w-130 h-100 border inline-block bg-zinc-100 rounded-s shadow-xl">
                 <h1 className="text-3xl p-4 text-center">Bienvenido!</h1>
                 <div className="w-120 m-auto">
                     <div className="mb-13">
                         <div>
                             <label
-                                className="mb-3 mt-5 block text-2xl text-gray-900"
+                                className="mb-3 mt-5 block text-2xl text-black-900"
                                 htmlFor="email"
                             >
                                 Email
                             </label>
                             <div className="relative">
                                 <input
-                                    className="block w-full border border-black-200 py-[9px] pl-3 text-sm placeholder:text-gray-500"
+                                    className="block w-full border border-black-200 py-[9px] pl-3 text-sm placeholder:text-gray-500 rounded-sm"
                                     id="email"
                                     type="email"
                                     name="email"
@@ -40,14 +40,14 @@ export default function Login() {
                         </div>
                         <div className="mt-4">
                             <label
-                                className="mb-3 mt-5 block text-2xl text-gray-900"
+                                className="mb-3 mt-5 block text-2xl text-black-900"
                                 htmlFor="password"
                             >
                                 Contraseña
                             </label>
                             <div className="relative">
                                 <input
-                                    className="block w-full border border-black-200 py-[9px] pl-3 text-sm placeholder:text-gray-500"
+                                    className="block w-full border border-black-200 py-[9px] pl-3 text-sm placeholder:text-gray-500 rounded-sm"
                                     id="password"
                                     type="password"
                                     name="password"
@@ -60,8 +60,8 @@ export default function Login() {
                     </div>
                     <div className="flex justify-around mb-5">
                         <input type="hidden" name="redirectTo" value={callbackUrl} />
-                        <Button aria-disabled={isPending} className="cursor-pointer hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Enviar"} />
-                        <Button className="cursor-pointer hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Limpiar"} />
+                        <Button aria-disabled={isPending} className="cursor-pointer rounded-sm hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Enviar"} />
+                        <Button className="cursor-pointer rounded-sm hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Limpiar"} />
                         {errorMessage && (
                             <>
                                 <p className="text-sm text-red-500">{errorMessage}</p>
