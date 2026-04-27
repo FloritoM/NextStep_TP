@@ -7,7 +7,7 @@ export const authConfig = {
     callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const protectedRoutes = ['/adminDashboard', '/userDashboard', '/screenRedirection']
+      const protectedRoutes = ['/adminDashboard', '/userDashboard', '/mainPage']
       const isOnProtectedRoute = protectedRoutes.some(route => 
         nextUrl.pathname.startsWith(route)
       )
@@ -15,7 +15,7 @@ export const authConfig = {
         if (isLoggedIn) return true;
         return false; 
       } else if (isLoggedIn) {
-        return Response.redirect(new URL('/screenRedirection', nextUrl));
+        return Response.redirect(new URL('/mainPage', nextUrl));
       }
       return true;
     },
