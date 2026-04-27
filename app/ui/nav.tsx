@@ -1,16 +1,15 @@
-import { signOut } from "@/auth"
-import { Button} from "./button";
+import DashboardLink from "./dashboardLink";
+import SignOutButton from "./signOutButton";
 
 export default function Nav() {
 
     return (
-        <form
-            action={async () => {
-                'use server';
-                await signOut({ redirectTo: '/' });
-            }}
-        >
-            <Button className="cursor-pointer hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Cerrar sesion"} />
-        </form>
+        <div>
+            <NextStepIcon />
+            <DashboardLink />
+            <ProfileLink/>
+            <SignOutButton />
+        </div>
+
     )
 }
