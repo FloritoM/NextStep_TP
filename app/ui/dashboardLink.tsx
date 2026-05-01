@@ -15,7 +15,7 @@ export default async function DashboardLink() {
     return (
         <Link href={href}>
             <Button 
-                className="cursor-pointer hover:bg-indigo-300 border-solid border-1 active:bg-blue-600"
+                className="cursor-pointer border-solid active:bg-blue-600 text-xl text-gray-500 font-semibold hover:text-gray-950"
                 buttonText="Dashboard"
             />
         </Link>

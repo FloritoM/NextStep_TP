@@ -6,17 +6,19 @@ import SignOutButton from "./signOutButton";
 export default function Header() {
 
     return (
-        <header className="flex justify-between border h-20">
-            <div>
+        <header className="grid grid-cols-3 h-20">
+            <div className="border">
                 <NextStepIcon />
             </div>
-            <div>
+            <div className="border flex place-items-center justify-end pr-4">
                 <nav>
-                    <DashboardLink />
-                    <ProfileLink />
+                    <ul className="flex">
+                        <li><DashboardLink /></li>
+                        <li><ProfileLink /></li>
+                    </ul>
                 </nav>
             </div>
-            <div>
+            <div className="border flex place-items-center justify-end pr-4">
                 <SignOutButton />
             </div>
         </header>

@@ -10,7 +10,8 @@ export default function SignOutButton() {
                 await signOut({ redirectTo: '/' });
             }}
         >
-            <Button className="cursor-pointer hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Cerrar sesion"} />
+            <Button className="cursor-pointer border-none bg-yellow-400 rounded-lg active:bg-blue-600 text-xl text-gray-500 font-semibold hover:text-gray-950" 
+            buttonText="Cerrar sesion"/>
         </form>
     )
 }
