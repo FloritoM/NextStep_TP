@@ -1,12 +1,10 @@
-import { Fragment } from "react/jsx-runtime";
+import Header from "@/app/ui/header";
 
-export default async function UserDashboard() {
+export default async function ApplicantDashboard() {
     return (
-        <Fragment>
-            <h1>ola soy floro soy lo mas</h1>
-            <img src={"./patricio.jpeg"}>
-            </img>
-        </Fragment>
+        <>
+            <Header />
+            <h1>ola soy flor y soy aplicante</h1>
+        </>
     );
 }
-

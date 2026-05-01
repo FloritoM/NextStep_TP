@@ -8,7 +8,7 @@ export default async function DashboardLink() {
 
     const href = 
         role === 'admin' ? '/adminDashboard' :
-        role === 'applicant' ? '/userDashboard' :
+        role === 'applicant' ? '/applicantDashboard' :
         role === 'recruiter' ? '/recruiterDashboard' :
         '/login'
 

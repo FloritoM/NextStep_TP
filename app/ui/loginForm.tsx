@@ -8,15 +8,15 @@ import { useSearchParams } from 'next/navigation';
 export default function Login() {
 
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get('callbackUrl') || '/dashboard';
+    const callbackUrl = searchParams.get('callbackUrl') || '/mainPage';
     const [errorMessage, formAction, isPending] = useActionState(
         authenticate,
         undefined,
     );
 
     return (
-        <div className="h-full bg-[url('/login-background.png')] bg-cover relative">
-            <form action={formAction} className="box-border w-130 h-100 border inline-block bg-zinc-100 rounded-s shadow-xl">
+        <div className="h-full bg-[url('/login-background.png')] bg-cover flex justify-center items-center">
+            <form action={formAction} className="box-border w-130 h-100 border-slate-400 inline-block bg-zinc-100 rounded-s shadow-xl">
                 <h1 className="text-3xl p-4 text-center">Bienvenido!</h1>
                 <div className="w-120 m-auto">
                     <div className="mb-13">
@@ -60,13 +60,17 @@ export default function Login() {
                     </div>
                     <div className="flex justify-around mb-5">
                         <input type="hidden" name="redirectTo" value={callbackUrl} />
-                        <Button aria-disabled={isPending} className="cursor-pointer rounded-sm hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Enviar"} />
-                        <Button className="cursor-pointer rounded-sm hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Limpiar"} />
-                        {errorMessage && (
-                            <>
-                                <p className="text-sm text-red-500">{errorMessage}</p>
-                            </>
-                        )}
+                        <div>
+                            <Button aria-disabled={isPending} className="cursor-pointer rounded-sm hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Enviar"} />
+                        </div>
+                        <div>
+                            {errorMessage && (
+                                <>
+
+                                    <p className="text-sm text-red-500">{errorMessage}</p>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </div>
             </form>
