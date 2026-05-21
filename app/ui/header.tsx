@@ -7,10 +7,10 @@ export default function Header() {
 
     return (
         <header className="grid grid-cols-3 h-20">
-            <div className="border">
+            <div className="">
                 <NextStepIcon />
             </div>
-            <div className="border flex place-items-center justify-end pr-4">
+            <div className=" flex place-items-center justify-end pr-4">
                 <nav>
                     <ul className="flex">
                         <li><DashboardLink /></li>
@@ -18,7 +18,7 @@ export default function Header() {
                     </ul>
                 </nav>
             </div>
-            <div className="border flex place-items-center justify-end pr-4">
+            <div className=" flex place-items-center justify-end pr-4">
                 <SignOutButton />
             </div>
         </header>
