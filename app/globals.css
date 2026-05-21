@@ -7,20 +7,18 @@
 .profile-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
+  grid-gap: 20px;
+  grid-template-rows: minmax(80px, auto) minmax(160px, auto) minmax(160px, auto);
 }
 
 .first {
   grid-column: 1/3;
   grid-row: 1;
-
 }
 
 .second {
   grid-column: 3 / 4;
   grid-row: 1;
-
 }
 
 .third {
@@ -49,5 +47,5 @@
 }
 
 .sub-section p:first-child {
-  width: 100px; /* columna fija para "Email", "Contraseña" */
+  width: 160px;
 }

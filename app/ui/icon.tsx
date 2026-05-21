@@ -8,14 +8,11 @@ export default function NextStepIcon() {
     const router = useRouter();
     return (
         <Fragment>
-            <Image
-                src="/app-icon.png"
-                width={90}
-                height={26}
-                alt="next step icon"
-                loading="eager"
+            <p
                 onClick={() => router.push('/mainPage')}
-                className="cursor-pointer" />
+                className="cursor-pointer font-bold text-[40px] pt-2 pl-4 text-blue-400">
+                    NEXT STEP
+            </p>
         </Fragment>
     );
 }
