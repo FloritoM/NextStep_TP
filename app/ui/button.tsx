@@ -1,7 +1,11 @@
-export function Button({ className, buttonText }: { className: string, buttonText: string }) {
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+export function Button({ className, buttonText, iconFont, iconClass }: { className: string, buttonText: string, iconFont?: IconProp, iconClass?: string }) {
   return (
     <button className={className}>
-        <p className="p-3">{buttonText}</p>   
+      {iconFont && <FontAwesomeIcon icon={iconFont} className={iconClass} />}
+      <p className="p-3">{buttonText}</p>
     </button>
   );
 }

@@ -12,7 +12,7 @@ export default function Header() {
             </div>
             <div className=" flex place-items-center justify-end pr-4">
                 <nav>
-                    <ul className="flex">
+                    <ul className="flex gap-10">
                         <li><DashboardLink /></li>
                         <li><ProfileLink /></li>
                     </ul>

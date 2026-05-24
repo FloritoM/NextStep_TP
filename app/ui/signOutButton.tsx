@@ -1,6 +1,6 @@
 import { signOut } from "@/auth"
-import { Button} from "./button";
-
+import { Button } from "./button";
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 
 export default function SignOutButton() {
     return (
@@ -10,8 +10,8 @@ export default function SignOutButton() {
                 await signOut({ redirectTo: '/' });
             }}
         >
-            <Button className="cursor-pointer border-none bg-yellow-400 rounded-lg active:bg-blue-600 text-xl text-gray-500 font-semibold hover:text-gray-950" 
-            buttonText="Cerrar sesion"/>
+            <Button className="cursor-pointer border-none bg-yellow-400 rounded-lg active:bg-blue-600 text-xl text-black font-semibold hover:bg-amber-600 flex flex-row items-center"
+                buttonText="Cerrar sesion" iconFont={faArrowRightFromBracket} iconClass="text-black" />
         </form>
     )
 }

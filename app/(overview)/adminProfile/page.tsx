@@ -8,18 +8,18 @@ export default async function AdminProfile() {
             <Header />
             <div className="h-full bg-main overflow-auto">
                 <div className="profile-grid w-7xl mx-auto mt-32">
-                    <div className="first justify-center p-6">
+                    <div className="first justify-start py-6">
                         <h1 className="text-[28px] text-gray-50 font-bold">Mi perfil</h1>
                         <p className="text-gray-50">Gestiona tu informacion personal y de acceso</p>
                     </div>
-                    <div className="second flex justify-center">
+                    <div className="second flex justify-end">
                         <div>
-                            <button className="cursor-pointer border-none bg-yellow-400 rounded-lg active:bg-blue-600 text-xl text-gray-500 font-semibold hover:text-gray-950 p-4 mt-4 ml-14">
+                            <button className="cursor-pointer border-none bg-yellow-400 rounded-lg active:bg-blue-600 text-xl text-black font-semibold hover:bg-amber-600 p-4 mt-4">
                                 <FontAwesomeIcon icon={faPenToSquare} className="text-black" /> Editar Perfil</button></div>
                     </div>
 
                     <div className="third rounded-xl border border-gray-700 bg-gray-800/50 p-5 flex flex-col items-center">
-                        <div className= "border border-white rounded-full mb-2">
+                        <div className="border border-white rounded-full mb-2">
                             <p className="text-amber-600 font-bold text-[70px] p-5">NR</p>
                         </div>
                         <div className="flex flex-col items-center">

@@ -9,12 +9,14 @@ import postgres from 'postgres';
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 async function getUser(email: string): Promise<User | undefined> {
+  const newEmail: string = email.toLowerCase();
+  console.log('Email después de toLowerCase:', newEmail);
   try {
     const user = await sql<User[]>`
   SELECT users.*, roles."roleName" as role 
   FROM users 
   JOIN roles ON users."idRole" = roles."idRole"
-  WHERE users.email = ${email}
+  WHERE users.email = ${newEmail}
 `;
     return user[0];
   } catch (error) {
@@ -29,7 +31,7 @@ export const { auth, signIn, signOut } = NextAuth({
     Credentials({
       async authorize(credentials) {
         const parsedCredentials = z
-          .object({ email: z.email().lowercase(), password: z.string().min(6) })
+          .object({ email: z.email().toLowerCase(), password: z.string().min(6) })
           .safeParse(credentials);
 
         if (parsedCredentials.success) {

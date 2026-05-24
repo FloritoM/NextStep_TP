@@ -16,10 +16,9 @@ export default function Login() {
 
     return (
         <div className="h-full bg-[url('/login-background.png')] bg-cover flex justify-center items-center">
-            <form action={formAction} className="box-border w-130 h-100 border-slate-400 inline-block bg-zinc-100 rounded-s shadow-xl">
-                <h1 className="text-3xl p-4 text-center">Bienvenido!</h1>
+            <form action={formAction} className="rounded-xl border border-gray-700 box-border w-130 h-auto border-slate-400 inline-block bg-zinc-100 shadow-xl">
                 <div className="w-120 m-auto">
-                    <div className="mb-13">
+                    <div className="mb-11">
                         <div>
                             <label
                                 className="mb-3 mt-5 block text-2xl text-black-900"
@@ -58,16 +57,19 @@ export default function Login() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-around mb-5">
+                    
+                    <div className="flex items-center justify-center mb-11">
                         <input type="hidden" name="redirectTo" value={callbackUrl} />
                         <div>
-                            <Button aria-disabled={isPending} className="cursor-pointer rounded-sm hover:bg-indigo-300 border-solid border-1 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50" buttonText={"Enviar"} />
+                            <Button aria-disabled={isPending} className="cursor-pointer border-none bg-yellow-400 rounded-lg active:bg-blue-600 text-xl text-black font-semibold hover:bg-amber-600 flex flex-row" 
+                            buttonText={"Iniciar sesión"} />
                         </div>
-                        <div>
+                    </div>
+                    <div>
+                        <div className="flex items-center justify-center mb-11">
                             {errorMessage && (
                                 <>
-
-                                    <p className="text-sm text-red-500">{errorMessage}</p>
+                                    <p className="text-xl text-red-500 font-semibold flex items-center justify-center mt-4">{errorMessage}</p>
                                 </>
                             )}
                         </div>

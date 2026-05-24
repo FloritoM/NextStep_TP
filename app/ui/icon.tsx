@@ -11,7 +11,7 @@ export default function NextStepIcon() {
             <p
                 onClick={() => router.push('/mainPage')}
                 className="cursor-pointer font-bold text-[40px] pt-2 pl-4 text-blue-400">
-                    NEXT STEP
+                NEXT STEP
             </p>
         </Fragment>
     );

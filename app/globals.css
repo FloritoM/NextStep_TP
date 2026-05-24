@@ -43,7 +43,7 @@
 
 .sub-section {
   display: flex;
-  gap: 1rem;   
+  gap: 1rem;
 }
 
 .sub-section p:first-child {
