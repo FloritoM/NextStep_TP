@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 import { Button } from "./button";
 
-export default function SignInButton() {
+export default function SignUpButton() {
     return (
         <form
             action={async () => {
@@ -9,7 +9,7 @@ export default function SignInButton() {
                 redirect('/login' );
             }}
         >
-            <Button className="cursor-pointer border-none bg-yellow-400 rounded-lg active:bg-blue-600 text-xl text-black font-semibold hover:bg-amber-600" buttonText={"Iniciar sesion"} />
+            <Button className="cursor-pointer border-none bg-main rounded-lg text-xl text-white font-semibold hover:bg-yellow-400" buttonText={"Registrarse"} />
         </form>
     )
 }
