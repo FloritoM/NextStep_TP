@@ -10,13 +10,13 @@ export default function Home() {
       <section id="inicio" className="h-screen bg-main">
         <header className="sticky top-0 w-full">
           <div className="bg-[url('/landing-header.png')] bg-cover">
-            <h1 className="text-center text-[4rem] text-black font-bold py-5">Next Step</h1>
-            <p className="px-17 py-5 text-black font-semibold text-[1.5rem] text-center">Simplificamos los procesos de selección</p>
-            <p className="px-17 py-5 text-black font-semibold text-[1.5rem] text-center">Mejor experiencia para recruiters y candidatos</p>
+            <h1 className="text-center text-[4rem] text-black font-bold py-4">Next Step</h1>
+            <p className="px-17 text-black font-semibold text-[1.5rem] text-center">Simplificamos los procesos de selección</p>
+            <p className="px-17 pb-3 text-black font-semibold text-[1.5rem] text-center">Mejor experiencia para recruiters y candidatos</p>
           </div>
-          <div className=" flex justify-center pr-4 border border-gray-700">
+          <div className=" flex justify-center pb-5">
             <nav className="w-[100%]">
-              <ul className="flex justify-center gap-10 text-white text-[1.5rem] bg-gray-700">
+              <ul className="flex justify-center gap-15 text-white text-[1.5rem] bg-gray-700 py-3">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#contacto">Contacto</a></li>
@@ -26,15 +26,16 @@ export default function Home() {
         </header>
 
         <div>
+          <p className="px-17 py-5 text-white font-semibold text-[2rem]">¿Que ofrecemos?</p>
           <div className="flex justify-evenly">
             <div className="flex items-center border border-gray-700 w-[45%] rounded-xl bg-gray-700">
               <FontAwesomeIcon icon={faUserTie} className="text-amber-600 text-[3rem] pl-4" />
-              <p className="px-8 py-3 text-white text-[1.3rem]"><span className="font-semibold">Recruiter:</span> puede publicar una búsqueda laboral, reciba postulantes y
+              <p className="px-8 py-3 text-white text-[1.3rem]"><span className="font-semibold text-amber-600">Recruiter:</span> puede publicar una búsqueda laboral, reciba postulantes y
                 cargue feedback estructurado para cada candidato.</p>
             </div>
             <div className="flex items-center border border-gray-700 w-[45%] rounded-xl bg-gray-700">
               <FontAwesomeIcon icon={faUser} className="text-yellow-400 text-[3rem] pl-4" />
-              <p className="px-8 py-3 text-white text-[1.3rem]"><span className="font-semibold">Candidato:</span> puede visualizar el estado de su postulación y recibir devoluciones
+              <p className="px-8 py-3 text-white text-[1.3rem]"><span className="font-semibold text-yellow-400">Candidato:</span> puede visualizar el estado de su postulación y recibir devoluciones
                 útiles para seguir mejorando.</p>
             </div>
           </div>

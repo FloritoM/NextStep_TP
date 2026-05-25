@@ -6,7 +6,7 @@ import SignOutButton from "./signOutButton";
 export default function Header() {
 
     return (
-        <header className="grid grid-cols-3 h-20">
+        <header className="sticky top-0 w-full grid grid-cols-3 h-20 bg-white">
             <div className="">
                 <NextStepIcon />
             </div>
