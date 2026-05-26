@@ -1,5 +1,5 @@
 import DashboardLink from "./dashboardLink";
-import NextStepIcon from "./icon";
+import NextStepIcon from "../../components/icon";
 import ProfileLink from "./profileLink";
 import SignOutButton from "./signOutButton";
 

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation"
 import { Fragment } from "react/jsx-runtime";
-import { pacifico } from "./fonts";
+import { pacifico } from "../app/ui/fonts";
 
 export default function NextStepIcon() {
     const router = useRouter();
