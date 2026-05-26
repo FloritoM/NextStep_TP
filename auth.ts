@@ -2,28 +2,6 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
 import { z } from 'zod';
-import type { User } from '@/app/lib/definitions';
-import bcrypt from 'bcrypt';
-import postgres from 'postgres';
-
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
-
-async function getUser(email: string): Promise<User | undefined> {
-  const newEmail: string = email.toLowerCase();
-  console.log('Email después de toLowerCase:', newEmail);
-  try {
-    const user = await sql<User[]>`
-  SELECT users.*, roles."roleName" as role 
-  FROM users 
-  JOIN roles ON users."idRole" = roles."idRole"
-  WHERE users.email = ${newEmail}
-`;
-    return user[0];
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
-  }
-}
 
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
@@ -31,43 +9,44 @@ export const { auth, signIn, signOut } = NextAuth({
     Credentials({
       async authorize(credentials) {
         const parsedCredentials = z
-          .object({ email: z.email().toLowerCase(), password: z.string().min(6) })
+          .object({ 
+            email: z.string().email(), 
+            password: z.string().min(6) 
+          })
           .safeParse(credentials);
 
-        if (parsedCredentials.success) {
-          const { email, password } = parsedCredentials.data;
+        if (!parsedCredentials.success) return null;
 
-          console.log('--- INTENTO DE LOGIN ---');
-          console.log('Email recibido:', email);
+        const { email, password } = parsedCredentials.data;
 
-          const user = await getUser(email);
-          if (!user) {
-            console.log('ERROR: Usuario no encontrado en Neon');
-            return null;
-          }
+        try {
+          const res = await fetch(`${process.env.BACKEND_URL}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email.toLowerCase(), password }),
+          });
 
-          console.log('USUARIO ENCONTRADO:', user.email);
-          console.log('HASH EN BASE DE DATOS:', user.password);
-          console.log('ROL EN BASE DE DATOS:', user.role);
+          if (!res.ok) return null;
 
-          const passwordsMatch = await bcrypt.compare(password, user.password);
+          const user = await res.json();
+          return user;
 
-          if (passwordsMatch) return user;
+        } catch (error) {
+          console.error('Error llamando al backend:', error);
+          return null;
         }
-
-        return null;
       },
-      credentials: undefined
+      credentials: undefined,
     }),
   ],
   callbacks: {
     jwt({ token, user }) {
-      if (user) token.role = user.role  // guarda el rol al hacer login
-      return token
+      if (user) token.role = user.role;
+      return token;
     },
     session({ session, token }) {
-      session.user.role = token.role as string  // lo pasa a la sesión
-      return session
-    }
-  }
+      session.user.role = token.role as string;
+      return session;
+    },
+  },
 });
