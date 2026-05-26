@@ -5,7 +5,7 @@ export function Button({ className, buttonText, iconFont, iconClass }: { classNa
   return (
     <button className={className}>
       {iconFont && <FontAwesomeIcon icon={iconFont} className={iconClass} />}
-      <p className="p-3">{buttonText}</p>
+      <p className="pr-4 pl-1 py-4">{buttonText}</p>
     </button>
   );
 }

@@ -3,16 +3,16 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation"
 import { Fragment } from "react/jsx-runtime";
+import { pacifico } from "./fonts";
 
 export default function NextStepIcon() {
     const router = useRouter();
     return (
-        <Fragment>
+        <div className="flex pl-6">
             <p
                 onClick={() => router.push('/mainPage')}
-                className="cursor-pointer font-bold text-[2.5rem] pt-2 pl-4 text-blue-400">
-                NextStep
+                className="text-center text-[2rem] text-black font-bold py-4 select-none">Next<span className={`${pacifico.className} italic text-amber-600 font-semibold select-none`}>Step</span>
             </p>
-        </Fragment>
+        </div>
     );
 }

@@ -2,17 +2,19 @@ import SignInButton from "./ui/signInButton";
 import SignUpButton from "./ui/SignUpButton";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faUserTie } from '@fortawesome/free-solid-svg-icons'
+import { faInstagram, faGithub, faYoutube } from '@fortawesome/free-brands-svg-icons'
 import Image from 'next/image'
+import { pacifico } from "./ui/fonts";
 
 export default function Home() {
   return (
-    <div className="h-auto">
-      <section id="inicio" className="h-screen bg-main">
+    <div className="">
+      <section id="inicio" className="bg-main">
         <header className="sticky top-0 w-full">
           <div className="bg-[url('/landing-header.png')] bg-cover">
-            <h1 className="text-center text-[4rem] text-black font-bold py-4">Next Step</h1>
-            <p className="px-17 text-black font-semibold text-[1.5rem] text-center">Simplificamos los procesos de selección</p>
-            <p className="px-17 pb-3 text-black font-semibold text-[1.5rem] text-center">Mejor experiencia para recruiters y candidatos</p>
+            <h1 className="text-center text-[4rem] text-black font-bold py-4 select-none">Next<span className={`${pacifico.className} italic text-amber-600 font-semibold select-none`}>Step</span></h1>
+            <p className="px-17 text-black font-semibold text-[1.5rem] text-center select-none">Simplificamos los procesos de selección</p>
+            <p className="px-17 pb-3 text-black font-semibold text-[1.5rem] text-center select-none">Mejor experiencia para recruiters y candidatos</p>
           </div>
           <div className=" flex justify-center pb-5">
             <nav className="w-[100%]">
@@ -26,7 +28,7 @@ export default function Home() {
         </header>
 
         <div>
-          <p className="px-17 py-5 text-white font-semibold text-[2rem]">¿Que ofrecemos?</p>
+          <p className="px-17 pt-5 pb-10 text-white font-semibold text-[2rem]">¿Que ofrecemos?</p>
           <div className="flex justify-evenly">
             <div className="flex items-center border border-gray-700 w-[45%] rounded-xl bg-gray-700">
               <FontAwesomeIcon icon={faUserTie} className="text-amber-600 text-[3rem] pl-4" />
@@ -41,8 +43,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex justify-center items-center mt-12">
-          <div className="w-[70%] flex justify-center items-center rounded-xl border border-gray-700 bg-gray-800/50 py-25">
+        <div className="flex justify-center items-center py-15">
             <div id="buttons" className="w-[30%] rounded-xl border border-gray-700 flex flex-col justify-center items-center bg-[url('/buttons-section.png')] bg-cover">
               <div className="m-[8%]">
                 <SignInButton />
@@ -51,13 +52,12 @@ export default function Home() {
                 <SignUpButton />
               </div>
             </div>
-          </div>
         </div>
       </section>
 
-      <section id="nosotros" className="h-full bg-main">
+      <section id="nosotros" className="bg-main">
         <div>
-          <p className="px-17 py-5 text-white font-semibold text-[1.5rem]">Empresas que trabajan con nosotros</p>
+          <p className="px-17 pb-15 text-white font-semibold text-[2rem]">Empresas que trabajan con nosotros</p>
           <div className="carousel">
             <div className="group">
               <div className="card">
@@ -167,6 +167,14 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="contacto" className="bg-main">
+        <p className="px-17 py-15 text-white font-semibold text-[2rem]">Contacto</p>
+        <div className="px-35 flex flex-col gap-4 items-start">
+          <a href="https://instagram.com/tuusuario" target="_blank" className="flex items-center gap-3 text-white text-[1.6rem]"><FontAwesomeIcon icon={faInstagram} className="text-amber-500 text-[3rem] pr-2" />Instagram</a>
+          <a href="https://instagram.com/tuusuario" target="_blank" className="flex items-center gap-3 text-white text-[1.6rem]"><FontAwesomeIcon icon={faGithub} className="text-amber-500 text-[3rem] pr-2" />GitHub</a>
+          <a href="https://instagram.com/tuusuario" target="_blank" className="flex items-center gap-3 text-white text-[1.6rem]"><FontAwesomeIcon icon={faYoutube} className="text-amber-500 text-[3rem] pr-2" />YouTube</a>
+        </div>
+      </section>
     </div>
   );
 }

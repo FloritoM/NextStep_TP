@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
+import { manrope } from "./ui/fonts";
 
 config.autoAddCss = false
 
@@ -19,7 +20,7 @@ export default function RootLayout({
     <html
       lang="en"
     >
-      <body className="h-screen">{children}</body>
+      <body className={`${manrope.className} antialiased h-screen`}>{children}</body>
     </html>
   );
 }

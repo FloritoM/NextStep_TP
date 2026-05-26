@@ -52,7 +52,7 @@
 
 /*CAROUSEL*/
 .carousel {
-  margin: 100px auto;
+  margin: 0px auto;
   width: 60%;
   display: flex;
   overflow-x: auto;

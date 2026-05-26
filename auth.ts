@@ -13,10 +13,10 @@ async function getUser(email: string): Promise<User | undefined> {
   console.log('Email después de toLowerCase:', newEmail);
   try {
     const user = await sql<User[]>`
-  SELECT users.*, roles."roleName" as role 
-  FROM users 
-  JOIN roles ON users."idRole" = roles."idRole"
-  WHERE users.email = ${newEmail}
+  SELECT usuarios.*, roles."roleName" as role 
+  FROM usuarios 
+  JOIN roles ON usuarios."idRole" = roles."idRole"
+  WHERE usuarios.email = ${newEmail}
 `;
     return user[0];
   } catch (error) {

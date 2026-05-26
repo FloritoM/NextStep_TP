@@ -10,7 +10,7 @@ export default function Header() {
             <div className="">
                 <NextStepIcon />
             </div>
-            <div className=" flex place-items-center justify-end pr-4">
+            <div className="flex place-items-center justify-end pr-4">
                 <nav>
                     <ul className="flex gap-10">
                         <li><DashboardLink /></li>
@@ -18,7 +18,7 @@ export default function Header() {
                     </ul>
                 </nav>
             </div>
-            <div className=" flex place-items-center justify-end pr-4">
+            <div className="flex place-items-center justify-end pr-4">
                 <SignOutButton />
             </div>
         </header>

@@ -10,8 +10,8 @@ export default function SignOutButton() {
                 await signOut({ redirectTo: '/' });
             }}
         >
-            <Button className="cursor-pointer border-none bg-yellow-400 rounded-lg active:bg-blue-600 text-xl text-black font-semibold hover:bg-amber-600 flex flex-row items-center"
-                buttonText="Cerrar sesion" iconFont={faArrowRightFromBracket} iconClass="text-black" />
+            <Button className="cursor-pointer border-none bg-yellow-400 rounded-lg text-xl text-black font-semibold hover:bg-amber-600 flex flex-row items-center"
+                buttonText="Cerrar sesion" iconFont={faArrowRightFromBracket} iconClass="text-black pl-4" />
         </form>
     )
 }
