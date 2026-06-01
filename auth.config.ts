@@ -27,7 +27,7 @@ export const authConfig = {
         return Response.redirect(new URL('/home', nextUrl));
       }
 
-      const protectedRoutes = ['/adminDashboard', '/applicantDashboard', '/recruiterDashboard', '/adminProfile', '/applicantProfile', '/recruiterProfile', '/home']
+      const protectedRoutes = ['/adminDashboard', '/applicantDashboard', '/recruiterDashboard', '/recruiterProfile', '/home']
       const isOnProtectedRoute = protectedRoutes.some(route =>
         nextUrl.pathname.startsWith(route)
       )

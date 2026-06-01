@@ -69,9 +69,6 @@ export default async function AdminProfile() {
                     </div>
                 </div>
             </div>
-            <div id="fileUpload">
-                <FileUploader/>
-            </div>
         </div>
     )
 }
