@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import FileUploader from "@/components/FileUploader";
 
-export default async function AdminProfile() {
+export default async function ApplicantProfile() {
     return (
         <div className="flex flex-col h-screen">
             <Header />
@@ -69,9 +69,11 @@ export default async function AdminProfile() {
                     </div>
                 </div>
             </div>
+
             <div id="fileUpload">
-                <FileUploader/>
+
             </div>
+        
         </div>
     )
 }

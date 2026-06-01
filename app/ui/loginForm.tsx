@@ -8,7 +8,7 @@ import { useSearchParams } from 'next/navigation';
 export default function Login() {
 
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get('callbackUrl') || '/mainPage';
+    const callbackUrl = searchParams.get('callbackUrl') || '/home';
     const [errorMessage, formAction, isPending] = useActionState(
         authenticate,
         undefined,

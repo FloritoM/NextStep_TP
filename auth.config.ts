@@ -1,24 +1,42 @@
 import type { NextAuthConfig } from 'next-auth';
- 
+
 export const authConfig = {
-    pages: {
-        signIn: '/login',
-    },
-    callbacks: {
+  pages: {
+    signIn: '/login',
+  },
+  callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const protectedRoutes = ['/adminDashboard', '/applicantDashboard', '/recruiterDashboard', '/adminProfile', '/applicantProfile', '/recruiterProfile', '/mainPage']
-      const isOnProtectedRoute = protectedRoutes.some(route => 
+      const role = (auth?.user as { role?: string })?.role;
+
+      console.log("ROL en middleware:", role);
+      console.log("USER en middleware:", auth?.user);
+
+      const publicRoutes = ['/', '/login', '/register']
+      if (publicRoutes.includes(nextUrl.pathname)) {
+        return true;
+      }
+
+      if (nextUrl.pathname.startsWith('/adminDashboard') && role !== 'admin') {
+        return Response.redirect(new URL('/home', nextUrl));
+      }
+      if (nextUrl.pathname.startsWith('/applicantDashboard') && role !== 'applicant') {
+        return Response.redirect(new URL('/home', nextUrl));
+      }
+      if (nextUrl.pathname.startsWith('/recruiterDashboard') && role !== 'recruiter') {
+        return Response.redirect(new URL('/home', nextUrl));
+      }
+
+      const protectedRoutes = ['/adminDashboard', '/applicantDashboard', '/recruiterDashboard', '/adminProfile', '/applicantProfile', '/recruiterProfile', '/home']
+      const isOnProtectedRoute = protectedRoutes.some(route =>
         nextUrl.pathname.startsWith(route)
       )
-      if (isOnProtectedRoute) {
-        if (isLoggedIn) return true;
-        return false; 
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/mainPage', nextUrl));
+      if (isOnProtectedRoute && !isLoggedIn) {
+        return false;
       }
+
       return true;
     },
   },
-  providers: [], 
+  providers: [],
 } satisfies NextAuthConfig;

@@ -1,6 +1,6 @@
 import Header from "../ui/header";
 
-export default async function MainPage() {
+export default async function Home() {
     return (
         <>
             <Header />

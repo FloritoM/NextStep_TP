@@ -18,10 +18,11 @@ export const SignupFormSchema = z.object({
 })
 
 export type User = {
-  id: string;
+  id: number;
   name: string;
   email: string;
   password: string;
-  idRole: number;
-  role: string;  
+  role: 'admin' | 'applicant' | 'recruiter';
+  createdAt: Date;
+  updatedAt: Date;
 };

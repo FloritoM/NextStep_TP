@@ -10,7 +10,7 @@ export default async function ProfileLink() {
         role === 'admin' ? '/adminProfile' :
             role === 'applicant' ? '/applicantProfile' :
                 role === 'recruiter' ? '/recruiterProfile' :
-                    '/mainPage'
+                    '/home'
 
     return (
         <Link href={href}>
