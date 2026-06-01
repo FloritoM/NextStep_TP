@@ -2,6 +2,8 @@ export type UserRole= "candidate" | "recruiter" ;
 
 export interface RegisterFormData{
     role:UserRole;
+    firstName:string;
+    lastName:string;
     email:string;
     password:string;
     birthDate:string;
