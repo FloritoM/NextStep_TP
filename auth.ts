@@ -1,4 +1,3 @@
-
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
@@ -42,8 +41,15 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
           console.log('AUTHORIZE RESPONSE:', response);
 
-          // IMPORTANTE
-          return response.user;
+          const userData = response.user;
+
+          return {
+            id: userData.id.toString(),
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            email: userData.email,
+            role: userData.role?.name
+          };
 
         } catch (error) {
           console.error('Error llamando al backend:', error);
@@ -61,7 +67,8 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
       if (user) {
         token.id = user.id;
-        token.name = user.name;
+        token.firstName = user.firstName;
+        token.lastName = user.lastName;
         token.email = user.email;
         token.role = user.role;
       }
@@ -75,7 +82,9 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       console.log('SESSION TOKEN:', token);
 
       if (session.user) {
-        session.user.name = token.name as string;
+        session.user.id = token.id as string;
+        session.user.firstName = token.firstName as string;
+        session.user.lastName = token.lastName as string;
         session.user.email = token.email as string;
         session.user.role = token.role as string;
       }
