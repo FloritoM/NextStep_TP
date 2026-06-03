@@ -12,9 +12,11 @@ export default async function DashboardLink() {
                     '/login'
 
     return (
-        <Link href={href}>
-            <button
-                className="cursor-pointer border-solid text-xl text-gray-500 font-semibold hover:text-gray-950"> Dashboard </button>
+        <Link
+            href={href}
+            className="cursor-pointer border-solid text-xl text-gray-500 font-semibold hover:text-gray-950"
+        >
+            Dashboard
         </Link>
     )
 }

@@ -1,6 +1,7 @@
 import Header from "@/app/ui/header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faUser, faLock } from '@fortawesome/free-solid-svg-icons'
+import FileUploader from "@/components/FileUploader";
 
 export default async function AdminProfile() {
     return (

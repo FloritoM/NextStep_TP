@@ -6,7 +6,7 @@ export default function SignUpButton() {
         <form
             action={async () => {
                 'use server';
-                redirect('/login' );
+                redirect('/register');
             }}
         >
             <Button className="cursor-pointer border-none bg-main rounded-lg text-xl text-white font-semibold hover:bg-yellow-400" buttonText={"Registrarse"} />
