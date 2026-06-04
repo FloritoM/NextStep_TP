@@ -48,7 +48,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
             firstName: userData.firstName,
             lastName: userData.lastName,
             email: userData.email,
-            role: userData.role?.name,
+            role: userData.role,
             token: response.token,
           };
 
@@ -88,7 +88,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         session.user.firstName = token.firstName as string;
         session.user.lastName = token.lastName as string;
         session.user.email = token.email as string;
-        session.user.role = token.role as string;
+        session.user.role = token.role as { id: number, name: string, isDefault?: boolean };
       }
       session.accessToken = token.accessToken as string;
       

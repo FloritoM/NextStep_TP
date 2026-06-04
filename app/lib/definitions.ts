@@ -22,7 +22,7 @@ export const SignupFormSchema = z.object({
 })
 
 export type User = {
-  id: number;
+  id: number | string;
   firstName: string;
   lastName: string;
   email: string;
