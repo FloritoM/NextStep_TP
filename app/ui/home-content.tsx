@@ -4,8 +4,9 @@ import { useState } from 'react';
 import Navbar from './Navbar';
 import JobCard from './JobCard';
 import CreateJobModal from './CreateJobModal';
+import { JobOffer, User } from '../lib/definitions';
 
-export default function HomeContent({ user, token, initialJobs }: { user: any, token: string | undefined, initialJobs: any[] }) {
+export default function HomeContent({ user, token, initialJobs }: { user: User, token: string | undefined, initialJobs: JobOffer[] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 

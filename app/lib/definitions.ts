@@ -29,7 +29,7 @@ export type User = {
   password?: string;
   role: {
     id: number;
-    name: string;
+    name: Roles;
     isDefault?: boolean;
   };
   createdAt?: string | Date;
@@ -42,4 +42,10 @@ export interface JobOffer {
   seniority: string;
   description: string;
   isActive: boolean;
+}
+
+export enum Roles {
+  ADMIN = 'admin',
+  APPLICANT = 'applicant',
+  RECRUITER = 'recruiter'
 }
