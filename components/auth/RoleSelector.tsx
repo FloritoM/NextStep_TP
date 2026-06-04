@@ -53,7 +53,7 @@ export default function RoleSelector({ onSelect }: RoleSelectorProps) {
           <button
             key={role.value}
             onClick={() => onSelect(role.value)}
-            className="group relative text-left w-full rounded-2xl border border-[#1e2d3d] bg-[#0d1824] hover:border-[#3b9ede]/60 hover:bg-[#0f1f30] transition-all duration-200 p-6 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9ede] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0f1a]"
+                className="group relative text-left w-full rounded-2xl border border-[#1e2d3d] bg-[#0d1824] hover:border-[#3b9ede]/60 hover:bg-[#0f1f30] transition-colors duration-200 p-6 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9ede] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0f1a]"
           >
             <div className="absolute inset-0 rounded-2xl bg-[#3b9ede]/0 group-hover:bg-[#3b9ede]/[0.04] transition-colors duration-200 pointer-events-none" />
 
