@@ -17,9 +17,9 @@ export const authConfig = {
         return true;
       }
 
-      if (nextUrl.pathname.startsWith('/adminDashboard') && role !== 'admin') {
+      /* if (nextUrl.pathname.startsWith('/adminDashboard') && role !== 'admin') {
         return Response.redirect(new URL('/home', nextUrl));
-      }
+      } */
       if (nextUrl.pathname.startsWith('/applicantDashboard') && role !== 'applicant') {
         return Response.redirect(new URL('/home', nextUrl));
       }
@@ -27,7 +27,7 @@ export const authConfig = {
         return Response.redirect(new URL('/home', nextUrl));
       }
 
-      const protectedRoutes = ['/adminDashboard', '/applicantDashboard', '/recruiterDashboard', '/recruiterProfile', '/home']
+      const protectedRoutes = ['/applicantDashboard', '/recruiterDashboard', '/recruiterProfile', '/home']
       const isOnProtectedRoute = protectedRoutes.some(route =>
         nextUrl.pathname.startsWith(route)
       )
