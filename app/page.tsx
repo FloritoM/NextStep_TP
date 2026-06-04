@@ -16,7 +16,7 @@ export default function Landing() {
             <p className="px-17 text-black font-semibold text-[1.5rem] text-center select-none">Simplificamos los procesos de selección</p>
             <p className="px-17 pb-3 text-black font-semibold text-[1.5rem] text-center select-none">Mejor experiencia para recruiters y candidatos</p>
           </div>
-          <div className=" flex justify-center pb-5">
+          <div className="flex justify-center pb-5">
             <nav className="w-[100%]">
               <ul className="flex justify-center gap-15 text-white text-[1.5rem] bg-gray-700 py-3">
                 <li><a href="#inicio">Inicio</a></li>
@@ -167,12 +167,12 @@ export default function Landing() {
         </div>
       </section>
 
-      <section id="contacto" className="bg-main">
+      <section id="contacto" className="bg-main pb-10">
         <p className="px-17 py-15 text-white font-semibold text-[2rem]">Contacto</p>
         <div className="px-35 flex flex-col gap-4 items-start">
-          <a href="https://instagram.com/tuusuario" target="_blank" className="flex items-center gap-3 text-white text-[1.6rem]"><FontAwesomeIcon icon={faInstagram} className="text-amber-500 text-[3rem] pr-2" />Instagram</a>
-          <a href="https://instagram.com/tuusuario" target="_blank" className="flex items-center gap-3 text-white text-[1.6rem]"><FontAwesomeIcon icon={faGithub} className="text-amber-500 text-[3rem] pr-2" />GitHub</a>
-          <a href="https://instagram.com/tuusuario" target="_blank" className="flex items-center gap-3 text-white text-[1.6rem]"><FontAwesomeIcon icon={faYoutube} className="text-amber-500 text-[3rem] pr-2" />YouTube</a>
+          <a href="https://www.instagram.com/centrouniversitariovl" target="_blank" className="flex items-center gap-3 text-white text-[1.5rem]"><FontAwesomeIcon icon={faInstagram} className="text-amber-500 text-[3rem] pr-2" />Instagram</a>
+          <a href="https://github.com/floritoM" target="_blank" className="flex items-center gap-3 text-white text-[1.5rem]"><FontAwesomeIcon icon={faGithub} className="text-amber-500 text-[3rem] pr-2" />GitHub</a>
+          <a href="https://www.youtube.com/watch?v=6dIr256vl1U" target="_blank" className="flex items-center gap-3 text-white text-[1.5rem]"><FontAwesomeIcon icon={faYoutube} className="text-amber-500 text-[3rem] pr-2" />YouTube</a>
         </div>
       </section>
     </div>
