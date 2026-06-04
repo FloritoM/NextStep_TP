@@ -9,9 +9,10 @@ async function getJobOffers() {
   return res.json();
 }
 
-export default async function HomePage() {
+export default async function Home() {
     const session = await auth(); 
-    const user = session?.user || { firstName: 'Invitado', role: 'applicant' };
+    const user = session?.user;
+    const token = session?.accessToken
     const jobOffers = await getJobOffers();
-    return <HomeContent user={user} initialJobs={jobOffers} />;
+    return <HomeContent user={user} token={token} initialJobs={jobOffers} />;
 }
