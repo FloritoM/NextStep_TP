@@ -8,9 +8,9 @@ interface RoleSelectorProps{
 
 const roles=[
     {
-        value:"candaidate" as UserRole,
+        value:"candidate" as UserRole,
         label: "Candidato",
-        descritpcion: "Buscas nuevas oportunidades y te gustaría recibir feedbacks reales de tus procesos",
+        description: "Buscas nuevas oportunidades y te gustaría recibir feedbacks reales de tus procesos",
         icon:(
               <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
         <circle cx="14" cy="9" r="4.5" stroke="currentColor" strokeWidth="1.8" />
@@ -38,7 +38,7 @@ const roles=[
 
 export default function RoleSelector({ onSelect }: RoleSelectorProps) {
   return (
-    <div className="animate-fadeIn">
+    <div >
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">
           ¿Cómo vas a usar NextStep?

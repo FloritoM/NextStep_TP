@@ -107,7 +107,7 @@ export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormPr
   }
 
   return (
-    <div className="animate-fadeIn">
+    <div>
       <div className="text-center mb-6">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0f1f30] border border-[#1e2d3d] text-[#3b9ede] text-xs font-medium mb-4">
           {roleLabels[role]}
