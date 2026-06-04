@@ -2,17 +2,31 @@
 
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faUser, faLock, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 
 export default function EditProfile() {
     const [isEditing, setIsEditing] = useState(false);
     const [firstName, setFirstName] = useState("Nahuel");
     const [lastName, setLastName] = useState("Raimondi");
-    const [role, setRole] = useState("Candidato");
     const [email, setEmail] = useState("nahuel@nextstep.com");
-    const [createdAt, setCreatedAt] = useState("20/03/2026");
+    const [password, setPassword] = useState("123456");
+    const [passErrorMsg, setPassErrorMsg] = useState("");
+    const [validPass, setValidPass] = useState(true)
 
     const initials = `${firstName[0] ?? ""}${lastName[0] ?? ""}`.toUpperCase();
+
+    function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const newPassword = e.target.value;
+        setPassword(newPassword)
+
+        if (newPassword.length < 4) {
+            setPassErrorMsg("La contraseña debe tener mínimo 4 caracteres")
+            setValidPass(false)
+        } else {
+            setPassErrorMsg("")
+            setValidPass(true)
+        }
+    }
 
     return (
         <div className="flex-1 bg-main overflow-auto">
@@ -24,18 +38,20 @@ export default function EditProfile() {
                     </div>
 
                     <div className="second flex justify-end">
-                        <button
-                            type="submit"
-                            className="cursor-pointer border-none bg-yellow-400 rounded-lg text-xl text-black font-semibold hover:bg-amber-600"
-                        >
-                            <FontAwesomeIcon icon={faPenToSquare} className="text-black" />
-                            {isEditing ? " Guardar" : " Editar Perfil"}
-                        </button>
+                        <div>
+                            <button
+                                type="submit"
+                                className="cursor-pointer border-none bg-yellow-400 rounded-lg text-xl text-black font-semibold hover:bg-amber-600 p-4"
+                            >
+                                <FontAwesomeIcon icon={isEditing ? faFloppyDisk : faPenToSquare} className="text-black" />
+                                {isEditing ? " Guardar" : " Editar Perfil"}
+                            </button>
+                        </div>
                     </div>
 
                     <div className="third rounded-xl border border-gray-700 bg-gray-800/50 p-5 flex flex-col items-center">
                         <div className="border border-white rounded-full mb-2">
-                            <p className="text-amber-600 font-bold text-[4.375rem] p-5">{initials}</p>
+                            <p className="text-amber-600 font-bold text-[4.375rem] p-5 select-none">{initials}</p>
                         </div>
                         <div className="flex flex-col items-center">
                             <p className="text-xl text-gray-50 font-bold">{firstName} {lastName}</p>
@@ -51,30 +67,24 @@ export default function EditProfile() {
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Nombre</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-black rounded px-2 py-1" value={firstName} onChange={e => setFirstName(e.target.value)} />
+                                    ? <input className="bg-gray-700 text-white rounded" value={firstName} onChange={e => setFirstName(e.target.value)} />
                                     : <p className="text-white">{firstName}</p>
                                 }
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Apellido</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded px-2 py-1" value={lastName} onChange={e => setLastName(e.target.value)} />
+                                    ? <input className="bg-gray-700 text-white rounded" value={lastName} onChange={e => setLastName(e.target.value)} />
                                     : <p className="text-white">{lastName}</p>
                                 }
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Rol</label>
-                                {isEditing
-                                    ? <input className="text-white bg-gray-700" value={role} onChange={e => { setRole(e.target.value) }} />
-                                    : <p className="text-white">{role}</p>
-                                }
-                            </div> 
+                                <p className="text-white">Candidato</p>
+                            </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Creacion de cuenta</label>
-                                 {isEditing
-                                    ? <input className="text-white bg-gray-700" value={createdAt} onChange={e => { setCreatedAt(e.target.value) }} />
-                                    : <p className="text-white">{createdAt}</p>
-                                }
+                                <p className="text-white">03/05/2025</p>
                             </div>
                         </div>
                     </div>
@@ -85,18 +95,29 @@ export default function EditProfile() {
                         </p>
                         <div className="section gap-5">
                             <div className="sub-section">
-                                <p className="text-white font-semibold">Email</p>
+                                <label className="text-white font-semibold">Email</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded px-2 py-1" value={email} onChange={e => setEmail(e.target.value)} />
+                                    ? <input className="bg-gray-700 text-white rounded" value={email} onChange={e => setEmail(e.target.value)} />
                                     : <p className="text-white">{email}</p>
                                 }
                             </div>
                             <div className="sub-section">
-                                <p className="text-white font-semibold">Contraseña</p>
-                                <p className="text-white">*********</p>
+                                <label className="text-white font-semibold">Contraseña</label>
+                                {isEditing
+                                    ? <input
+                                        id="password"
+                                        type="password"
+                                        className="bg-gray-700 text-white rounded"
+                                        value={password ?? ""}
+                                        onChange={handlePasswordChange}
+                                    />
+                                    : <p className="text-white">••••••••</p>
+                                }
+                                {!validPass && <p className="text-white text-sm">{passErrorMsg}</p>}
                             </div>
                         </div>
-                    </div></div>
+                    </div>
+                </div>
             </form>
         </div>
     );
