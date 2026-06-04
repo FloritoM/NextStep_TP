@@ -48,7 +48,8 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
             firstName: userData.firstName,
             lastName: userData.lastName,
             email: userData.email,
-            role: userData.role?.name
+            role: userData.role,
+            token: response.token,
           };
 
         } catch (error) {
@@ -71,6 +72,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         token.lastName = user.lastName;
         token.email = user.email;
         token.role = user.role;
+        token.accessToken = user.token;
       }
 
       console.log('JWT TOKEN:', token);
@@ -86,9 +88,10 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         session.user.firstName = token.firstName as string;
         session.user.lastName = token.lastName as string;
         session.user.email = token.email as string;
-        session.user.role = token.role as string;
+        session.user.role = token.role as { id: number, name: string, isDefault?: boolean };
       }
-
+      session.accessToken = token.accessToken as string;
+      
       console.log('SESSION:', session);
 
       return session;

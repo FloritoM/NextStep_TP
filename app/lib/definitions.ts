@@ -1,28 +1,51 @@
 import * as z from 'zod'
 
 export const SignupFormSchema = z.object({
-  name: z
+  firstName: z
     .string()
-    .min(2, { error: 'El nom debe tener al menos 8 caracteres' })
+    .min(2, { message: 'El nombre debe tener al menos 2 caracteres' })
     .trim(),
-  email: z.email({ error: 'Ingresar un email válido' }).trim(),
+  lastName: z
+    .string()
+    .min(2, { message: 'El apellido debe tener al menos 2 caracteres' })
+    .trim(),
+  email: z
+    .email({ message: 'Ingresar un email válido' })
+    .trim(),
   password: z
     .string()
-    .min(8, { error: 'Debe tener al menos 8 caracteres' })
-    .regex(/[a-zA-Z]/, { error: 'Contiene al menos una letra' })
-    .regex(/[0-9]/, { error: 'Contiene al menos un numero' })
-    .regex(/[^a-zA-Z0-9]/, {
-      error: 'Contiene al menos un caracter especial',
-    })
+    .min(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
+    .regex(/[a-zA-Z]/, { message: 'La contraseña debe tener al menos una letra' })
+    .regex(/[0-9]/, { message: 'La contraseña debe tener al menos un número' })
+    .regex(/[^a-zA-Z0-9]/, { message: 'La contraseña debe tener al menos un caracter especial' })
     .trim(),
 })
 
 export type User = {
-  id: number;
-  name: string;
+  id: number | string;
+  firstName: string;
+  lastName: string;
   email: string;
-  password: string;
-  role: 'admin' | 'applicant' | 'recruiter';
-  createdAt: Date;
-  updatedAt: Date;
+  password?: string;
+  role: {
+    id: number;
+    name: Roles;
+    isDefault?: boolean;
+  };
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
 };
+
+export interface JobOffer {
+  id: number;
+  title: string;
+  seniority: string;
+  description: string;
+  isActive: boolean;
+}
+
+export enum Roles {
+  ADMIN = 'admin',
+  APPLICANT = 'applicant',
+  RECRUITER = 'recruiter'
+}

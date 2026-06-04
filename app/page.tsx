@@ -6,7 +6,7 @@ import { faInstagram, faGithub, faYoutube } from '@fortawesome/free-brands-svg-i
 import Image from 'next/image'
 import { pacifico } from "./ui/fonts";
 
-export default function Home() {
+export default function Landing() {
   return (
     <div className="">
       <section id="inicio" className="bg-main">
