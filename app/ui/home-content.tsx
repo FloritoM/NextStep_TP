@@ -1,14 +1,13 @@
-// app/ui/home-content.tsx
 "use client";
 
 import { useState } from 'react';
-import Navbar from './Navbar'; // 👈 Componente separado
-import JobCard from './JobCard'; // 👈 Componente separado
-import CreateJobModal from './CreateJobModal'; // 👈 El formulario
+import Navbar from './Navbar';
+import JobCard from './JobCard';
+import CreateJobModal from './CreateJobModal';
 
 export default function HomeContent({ user, initialJobs }: { user: any, initialJobs: any[] }) {
     const [searchTerm, setSearchTerm] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false); // 👈 Controla si el form está abierto
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const filteredJobs = initialJobs.filter(job => 
         job.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -29,7 +28,7 @@ export default function HomeContent({ user, initialJobs }: { user: any, initialJ
                     />
                     
                     {user.role === 'recruiter' && (
-                        /* ACÁ ESTÁ EL JAVASCRIPT DEL EVENTO */
+                       
                         <button 
                             onClick={() => setIsModalOpen(true)} 
                             className="bg-amber-600 font-bold py-4 px-8 rounded-full"
@@ -50,7 +49,8 @@ export default function HomeContent({ user, initialJobs }: { user: any, initialJ
             {/* Si el estado es true, mostramos el componente del formulario */}
             {isModalOpen && (
                 <CreateJobModal 
-                    onClose={() => setIsModalOpen(false)} 
+                    onClose={() => setIsModalOpen(false)}
+                    token={user.accessToken}
                 />
             )}
         </div>
