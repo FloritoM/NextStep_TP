@@ -39,13 +39,13 @@ export default function MethodSelector({ role, onManual, onBack }: MethodSelecto
         {/* Google */}
         <button
           onClick={handleGoogleSignIn}
-          className="group w-full flex items-center gap-4 rounded-2xl border border-[#1e2d3d] bg-[#0d1824] hover:border-[#3b9ede]/50 hover:bg-[#0f1f30] transition-all duration-200 p-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9ede] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0f1a]"
+          className="w-full flex items-center gap-4 rounded-2xl border border-[#1e2d3d] bg-[#0d1824] hover:border-[#3b9ede]/50 hover:bg-[#0f1f30] transition-colors duration-200 p-4 cursor-pointer focus:outline-none"
         >
           <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-white flex items-center justify-center shadow-sm">
             <GoogleIcon />
           </div>
           <div className="flex-1 text-left">
-            <p className="text-white font-semibold text-sm group-hover:text-[#5db8f5] transition-colors">
+            <p className="text-white font-semibold text-sm">
               Continuar con Google
             </p>
             <p className="text-[#6a7f94] text-xs mt-0.5">
@@ -64,16 +64,16 @@ export default function MethodSelector({ role, onManual, onBack }: MethodSelecto
         {/* Email manual */}
         <button
           onClick={onManual}
-          className="group w-full flex items-center gap-4 rounded-2xl border border-[#1e2d3d] bg-[#0d1824] hover:border-[#3b9ede]/50 hover:bg-[#0f1f30] transition-all duration-200 p-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9ede] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0f1a]"
+          className="w-full flex items-center gap-4 rounded-2xl border border-[#1e2d3d] bg-[#0d1824] hover:border-[#3b9ede]/50 hover:bg-[#0f1f30] transition-colors duration-200 p-4 cursor-pointer focus:outline-none"
         >
-          <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-[#0a1a28] border border-[#1e2d3d] group-hover:border-[#3b9ede]/40 flex items-center justify-center text-[#3b9ede] transition-colors duration-200">
+          <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-[#0a1a28] border border-[#1e2d3d] flex items-center justify-center text-[#3b9ede]">
             <svg className="w-5 h-5" viewBox="0 0 20 20" fill="none">
               <rect x="2" y="4" width="16" height="12" rx="2" stroke="currentColor" strokeWidth="1.6" />
               <path d="M2 7l8 5.5L18 7" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
             </svg>
           </div>
           <div className="flex-1 text-left">
-            <p className="text-white font-semibold text-sm group-hover:text-[#5db8f5] transition-colors">
+            <p className="text-white font-semibold text-sm">
               Registrarme con email
             </p>
             <p className="text-[#6a7f94] text-xs mt-0.5">
@@ -86,7 +86,7 @@ export default function MethodSelector({ role, onManual, onBack }: MethodSelecto
       {/* Botón volver */}
       <button
         onClick={onBack}
-        className="mt-6 w-full flex items-center justify-center gap-2 text-[#6a7f94] hover:text-white text-sm transition-colors duration-200 py-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9ede] rounded-lg"
+        className="mt-6 w-full flex items-center justify-center gap-2 text-[#6a7f94] hover:text-white text-sm transition-colors duration-200 py-2 focus:outline-none rounded-lg"
       >
         Volver a elegir rol
       </button>

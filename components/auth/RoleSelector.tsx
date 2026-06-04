@@ -50,25 +50,24 @@ export default function RoleSelector({ onSelect }: RoleSelectorProps) {
 
       <div className="flex flex-col gap-4">
         {roles.map((role) => (
-          <button
-            key={role.value}
-            onClick={() => onSelect(role.value)}
-                className="group relative text-left w-full rounded-2xl border border-[#1e2d3d] bg-[#0d1824] hover:border-[#3b9ede]/60 hover:bg-[#0f1f30] transition-colors duration-200 p-6 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3b9ede] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0f1a]"
-          >
-            <div className="absolute inset-0 rounded-2xl bg-[#3b9ede]/0 group-hover:bg-[#3b9ede]/[0.04] transition-colors duration-200 pointer-events-none" />
+              <button
+                key={role.value}
+                onClick={() => onSelect(role.value)}
+                className="relative text-left w-full rounded-2xl border border-[#1e2d3d] bg-[#0d1824] hover:border-[#3b9ede]/60 hover:bg-[#0f1f30] transition-colors duration-200 p-6 cursor-pointer focus:outline-none"
+              >
 
             <div className="flex items-start gap-4 relative">
-              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#0a1a28] border border-[#1e2d3d] group-hover:border-[#3b9ede]/40 flex items-center justify-center text-[#3b9ede] transition-colors duration-200">
+              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#0a1a28] border border-[#1e2d3d] flex items-center justify-center text-[#3b9ede]">
                 {role.icon}
               </div>
 
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between mb-1">
-                  <h2 className="text-white font-semibold text-base group-hover:text-[#5db8f5] transition-colors duration-200">
+                  <h2 className="text-white font-semibold text-base hover:text-[#5db8f5] transition-colors duration-200">
                     {role.label}
                   </h2>
                   <svg
-                    className="w-4 h-4 text-[#4a5a6a] group-hover:text-[#3b9ede] group-hover:translate-x-0.5 transition-all duration-200 flex-shrink-0 ml-2"
+                    className="w-4 h-4 text-[#3b9ede] flex-shrink-0 ml-2"
                     viewBox="0 0 16 16"
                     fill="none"
                   >
