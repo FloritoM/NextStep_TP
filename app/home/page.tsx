@@ -1,15 +1,17 @@
-import Header from "../ui/header";
+import { auth } from "../../auth";
+import HomeContent from "../ui/home-content";
 
-export default async function Home() {
-    return (
-        <>
-            <Header />
-            <div className="h-full bg-main">
-                <div className="flex flex-col gap-5 w-120 m-auto pt-19 content-center">
-                    <h1 className="text-white text-[4rem] text-center font-bold">Bienvenido</h1>
-                    <p className="text-white text-[3.5rem] text-center">Nahuel <span className="text-amber-600 text-[3.5rem]">Raimondi</span>!</p>
-                </div>
-            </div>
-        </>
-    );
+async function getJobOffers() {
+  const res = await fetch(`${process.env.BACKEND_URL}/job-offers`, {
+    cache: 'no-store'
+  });
+  if (!res.ok) return [];
+  return res.json();
+}
+
+export default async function HomePage() {
+    const session = await auth(); 
+    const user = session?.user || { firstName: 'Invitado', role: 'applicant' };
+    const jobOffers = await getJobOffers();
+    return <HomeContent user={user} initialJobs={jobOffers} />;
 }
