@@ -1,40 +1,37 @@
-// app/ui/CreateJobModal.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function CreateJobModal({ onClose }: { onClose: () => void }) {
+export default function CreateJobModal({ onClose, token }: { onClose: () => void, token: string }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  // El "JavaScript" que maneja el guardado
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // 1. Capturamos los datos del formulario
     const formData = new FormData(e.currentTarget);
     const newJob = {
       title: formData.get("title"),
       seniority: formData.get("seniority"),
       description: formData.get("description"),
-      active: true,
+      isActive: true,
     };
 
     try {
-      // 2. Le pegamos a tu backend en NestJS para guardarlo
-      // (Asegurate de que tu NestJS tenga habilitado CORS para el puerto 3000)
       const res = await fetch("http://localhost:3001/job-offers", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify(newJob),
       });
 
       if (res.ok) {
-        // 3. Si se guardó bien, cerramos el modal y le decimos a Next.js que recargue los datos
         onClose();
-        router.refresh(); // 👈 Esto hace que la página vuelva a buscar los datos nuevos a la BD sin recargar la pantalla
+        router.refresh();
       } else {
         alert("Hubo un error al guardar la vacante");
       }
@@ -50,7 +47,6 @@ export default function CreateJobModal({ onClose }: { onClose: () => void }) {
       <div className="bg-gray-800 p-8 rounded-xl w-[500px]">
         <h2 className="text-2xl font-bold text-white mb-6">Crear Nueva Vacante</h2>
         
-        {/* El evento onSubmit ejecuta nuestra función JS */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input 
             name="title" 
