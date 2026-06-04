@@ -3,15 +3,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-
-// Definimos qué forma tiene la vacante para que TypeScript nos ayude
-interface JobOffer {
-    id: number;
-    title: string;
-    seniority: string;
-    description: string;
-    isActive: boolean;
-}
+import { JobOffer } from '../lib/definitions';
 
 interface JobCardProps {
     job: JobOffer;
@@ -19,19 +11,17 @@ interface JobCardProps {
 }
 
 export default function JobCard({ job, userRole }: JobCardProps) {
-    // Estado para controlar el acordeón (abierto/cerrado)
+
     const [isExpanded, setIsExpanded] = useState(false);
 
-    // Función para manejar el clic en la tarjeta
     const toggleExpand = () => {
         if (job.isActive) {
             setIsExpanded(!isExpanded);
         }
     };
 
-    // Función que se ejecutará cuando el candidato aplique
     const handleApply = (e: React.MouseEvent) => {
-        e.stopPropagation(); // Evita que al hacer clic en el botón se cierre la tarjeta
+        e.stopPropagation();
         alert(`¡Aplicaste a ${job.title}! (Próximamente conectaremos esto al backend)`);
     };
 
@@ -41,7 +31,7 @@ export default function JobCard({ job, userRole }: JobCardProps) {
                 ? 'bg-gray-800 border-gray-700 hover:border-amber-600' 
                 : 'bg-gray-900 border-gray-800 opacity-50 grayscale'
         }`}>
-            {/* Cabecera de la Tarjeta (La parte que siempre se ve) */}
+    
             <div
                 className={`px-8 py-6 flex justify-between items-center ${job.isActive ? 'cursor-pointer' : 'cursor-not-allowed'}`}
                 onClick={toggleExpand}
@@ -57,7 +47,6 @@ export default function JobCard({ job, userRole }: JobCardProps) {
                     </span>
                 </div>
                 
-                {/* Icono de flecha o etiqueta de Inactiva */}
                 {job.isActive ? (
                     <FontAwesomeIcon
                         icon={isExpanded ? faChevronUp : faChevronDown}
@@ -70,7 +59,6 @@ export default function JobCard({ job, userRole }: JobCardProps) {
                 )}
             </div>
 
-            {/* Acordeón: Detalles y Botón de Aplicar (La parte que se despliega) */}
             <div
                 className={`transition-all duration-500 ease-in-out overflow-hidden bg-gray-750 ${
                     isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
@@ -81,7 +69,6 @@ export default function JobCard({ job, userRole }: JobCardProps) {
                         {job.description}
                     </p>
                     
-                    {/* Renderizado condicional: Solo los 'applicant' ven el botón en vacantes activas */}
                     {userRole === 'applicant' && job.isActive && (
                         <button 
                             onClick={handleApply}
