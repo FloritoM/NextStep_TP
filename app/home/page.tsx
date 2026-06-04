@@ -3,12 +3,23 @@ import { auth } from "../../auth";
 import HomeContent from "../ui/home-content";
 import { User } from "../lib/definitions";
 
-async function getJobOffers() {
-  const res = await fetch(`${process.env.BACKEND_URL}/job-offers`, {
-    cache: 'no-store'
-  });
-  if (!res.ok) return [];
-  return res.json();
+async function getJobOffers(token: string | undefined) {
+  try {
+    const res = await fetch(`${process.env.BACKEND_URL}/job-offers`, {
+      cache: 'no-store',
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
+    if (!res.ok) {
+      console.error("Error trayendo vacantes:", res.status, await res.text());
+      return [];
+    }
+    return res.json();
+  } catch (error) {
+    console.error("Error de conexión con el backend:", error);
+    return [];
+  }
 }
 
 export default async function Home() {
@@ -18,6 +29,6 @@ export default async function Home() {
     }
     const user = session.user as unknown as User;
     const token = session.accessToken;
-    const jobOffers = await getJobOffers();
+    const jobOffers = await getJobOffers(token);
     return <HomeContent user={user} token={token} initialJobs={jobOffers} />;
 }

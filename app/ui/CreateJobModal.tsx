@@ -16,11 +16,10 @@ export default function CreateJobModal({ onClose, token }: { onClose: () => void
       title: formData.get("title"),
       seniority: formData.get("seniority"),
       description: formData.get("description"),
-      isActive: true,
     };
 
     try {
-      const res = await fetch("http://localhost:3001/job-offers", {
+      const res = await fetch(`${process.env.BACKEND_URL}/job-offers`, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
@@ -33,7 +32,9 @@ export default function CreateJobModal({ onClose, token }: { onClose: () => void
         onClose();
         router.refresh();
       } else {
-        alert("Hubo un error al guardar la vacante");
+        const errorData = await res.json();
+        console.error("Detalle del error:", errorData);
+        alert(`Error del servidor: ${JSON.stringify(errorData.message)}`);
       }
     } catch (error) {
       console.error(error);
