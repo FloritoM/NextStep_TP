@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function CreateJobModal({ onClose, token }: { onClose: () => void, token: string }) {
+export default function CreateJobModal({ onClose, token }: { onClose: () => void, token: string | undefined }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 

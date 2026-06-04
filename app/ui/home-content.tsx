@@ -5,7 +5,7 @@ import Navbar from './Navbar';
 import JobCard from './JobCard';
 import CreateJobModal from './CreateJobModal';
 
-export default function HomeContent({ user, initialJobs }: { user: any, initialJobs: any[] }) {
+export default function HomeContent({ user, token, initialJobs }: { user: any, token: string | undefined, initialJobs: any[] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -38,7 +38,6 @@ export default function HomeContent({ user, initialJobs }: { user: any, initialJ
                     )}
                 </div>
 
-                {/* Renderizamos componentes separados por cada trabajo */}
                 <div className="space-y-5">
                     {filteredJobs.map(job => (
                         <JobCard key={job.id} job={job} userRole={user.role} />
@@ -46,11 +45,10 @@ export default function HomeContent({ user, initialJobs }: { user: any, initialJ
                 </div>
             </div>
 
-            {/* Si el estado es true, mostramos el componente del formulario */}
             {isModalOpen && (
                 <CreateJobModal 
                     onClose={() => setIsModalOpen(false)}
-                    token={user.accessToken}
+                    token={token}
                 />
             )}
         </div>
