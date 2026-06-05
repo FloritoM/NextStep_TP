@@ -19,7 +19,7 @@ export default function CreateJobModal({ onClose, token }: { onClose: () => void
     };
 
     try {
-      const res = await fetch(`${process.env.BACKEND_URL}/job-offers`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-offers`, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
