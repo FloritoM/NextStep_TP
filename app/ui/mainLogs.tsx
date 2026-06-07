@@ -1,12 +1,6 @@
-import Header from "@/app/ui/header";
-import TableLogs from "@/app/ui/tableLogs";
-
-export default async function AdminDashboard() {
+export default async function MainLogs() {
     return (
         <div className="bg-main">
-            
-            <h1 className="mt-20 text-white font-bold text-center text-[2.375rem]">Dashboard Admin</h1>
-
             <section id="counters" className="mt-20">
                 <div className="max-w-[70%] mx-auto px-5 grid grid-cols-3 gap-9 justify-center">
                     <div id="users_total" className="flex flex-col rounded-xl border border-gray-700 bg-gray-800/50">

@@ -20,14 +20,14 @@ export const authConfig = {
       /* if (nextUrl.pathname.startsWith('/adminDashboard') && role !== 'admin') {
         return Response.redirect(new URL('/home', nextUrl));
       } */
-      if (nextUrl.pathname.startsWith('/applicantDashboard') && role !== 'applicant') {
+      /* if (nextUrl.pathname.startsWith('/applicantDashboard') && role !== 'applicant') {
         return Response.redirect(new URL('/home', nextUrl));
       }
       if (nextUrl.pathname.startsWith('/recruiterDashboard') && role !== 'recruiter') {
         return Response.redirect(new URL('/home', nextUrl));
-      }
+      } */
 
-      const protectedRoutes = ['/applicantDashboard', '/recruiterDashboard', '/recruiterProfile', '/home']
+      const protectedRoutes = ['/applicantDashboard', '/recruiterDashboard', '/recruiterProfile']
       const isOnProtectedRoute = protectedRoutes.some(route =>
         nextUrl.pathname.startsWith(route)
       )

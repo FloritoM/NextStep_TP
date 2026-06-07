@@ -1,5 +1,6 @@
 import Header from "@/app/ui/header";
 import EditProfile from "@/components/EditProfile";
+import FileUploader from "@/components/FileUploader";
 
 export default async function ApplicantProfile() {
 
