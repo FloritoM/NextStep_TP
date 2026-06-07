@@ -12,7 +12,7 @@ export const authConfig = {
       console.log("ROL en middleware:", role);
       console.log("USER en middleware:", auth?.user);
 
-      const publicRoutes = ['/', '/login', '/register']
+      const publicRoutes = ['/', '/login', '/register', '/register/complete']
       if (publicRoutes.includes(nextUrl.pathname)) {
         return true;
       }
