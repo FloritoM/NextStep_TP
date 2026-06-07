@@ -6,7 +6,14 @@ export async function registerWithEmail(payload: RegisterPayLoad) {
   const res = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      firstName: payload.firstName,
+      lastName: payload.lastName,
+      email: payload.email.toLowerCase(),
+      password: payload.password,
+      role: payload.role,
+      birthDate: payload.birthDate,
+    }),
   });
 
   if (!res.ok) {
