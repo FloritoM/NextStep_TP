@@ -61,7 +61,7 @@ const defaultData: Person[] = [
     },
 ]
 
-export default function TableLogs() {
+export default function UserLogs() {
     const rerender = React.useReducer(() => ({}), {})[1]
 
     const columns = React.useMemo<ColumnDef<Person>[]>(

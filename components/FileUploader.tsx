@@ -30,7 +30,6 @@ export default function FileUploader() {
         <p className="text-white text-[1.5rem] font-bold">
           Arrastrá tu CV o hacé click para seleccionarlo
         </p>
-        
       </div>
 
       {archivo && (
