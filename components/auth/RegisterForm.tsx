@@ -11,19 +11,19 @@ interface RegisterFormProps {
 }
 
 interface FormState {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
-  birthDate: string;
+  birth_date: string;
 }
 
 interface FormErrors {
-  firstName?: string;
-  lastName?: string;
+  first_name?: string;
+  last_name?: string;
   email?: string;
   password?: string;
-  birthDate?: string;
+  birth_date?: string;
   general?: string;
 }
 
@@ -34,11 +34,11 @@ const roleLabels: Record<UserRole, string> = {
 
 export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormProps) {
   const [form, setForm] = useState<FormState>({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
-    birthDate: "",
+    birth_date: "",
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [showPassword, setShowPassword] = useState(false);
@@ -55,8 +55,8 @@ export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormPr
   function validate(): boolean {
     const newErrors: FormErrors = {};
 
-    if (!form.firstName.trim()) newErrors.firstName = "El nombre es requerido";
-    if (!form.lastName.trim()) newErrors.lastName = "El apellido es requerido";
+    if (!form.first_name.trim()) newErrors.first_name = "El nombre es requerido";
+    if (!form.last_name.trim()) newErrors.last_name = "El apellido es requerido";
 
     if (!form.email.trim()) {
       newErrors.email = "El email es requerido";
@@ -70,10 +70,10 @@ export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormPr
       newErrors.password = "Mínimo 8 caracteres";
     }
 
-    if (!form.birthDate) {
-      newErrors.birthDate = "La fecha de nacimiento es requerida";
-    } else if (!isAdult(form.birthDate)) {
-      newErrors.birthDate = "Debés ser mayor de 18 años para registrarte";
+    if (!form.birth_date) {
+      newErrors.birth_date = "La fecha de nacimiento es requerida";
+    } else if (!isAdult(form.birth_date)) {
+      newErrors.birth_date = "Debés ser mayor de 18 años para registrarte";
     }
 
     setErrors(newErrors);
@@ -90,11 +90,11 @@ export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormPr
     try {
       await registerWithEmail({
         role,
-        firstName: form.firstName.trim(),
-        lastName: form.lastName.trim(),
+        first_name: form.first_name.trim(),
+        last_name: form.last_name.trim(),
         email: form.email.trim().toLowerCase(),
         password: form.password,
-        birthDate: form.birthDate,
+        birth_date: form.birth_date,
       });
       onSuccess();
     } catch (err) {
@@ -130,21 +130,21 @@ export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormPr
         <div className="grid grid-cols-2 gap-3">
           <Field
             label="Nombre"
-            name="firstName"
+            name="first_name"
             type="text"
-            value={form.firstName}
+            value={form.first_name}
             onChange={handleChange}
-            error={errors.firstName}
+            error={errors.first_name}
             placeholder="Juan"
             autoComplete="given-name"
           />
           <Field
             label="Apellido"
-            name="lastName"
+            name="last_name"
             type="text"
-            value={form.lastName}
+            value={form.last_name}
             onChange={handleChange}
-            error={errors.lastName}
+            error={errors.last_name}
             placeholder="Pérez"
             autoComplete="family-name"
           />
@@ -194,11 +194,11 @@ export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormPr
 
         <Field
           label="Fecha de nacimiento"
-          name="birthDate"
+          name="birth_date"
           type="date"
-          value={form.birthDate}
+          value={form.birth_date}
           onChange={handleChange}
-          error={errors.birthDate}
+          error={errors.birth_date}
           hint="Debés ser mayor de 18 años"
           autoComplete="bday"
         />
