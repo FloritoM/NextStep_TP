@@ -7,12 +7,12 @@ export async function registerWithEmail(payload: RegisterPayLoad) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      firstName: payload.firstName,
-      lastName: payload.lastName,
+      first_name: payload.firstName,
+      last_name: payload.lastName,
       email: payload.email.toLowerCase(),
       password: payload.password,
       role: payload.role,
-      birthDate: payload.birthDate,
+      birth_date: payload.birthDate,
     }),
   });
 
