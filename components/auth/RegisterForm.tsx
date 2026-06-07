@@ -28,7 +28,7 @@ interface FormErrors {
 }
 
 const roleLabels: Record<UserRole, string> = {
-  candidate: "Candidato",
+  applicant: "Candidato",
   recruiter: "Reclutador",
 };
 
@@ -66,8 +66,8 @@ export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormPr
 
     if (!form.password) {
       newErrors.password = "La contraseña es requerida";
-    } else if (form.password.length < 6) {
-      newErrors.password = "Mínimo 6 caracteres";
+    } else if (form.password.length < 8) {
+      newErrors.password = "Mínimo 8 caracteres";
     }
 
     if (!form.birthDate) {
