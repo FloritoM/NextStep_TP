@@ -12,7 +12,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         const parsedCredentials = z
           .object({
             email: z.string().email(),
-            password: z.string().min(6),
+            password: z.string().min(8),
           })
           .safeParse(credentials);
 
