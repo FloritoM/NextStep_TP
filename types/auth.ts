@@ -11,11 +11,11 @@ export interface RegisterFormData{
 
 export interface RegisterPayLoad{
     role:UserRole;
-    firstName:string;
-    lastName:string;
+    first_name:string;
+    last_name:string;
     email:string;
     password:string;
-    birthDate?:string;
+    birth_date?:string;
 
 }
 
