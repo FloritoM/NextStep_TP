@@ -9,7 +9,7 @@ export default function NextStepIcon() {
         <div className="flex pl-6">
             <p
                 onClick={() => router.push('/home')}
-                className="cursor-pointer text-center text-[2rem] text-black font-bold py-4 select-none">Next<span className={`${pacifico.className} italic text-amber-600 font-semibold select-none`}>Step</span>
+                className="cursor-pointer text-center text-[2rem] text-white font-bold select-none">Next<span className={`${pacifico.className} italic text-amber-600 font-semibold select-none`}>Step</span>
             </p>
         </div>
     );

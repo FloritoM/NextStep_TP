@@ -1,12 +1,12 @@
-import Header from "@/app/ui/header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPenToSquare, faUser, faLock } from '@fortawesome/free-solid-svg-icons'
 import FileUploader from "@/components/FileUploader";
+import Navbar from "@/app/ui/Navbar";
 
 export default async function AdminProfile() {
     return (
         <div className="flex flex-col h-screen">
-            <Header />
+            <Navbar />
             <div className="flex-1 bg-main overflow-auto">
                 <div className="profile-grid max-w-7xl mx-auto mt-32">
                     <div className="first justify-start py-6">
