@@ -145,14 +145,14 @@ function MyTable({
     })
 
     return (
-        <div className="text-white">
+        <div className="mt-20 text-white">
             <table className="mx-auto rounded-xl border border-gray-700">
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
                                 return (
-                                    <th key={header.id} colSpan={header.colSpan} className='border border-gray-700 bg-gray-800/50'>
+                                    <th key={header.id} colSpan={header.colSpan} className='border border-gray-700 bg-gray-800/50 py-3 px-4'>
                                         <div
                                             {...{
                                                 className: header.column.getCanSort()
@@ -285,7 +285,7 @@ function Filter<TData, TValue>({
     const columnFilterValue = column.getFilterValue()
 
     return typeof firstValue === 'number' ? (
-        <div className="flex space-x-2" onClick={(e) => e.stopPropagation()}>
+        <div className="flex space-x-2 pt-2" onClick={(e) => e.stopPropagation()}>
             <input
                 type="number"
                 value={(columnFilterValue as [number, number])?.[0] ?? ''}
@@ -296,7 +296,7 @@ function Filter<TData, TValue>({
                     ])
                 }
                 placeholder={`Min`}
-                className="w-24 border border-gray-700 rounded text-white"
+                className="w-24 border border-gray-700 rounded text-white font-normal"
             />
             <input
                 type="number"
@@ -308,17 +308,19 @@ function Filter<TData, TValue>({
                     ])
                 }
                 placeholder={`Max`}
-                className="w-24 border border-gray-700 rounded"
+                className="w-24 border border-gray-700 rounded font-normal"
             />
         </div>
     ) : (
-        <input
-        onChange={(e) => column.setFilterValue(e.target.value)}
-        onClick={(e) => e.stopPropagation()}
-        placeholder={`Buscar...`}
-        type="text"
-        value={(columnFilterValue ?? '') as string}
-        className="w-36 border border-gray-700 rounded"
-        />
+        <div className='pt-2'>
+            <input
+                onChange={(e) => column.setFilterValue(e.target.value)}
+                onClick={(e) => e.stopPropagation()}
+                placeholder={`Buscar...`}
+                type="text"
+                value={(columnFilterValue ?? '') as string}
+                className="w-36 border border-gray-700 rounded font-normal"
+            />
+        </div>
     )
 }
