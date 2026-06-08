@@ -6,6 +6,7 @@ import { authenticate } from '@/app/lib/actions';
 import { useSearchParams } from 'next/navigation';
 import { pacifico } from "./fonts";
 import Link from "next/link";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 export default function Login() {
 
@@ -89,6 +90,16 @@ export default function Login() {
                     </div>
                     <p className="text-gray-400 text-sm pb-3 text-center">
                         ¿No tenes cuenta?{" "}
+                        <div className="flex items-center gap-3 mx-4 mb-4">
+                            <div className="flex-1 h-px bg-gray-600" />
+                            <span className="text-gray-400 text-sm">o</span>
+                            <div className="flex-1 h-px bg-gray-600" />
+                        </div>
+
+                        <div className="flex justify-center mb-6">
+                            <GoogleLoginButton />
+                        </div>
+  
                         <Link href="/register" className="text-gray-50 font-semibold hover:underline">
                             Registrate acá
                         </Link>

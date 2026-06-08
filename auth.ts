@@ -70,7 +70,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
   ],
 
   callbacks: {
-    jwt({ token, user, account }) {
+     async jwt({ token, user, account }) {
       console.log('JWT USER:', user);
 
       if (user) {
@@ -82,7 +82,29 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         token.accessToken = user.token;
       }
       
-      if (account?.provider === 'google') {
+      if (account?.provider === 'google' && token.email) {
+        try {
+          const res = await fetch(
+            `${process.env.BACKEND_URL}/auth/google-login`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: token.email }),
+            }
+          );
+
+            if (res.ok) {
+              const response = await res.json();
+              token.id = response.user.id.toString();
+              token.firstName = response.user.firstName;
+              token.lastName = response.user.lastName;
+              token.role = response.user.role;
+              token.accessToken = response.token;
+            }
+            
+          } catch (error) {
+            console.error('Error en google-login:', error);
+        }
         token.provider = 'google';
       }
 
