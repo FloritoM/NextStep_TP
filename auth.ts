@@ -2,17 +2,24 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './auth.config';
 import { z } from 'zod';
+import Google from 'next-auth/providers/google';
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
 
   providers: [
+
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+          }),
+
     Credentials({
       async authorize(credentials) {
         const parsedCredentials = z
           .object({
             email: z.string().email(),
-            password: z.string().min(6),
+            password: z.string().min(8),
           })
           .safeParse(credentials);
 
@@ -63,7 +70,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
   ],
 
   callbacks: {
-    jwt({ token, user }) {
+    jwt({ token, user, account }) {
       console.log('JWT USER:', user);
 
       if (user) {
@@ -73,6 +80,10 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         token.email = user.email;
         token.role = user.role;
         token.accessToken = user.token;
+      }
+      
+      if (account?.provider === 'google') {
+        token.provider = 'google';
       }
 
       console.log('JWT TOKEN:', token);

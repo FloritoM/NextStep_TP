@@ -6,7 +6,14 @@ export async function registerWithEmail(payload: RegisterPayLoad) {
   const res = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({
+      first_name: payload.first_name,
+      last_name: payload.last_name,
+      email: payload.email.toLowerCase(),
+      password: payload.password,
+      role_name: payload.role,
+      
+    }),
   });
 
   if (!res.ok) {
@@ -17,8 +24,8 @@ export async function registerWithEmail(payload: RegisterPayLoad) {
   return res.json();
 }
 
-export function isAdult(birthDate: string): boolean {
-  const birth = new Date(birthDate);
+export function isAdult(birth_date: string): boolean {
+  const birth = new Date(birth_date);
   const today = new Date();
   const age = today.getFullYear() - birth.getFullYear();
   const monthDiff = today.getMonth() - birth.getMonth();

@@ -8,7 +8,7 @@ interface RoleSelectorProps{
 
 const roles=[
     {
-        value:"candidate" as UserRole,
+        value:"applicant" as UserRole,
         label: "Candidato",
         description: "Buscas nuevas oportunidades y te gustaría recibir feedbacks reales de tus procesos",
         icon:(
