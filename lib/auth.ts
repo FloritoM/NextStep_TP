@@ -11,8 +11,8 @@ export async function registerWithEmail(payload: RegisterPayLoad) {
       last_name: payload.last_name,
       email: payload.email.toLowerCase(),
       password: payload.password,
-      role: payload.role,
-      birth_date: payload.birth_date,
+      role_name: payload.role,
+      
     }),
   });
 
