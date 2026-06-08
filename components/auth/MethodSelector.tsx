@@ -10,7 +10,7 @@ interface MethodSelectorProps {
 }
 
 const roleLabels: Record<UserRole, string> = {
-  candidate: "Candidato",
+  applicant: "Candidato",
   recruiter: "Reclutador",
 };
 

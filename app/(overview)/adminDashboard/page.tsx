@@ -1,6 +1,3 @@
-import Header from "@/app/ui/header";
-import TableLogs from "@/app/ui/tableLogs";
-
 export default async function AdminDashboard() {
     return (
         <div className="bg-main">

@@ -1,9 +1,9 @@
-import Header from "@/app/ui/header";
+import Navbar from "@/app/ui/Navbar";
 
 export default async function RecruiterDashboard() {
     return (
         <>
-            <Header />
+            <Navbar />
             <h1>ola soy laura y soy recruiter</h1>
         </>
     );

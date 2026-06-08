@@ -3,6 +3,7 @@ import "./globals.css";
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { manrope } from "./ui/fonts";
+import { SessionProvider } from "next-auth/react";
 
 config.autoAddCss = false
 
@@ -20,7 +21,11 @@ export default function RootLayout({
     <html
       lang="en"
     >
-      <body className={`${manrope.className} antialiased h-screen`}>{children}</body>
+      <body className={`${manrope.className} antialiased h-screen`} suppressHydrationWarning>
+        <SessionProvider>
+          {children}
+        </SessionProvider>
+      </body>
     </html>
   );
 }

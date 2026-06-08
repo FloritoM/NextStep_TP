@@ -1,9 +1,9 @@
-import Header from "@/app/ui/header";
+import Navbar from "@/app/ui/Navbar";
 
 export default async function ApplicantDashboard() {
     return (
         <>
-            <Header />
+            <Navbar />
             <h1>ola soy flor y soy aplicante</h1>
         </>
     );

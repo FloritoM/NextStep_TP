@@ -1,14 +1,13 @@
 import Link from 'next/link';
-import { pacifico } from "./fonts";
+import SignOutButton from './signOutButton';
+import NextStepIcon from '@/components/icon';
 
 export default function Navbar() {
     return (
         <nav className="sticky top-0 z-40 bg-gray-800 border-b border-gray-700 shadow-lg px-10 py-4 flex justify-between items-center">
             {/* Logo */}
-            <div className="text-[2rem] font-bold select-none text-white">
-                Next<span className={`${pacifico.className} italic text-amber-600 font-semibold`}>Step</span>
-            </div>
-            
+            <NextStepIcon />
+
             {/* Links de Navegación */}
             <ul className="flex gap-10 text-[1.2rem] font-semibold text-gray-300">
                 <li>
@@ -27,6 +26,10 @@ export default function Navbar() {
                     </Link>
                 </li>
             </ul>
+
+            <div className="flex place-items-center justify-end pr-4">
+                <SignOutButton />
+            </div>
         </nav>
     );
 }
