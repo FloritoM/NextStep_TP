@@ -55,13 +55,28 @@ export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormPr
   function validate(): boolean {
     const newErrors: FormErrors = {};
 
-    if (!form.first_name.trim()) newErrors.first_name = "El nombre es requerido";
-    if (!form.last_name.trim()) newErrors.last_name = "El apellido es requerido";
+    if (!form.first_name.trim()) {
+      newErrors.first_name = "El nombre es requerido";
+    } else if (form.first_name.trim().length < 2) {
+      newErrors.first_name = "El nombre debe tener al menos 2 caracteres";
+    } else if (form.first_name.trim().length > 50) {
+      newErrors.first_name = "El nombre es demasiado largo";
+    }
+
+    if (!form.last_name.trim()) {
+      newErrors.last_name = "El apellido es requerido";
+    } else if (form.last_name.trim().length < 2) {
+      newErrors.last_name = "El apellido debe tener al menos 2 caracteres";
+    } else if (form.last_name.trim().length > 50) {
+      newErrors.last_name = "El apellido es demasiado largo";
+    }
 
     if (!form.email.trim()) {
       newErrors.email = "El email es requerido";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       newErrors.email = "El email no es válido";
+    }else if (form.email.length > 50) {        // ← acá
+      newErrors.email = "El email es demasiado largo";
     }
 
     if (!form.password) {
