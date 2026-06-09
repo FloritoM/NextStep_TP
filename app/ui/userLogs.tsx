@@ -26,11 +26,13 @@ export default function UserLogs({ users }: { users: User[] }) {
             {
                 accessorKey: 'firstName',
                 cell: (info) => info.getValue(),
+                header: () => 'Nombre',
                 footer: (props) => props.column.id,
             },
             {
                 accessorKey: 'lastName',
                 cell: (info) => info.getValue(),
+                header: () => 'Apellido',
                 footer: (props) => props.column.id,
             },
             {
@@ -47,11 +49,35 @@ export default function UserLogs({ users }: { users: User[] }) {
             {
                 accessorKey: 'createdAt',
                 header: 'Creado',
+                cell: (info) => {
+                    const date = new Date(info.getValue() as string)
+                    return date.toLocaleString('es-AR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false,
+                    })
+                },
                 footer: (props) => props.column.id,
             },
             {
                 accessorKey: 'updatedAt',
                 header: 'Actualizado',
+                cell: (info) => {
+                    const date = new Date(info.getValue() as string)
+                    return date.toLocaleString('es-AR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false,
+                    })
+                },
                 footer: (props) => props.column.id,
             },
         ],

@@ -5,10 +5,8 @@ import NextStepIcon from '@/components/icon';
 export default function Navbar() {
     return (
         <nav className="sticky top-0 z-40 bg-gray-800 border-b border-gray-700 shadow-lg px-10 py-4 flex justify-between items-center">
-            {/* Logo */}
             <NextStepIcon />
 
-            {/* Links de Navegación */}
             <ul className="flex gap-10 text-[1.2rem] font-semibold text-gray-300">
                 <li>
                     <Link href="/home" className="hover:text-amber-500 transition-colors text-amber-500">
