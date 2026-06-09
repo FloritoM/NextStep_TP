@@ -1,6 +1,7 @@
 "use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { User } from '../lib/definitions'
 import * as React from 'react'
 import {
     Column,
@@ -16,55 +17,11 @@ import {
     useReactTable,
 } from '@tanstack/react-table'
 
-type Person = {
-    firstName: string
-    lastName: string | undefined
-    age: number
-    visits: number | undefined
-    progress: number
-    status: 'relationship' | 'complicated' | 'single'
-    rank: number
-    createdAt: Date
-    subRows?: Person[]
-}
 
-const defaultData: Person[] = [
-    {
-        firstName: 'tanner',
-        lastName: 'linsley',
-        age: 24,
-        visits: 100,
-        status: 'relationship',
-        progress: 500,
-        rank: 0,
-        createdAt: new Date('2024-01-01')
-    },
-    {
-        firstName: 'tandy',
-        lastName: 'miller',
-        age: 40,
-        visits: 40,
-        status: 'complicated',
-        progress: 30,
-        rank: 0,
-        createdAt: new Date('2026-06-04')
-    },
-    {
-        firstName: 'joe',
-        lastName: 'dirte',
-        age: 45,
-        visits: 20,
-        status: 'single',
-        progress: 100,
-        rank: 0,
-        createdAt: new Date('2026-06-04')
-    },
-]
-
-export default function UserLogs() {
+export default function UserLogs({ users }: { users: User[] }) {
     const rerender = React.useReducer(() => ({}), {})[1]
 
-    const columns = React.useMemo<ColumnDef<Person>[]>(
+    const columns = React.useMemo<ColumnDef<User>[]>(
         () => [
             {
                 accessorKey: 'firstName',
@@ -72,37 +29,36 @@ export default function UserLogs() {
                 footer: (props) => props.column.id,
             },
             {
-                accessorFn: (row) => row.lastName,
-                id: 'lastName',
+                accessorKey: 'lastName',
                 cell: (info) => info.getValue(),
-                header: () => <span>Last Name</span>,
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'age',
-                header: () => 'Age',
+                accessorKey: 'email',
+                header: () => 'Email',
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'visits',
-                header: () => <span>Visits</span>,
+                accessorKey: 'role',
+                header: 'Rol',
+                cell: (info) => (info.getValue() as User['role']).name,
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'status',
-                header: 'Status',
+                accessorKey: 'createdAt',
+                header: 'Creado',
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'progress',
-                header: 'Profile Progress',
+                accessorKey: 'updatedAt',
+                header: 'Actualizado',
                 footer: (props) => props.column.id,
             },
         ],
         [],
     )
 
-    const [data, setData] = React.useState(() => [...defaultData])
+    const [data, setData] = React.useState(() => [...users])
 
     return (
         <>
@@ -120,8 +76,8 @@ function MyTable({
     data,
     columns,
 }: {
-    data: Person[]
-    columns: ColumnDef<Person>[]
+    data: User[]
+    columns: ColumnDef<User>[]
 }) {
     const [pagination, setPagination] = React.useState<PaginationState>({
         pageIndex: 0,

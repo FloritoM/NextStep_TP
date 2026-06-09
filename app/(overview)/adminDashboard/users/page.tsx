@@ -15,7 +15,7 @@ export default async function UsersLogsPage() {
     return (
         <>
             <h1 className="text-white text-3xl font-bold text-center mt-20 mb-8">Users</h1>
-            <UserLogs />
+            <UserLogs users={data} />
         </>
     )
 }
