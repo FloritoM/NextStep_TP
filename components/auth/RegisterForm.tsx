@@ -105,11 +105,11 @@ export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormPr
     try {
       await registerWithEmail({
         role,
-        first_name: form.first_name.trim(),
-        last_name: form.last_name.trim(),
+        firstName: form.first_name.trim(),
+        lastName: form.last_name.trim(),
         email: form.email.trim().toLowerCase(),
         password: form.password,
-        birth_date: form.birth_date,
+        birthDate: form.birth_date,
       });
       onSuccess();
     } catch (err) {
