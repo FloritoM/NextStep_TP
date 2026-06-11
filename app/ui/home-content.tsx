@@ -4,10 +4,10 @@ import { useState } from 'react';
 import Navbar from './Navbar';
 import JobCard from './JobCard';
 import CreateJobModal from './CreateJobModal';
-import { JobOffer, User } from '../lib/definitions';
+import { JobOffer, Seniority, User } from '../lib/definitions';
 import { canCreateJobOffer } from '../lib/permissions';
 
-export default function HomeContent({ user, token, initialJobs }: { user: User, token: string | undefined, initialJobs: JobOffer[] }) {
+export default function HomeContent({ user, token, initialJobs, seniorities }: { user: User, token: string | undefined, initialJobs: JobOffer[], seniorities: Seniority[] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -30,7 +30,6 @@ export default function HomeContent({ user, token, initialJobs }: { user: User, 
                     />
                     
                     {canCreateJobOffer(user) && (
-                       
                         <button 
                             onClick={() => setIsModalOpen(true)} 
                             className="bg-amber-600 font-bold py-4 px-8 rounded-full"
@@ -51,6 +50,7 @@ export default function HomeContent({ user, token, initialJobs }: { user: User, 
                 <CreateJobModal 
                     onClose={() => setIsModalOpen(false)}
                     token={token}
+                    seniorities={seniorities}
                 />
             )}
         </div>

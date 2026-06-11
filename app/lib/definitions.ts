@@ -49,3 +49,8 @@ export enum Roles {
   APPLICANT = 'applicant',
   RECRUITER = 'recruiter'
 }
+
+export type Seniority = {
+  id: number;
+  name: string;
+}
