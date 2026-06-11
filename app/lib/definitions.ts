@@ -39,7 +39,7 @@ export type User = {
 export interface JobOffer {
   id: number;
   title: string;
-  seniority: string;
+  seniority: Seniority;
   description: string;
   isActive: boolean;
 }

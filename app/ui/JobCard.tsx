@@ -8,11 +8,16 @@ import { JobOffer } from '../lib/definitions';
 interface JobCardProps {
     job: JobOffer;
     userRole: string;
+    token: string | undefined; 
 }
 
-export default function JobCard({ job, userRole }: JobCardProps) {
+export default function JobCard({ job, userRole, token }: JobCardProps) {
 
     const [isExpanded, setIsExpanded] = useState(false);
+    
+    const [isApplying, setIsApplying] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const toggleExpand = () => {
         if (job.isActive) {
@@ -20,9 +25,38 @@ export default function JobCard({ job, userRole }: JobCardProps) {
         }
     };
 
-    const handleApply = (e: React.MouseEvent) => {
+    const handleApply = async (e: React.MouseEvent) => {
         e.stopPropagation();
-        alert(`¡Aplicaste a ${job.title}! (Próximamente conectaremos esto al backend)`);
+        if (!token) return;
+
+        setIsApplying(true);
+        setStatus('idle');
+        setErrorMessage('');
+
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-applications`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ jobOfferId: job.id })
+            });
+
+            if (res.ok) {
+                setStatus('success');
+            } else {
+                const errorData = await res.json();
+                setStatus('error');
+                setErrorMessage(errorData.message || 'Error al postularse'); 
+            }
+        } catch (error) {
+            console.error(error);
+            setStatus('error');
+            setErrorMessage('Error de conexión');
+        } finally {
+            setIsApplying(false);
+        }
     };
 
     return (
@@ -43,7 +77,7 @@ export default function JobCard({ job, userRole }: JobCardProps) {
                     <span className={`text-sm font-semibold px-4 py-1.5 rounded-full inline-block mt-3 ${
                         job.isActive ? 'bg-gray-700 text-amber-500 border border-gray-600' : 'bg-gray-800 text-gray-500 border border-gray-700'
                     }`}>
-                        {job.seniority}
+                        {job.seniority?.name || 'N/A'} 
                     </span>
                 </div>
                 
@@ -70,12 +104,26 @@ export default function JobCard({ job, userRole }: JobCardProps) {
                     </p>
                     
                     {userRole === 'applicant' && job.isActive && (
-                        <button 
-                            onClick={handleApply}
-                            className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-xl transition-colors shadow-lg"
-                        >
-                            Aplicar a esta vacante
-                        </button>
+                        <div className="flex flex-col items-start gap-2">
+                            
+                            <button 
+                                onClick={handleApply}
+                                disabled={isApplying || status === 'success'}
+                                className={`font-bold py-3 px-8 rounded-xl transition-colors shadow-lg ${
+                                    status === 'success' 
+                                        ? 'bg-green-600 text-white cursor-not-allowed' 
+                                        : 'bg-amber-600 hover:bg-amber-700 text-white'
+                                }`}
+                            >
+                                {isApplying ? 'Enviando...' : status === 'success' ? '¡Postulado!' : 'Aplicar a esta vacante'}
+                            </button>
+                            
+                            {status === 'error' && (
+                                <span className="text-red-400 text-sm font-medium ml-2">
+                                    {errorMessage}
+                                </span>
+                            )}
+                        </div>
                     )}
                 </div>
             </div>

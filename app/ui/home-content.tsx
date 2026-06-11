@@ -41,7 +41,12 @@ export default function HomeContent({ user, token, initialJobs, seniorities }: {
 
                 <div className="space-y-5">
                     {filteredJobs.map(job => (
-                        <JobCard key={job.id} job={job} userRole={user.role.name} />
+                        <JobCard 
+                            key={job.id} 
+                            job={job} 
+                            userRole={user.role.name}
+                            token={token} 
+                        />
                     ))}
                 </div>
             </div>
