@@ -6,9 +6,9 @@ export default async function DashboardLink() {
     const role = session?.user?.role
 
     const href =
-        role === 'admin' ? '/adminDashboard' :
-            role === 'applicant' ? '/applicantDashboard' :
-                role === 'recruiter' ? '/recruiterDashboard' :
+        role?.name === 'admin' ? '/adminDashboard' :
+            role?.name === 'applicant' ? '/applicantDashboard' :
+                role?.name === 'recruiter' ? '/recruiterDashboard' :
                     '/login'
 
     return (

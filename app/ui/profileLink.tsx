@@ -7,9 +7,9 @@ export default async function ProfileLink() {
     const role = session?.user?.role
 
     const href =
-        role === 'admin' ? '/adminProfile' :
-            role === 'applicant' ? '/applicantProfile' :
-                role === 'recruiter' ? '/recruiterProfile' :
+        role?.name === 'admin' ? '/adminProfile' :
+            role?.name === 'applicant' ? '/applicantProfile' :
+                role?.name === 'recruiter' ? '/recruiterProfile' :
                     '/home'
 
     return (
