@@ -3,18 +3,19 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function CreateJobModal({ onClose, token }: { onClose: () => void, token: string | undefined }) {
+export default function CreateJobModal({ onClose, token, seniorities }: { onClose: () => void, token: string | undefined, seniorities: any[] }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
+    
     const newJob = {
       title: formData.get("title"),
-      seniority: formData.get("seniority"),
+      seniorityId: Number(formData.get("seniorityId")), 
       description: formData.get("description"),
     };
 
@@ -55,15 +56,21 @@ export default function CreateJobModal({ onClose, token }: { onClose: () => void
             required 
             className="p-3 bg-gray-700 text-white rounded"
           />
+          
           <select 
-            name="seniority" 
+            name="seniorityId" 
+            required
             className="p-3 bg-gray-700 text-white rounded"
+            defaultValue=""
           >
-            <option value="Trainee">Trainee</option>
-            <option value="Junior">Junior</option>
-            <option value="Semi-Senior">Semi-Senior</option>
-            <option value="Senior">Senior</option>
+            <option value="" disabled>Seleccioná un seniority</option>
+            {seniorities.map((sen) => (
+              <option key={sen.id} value={sen.id}>
+                {sen.name}
+              </option>
+            ))}
           </select>
+
           <textarea 
             name="description" 
             placeholder="Descripción del puesto..." 
