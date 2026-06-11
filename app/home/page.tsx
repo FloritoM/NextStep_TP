@@ -5,7 +5,7 @@ import { User } from "../lib/definitions";
 
 async function getJobOffers(token: string | undefined) {
   try {
-    const res = await fetch(`${process.env.BACKEND_URL}/job-offers`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-offers`, {
       cache: 'no-store',
       headers: {
         'Authorization': `Bearer ${token}` 
@@ -22,6 +22,19 @@ async function getJobOffers(token: string | undefined) {
   }
 }
 
+async function getSeniorities() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/seniorities`, {
+      cache: 'no-store',
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error("Error trayendo seniorities:", error);
+    return [];
+  }
+}
+
 export default async function Home() {
     const session = await auth();
     if (!session || !session.user) {
@@ -29,6 +42,9 @@ export default async function Home() {
     }
     const user = session.user as unknown as User;
     const token = session.accessToken;
+    
     const jobOffers = await getJobOffers(token);
-    return <HomeContent user={user} token={token} initialJobs={jobOffers} />;
+    const seniorities = await getSeniorities(); 
+
+    return <HomeContent user={user} token={token} initialJobs={jobOffers} seniorities={seniorities} />;
 }
