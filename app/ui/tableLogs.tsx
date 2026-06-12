@@ -1,6 +1,7 @@
 "use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { AuditLog } from '../lib/definitions'
 import * as React from 'react'
 import {
     Column,
@@ -16,93 +17,56 @@ import {
     useReactTable,
 } from '@tanstack/react-table'
 
-type Person = {
-    firstName: string
-    lastName: string | undefined
-    age: number
-    visits: number | undefined
-    progress: number
-    status: 'relationship' | 'complicated' | 'single'
-    rank: number
-    createdAt: Date
-    subRows?: Person[]
-}
+export default function AuditLogs({ logs }: { logs: AuditLog[] }) {
 
-const defaultData: Person[] = [
-    {
-        firstName: 'tanner',
-        lastName: 'linsley',
-        age: 24,
-        visits: 100,
-        status: 'relationship',
-        progress: 500,
-        rank: 0,
-        createdAt: new Date('2024-01-01')
-    },
-    {
-        firstName: 'tandy',
-        lastName: 'miller',
-        age: 40,
-        visits: 40,
-        status: 'complicated',
-        progress: 30,
-        rank: 0,
-        createdAt: new Date('2026-06-04')
-    },
-    {
-        firstName: 'joe',
-        lastName: 'dirte',
-        age: 45,
-        visits: 20,
-        status: 'single',
-        progress: 100,
-        rank: 0,
-        createdAt: new Date('2026-06-04')
-    },
-]
-
-export default function TableLogs() {
-    const rerender = React.useReducer(() => ({}), {})[1]
-
-    const columns = React.useMemo<ColumnDef<Person>[]>(
+    const columns = React.useMemo<ColumnDef<AuditLog>[]>(
         () => [
             {
-                accessorKey: 'firstName',
+                accessorKey: 'userId',
                 cell: (info) => info.getValue(),
+                header: () => 'Usuario ID',
                 footer: (props) => props.column.id,
             },
             {
-                accessorFn: (row) => row.lastName,
-                id: 'lastName',
+                accessorKey: 'action',
                 cell: (info) => info.getValue(),
-                header: () => <span>Last Name</span>,
+                header: () => 'Acción',
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'age',
-                header: () => 'Age',
+                accessorKey: 'entity',
+                cell: (info) => info.getValue(),
+                header: () => 'Entidad',
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'visits',
-                header: () => <span>Visits</span>,
+                accessorKey: 'entityId',
+                cell: (info) => info.getValue(),
+                header: () => 'Entidad ID',
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'status',
-                header: 'Status',
-                footer: (props) => props.column.id,
-            },
-            {
-                accessorKey: 'progress',
-                header: 'Profile Progress',
+                accessorKey: 'createdAt',
+                header: 'Fecha',
+                cell: (info) => {
+                    const date = new Date(info.getValue() as string)
+                    return date.toLocaleString('es-AR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false,
+                    })
+                },
                 footer: (props) => props.column.id,
             },
         ],
         [],
     )
 
-    const [data, setData] = React.useState(() => [...defaultData])
+    const [data, setData] = React.useState(() => [...logs])
 
     return (
         <>
@@ -120,8 +84,8 @@ function MyTable({
     data,
     columns,
 }: {
-    data: Person[]
-    columns: ColumnDef<Person>[]
+    data: AuditLog[]
+    columns: ColumnDef<AuditLog>[]
 }) {
     const [pagination, setPagination] = React.useState<PaginationState>({
         pageIndex: 0,

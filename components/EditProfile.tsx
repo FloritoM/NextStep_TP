@@ -15,6 +15,20 @@ export default function EditProfile() {
 
     const initials = `${firstName[0] ?? ""}${lastName[0] ?? ""}`.toUpperCase();
 
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        if (isEditing) {
+            await fetch('/api/users/me', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ firstName, lastName, email, password })
+            });
+        }
+
+        setIsEditing(!isEditing);
+    }
+
     function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
         const newPassword = e.target.value;
         setPassword(newPassword)
@@ -30,7 +44,7 @@ export default function EditProfile() {
 
     return (
         <div className="flex-1 bg-main overflow-auto">
-            <form onSubmit={e => { e.preventDefault(); setIsEditing(!isEditing); }}>
+            <form onSubmit={handleSubmit}>
                 <div className="profile-grid max-w-7xl mx-auto mt-32">
                     <div className="first justify-start py-6">
                         <h1 className="text-[1.75rem] text-gray-50 font-bold">Mi perfil</h1>

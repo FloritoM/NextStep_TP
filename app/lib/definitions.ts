@@ -54,3 +54,12 @@ export type Seniority = {
   id: number;
   name: string;
 }
+
+export type AuditLog = {
+  id: number;
+  userId: number;
+  action: string;
+  entity: string;
+  entityId: string;
+  createdAt: string | Date;
+};

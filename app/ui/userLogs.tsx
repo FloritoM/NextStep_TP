@@ -17,9 +17,7 @@ import {
     useReactTable,
 } from '@tanstack/react-table'
 
-
 export default function UserLogs({ users }: { users: User[] }) {
-    const rerender = React.useReducer(() => ({}), {})[1]
 
     const columns = React.useMemo<ColumnDef<User>[]>(
         () => [

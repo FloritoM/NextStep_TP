@@ -10,8 +10,7 @@ export default async function UsersLogsPage() {
         }
     })
     const data = await res.json()
-    console.log("FETCH DE USERS");
-    console.log(data) // para ver qué llega del back
+
     return (
         <>
             <h1 className="text-white text-3xl font-bold text-center mt-20 mb-8">Users</h1>
