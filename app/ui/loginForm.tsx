@@ -11,7 +11,7 @@ import GoogleLoginButton from "./GoogleLoginButton";
 export default function Login() {
 
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get('callbackUrl') || '/home';
+    const callbackUrl = searchParams.get('callbackUrl') || '/screenRedirection';
     const [errorMessage, formAction, isPending] = useActionState(
         authenticate,
         undefined,

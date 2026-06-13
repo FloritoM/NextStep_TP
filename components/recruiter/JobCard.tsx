@@ -21,7 +21,7 @@ export default function JobCard({ id, title, description, isActive, stages }: Jo
 
   return (
     <div
-      onClick={() => router.push(`/recruiterDashboard/jobs/${id}`)}
+        onClick={() => router.push(`/recruiter/dashboard/jobs/${id}`)}
       className="bg-gray-800 border border-gray-700 rounded-xl p-4 mb-3 cursor-pointer hover:border-gray-500 transition-colors"
     >
       <div className="flex items-start justify-between mb-3">
