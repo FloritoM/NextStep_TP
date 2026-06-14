@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import SignOutButton from './signOutButton';
 import NextStepIcon from '@/components/icon';
+import { Roles } from '../lib/definitions';
 
-export default function Navbar() {
+interface NavbarProps {
+    role: Roles;
+}
+
+export default function Navbar({ role }: NavbarProps) {
     return (
         <nav className="sticky top-0 z-40 bg-gray-800 border-b border-gray-700 shadow-lg px-10 py-4 flex justify-between items-center">
             <NextStepIcon />
@@ -14,7 +19,7 @@ export default function Navbar() {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/screenRedirection" className="hover:text-amber-500 transition-colors">
+                    <Link href={`/${role}/dashboard`} className="hover:text-amber-500 transition-colors">
                         Dashboard
                     </Link>
                 </li>
