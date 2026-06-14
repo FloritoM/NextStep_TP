@@ -63,15 +63,14 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
 
     function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
         const newPassword = e.target.value;
+        setEditForm(prev => ({ ...prev, password: newPassword }));
 
-
-        if (newPassword.length < 4) {
-            setPassErrorMsg("La contraseña debe tener mínimo 4 caracteres")
-            setValidPass(false)
+        if (newPassword.length > 0 && newPassword.length < 4) {
+            setPassErrorMsg("La contraseña debe tener mínimo 4 caracteres");
+            setValidPass(false);
         } else {
-            setPassErrorMsg("")
-            setValidPass(true)
-            setEditForm(prev => ({ ...prev, password: e.target.value }))
+            setPassErrorMsg("");
+            setValidPass(true);
         }
     }
 
@@ -173,7 +172,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                         id="password"
                                         type="password"
                                         className="bg-gray-700 text-white rounded"
-                                        value={user?.password ?? ""}
+                                        value={editForm.password}
                                         onChange={handlePasswordChange}
                                     />
                                     : <p className="text-white">••••••••</p>
