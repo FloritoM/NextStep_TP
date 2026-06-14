@@ -65,7 +65,7 @@ export default function CandidateRow({
 
   return (
     <div
-      onClick={() => router.push(`/recruiterDashboard/jobs/${jobId}/candidates/${applicationId}`)}
+        onClick={() => router.push(`/recruiter/dashboard/jobs/${jobId}/candidates/${applicationId}`)}
       className="flex items-center px-4 py-3 border-b border-gray-700 cursor-pointer hover:bg-gray-700 transition-colors"
     >
       <Avatar firstName={firstName} lastName={lastName} />

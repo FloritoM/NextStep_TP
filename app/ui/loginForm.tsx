@@ -11,7 +11,7 @@ import GoogleLoginButton from "./GoogleLoginButton";
 export default function Login() {
 
     const searchParams = useSearchParams();
-    const callbackUrl = searchParams.get('callbackUrl') || '/home';
+    const callbackUrl = searchParams.get('callbackUrl') || '/screenRedirection';
     const [errorMessage, formAction, isPending] = useActionState(
         authenticate,
         undefined,
@@ -23,22 +23,19 @@ export default function Login() {
                 <div className="w-100 m-auto flex flex-col">
                     <div className="flex justify-center mt-5">
                         <div className="flex">
-                                    <p
-                                        className="text-center text-[3rem] text-white font-bold py-4 select-none">Next<span className={`${pacifico.className} italic text-amber-600 font-semibold select-none`}>Step</span>
-                                    </p>
-                                </div>
+                            <p className="text-center text-[3rem] text-white font-bold py-4 select-none">
+                                Next<span className={`${pacifico.className} italic text-amber-600 font-semibold select-none`}>Step</span>
+                            </p>
+                        </div>
                     </div>
-                    <div className="">
+                    <div>
                         <p className="text-[1.75rem] text-gray-50 font-bold text-center mb-6">
                             Inicio de sesión
                         </p>
                     </div>
                     <div className="mb-11">
                         <div>
-                            <label
-                                className="mb-3 mt-5 block text-2xl text-gray-50"
-                                htmlFor="email"
-                            >
+                            <label className="mb-3 mt-5 block text-2xl text-gray-50" htmlFor="email">
                                 Email
                             </label>
                             <div className="relative">
@@ -53,10 +50,7 @@ export default function Login() {
                             </div>
                         </div>
                         <div className="mt-4">
-                            <label
-                                className="mb-3 mt-5 block text-2xl text-gray-50"
-                                htmlFor="password"
-                            >
+                            <label className="mb-3 mt-5 block text-2xl text-gray-50" htmlFor="password">
                                 Contraseña
                             </label>
                             <div className="relative">
@@ -72,39 +66,35 @@ export default function Login() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex items-center justify-center mb-11">
+                    <div className="flex items-center justify-center mb-4">
                         <input type="hidden" name="redirectTo" value={callbackUrl} />
                         <div>
-                            <Button aria-disabled={isPending} className="cursor-pointer border-none bg-yellow-400 rounded-lg active:bg-amber-700 text-xl text-black font-semibold hover:bg-amber-600 flex flex-row w-full"
-                                buttonText={"Iniciar sesión"} />
+                            <Button
+                                aria-disabled={isPending}
+                                className="cursor-pointer border-none bg-yellow-400 rounded-lg active:bg-amber-700 text-xl text-black font-semibold hover:bg-amber-600 flex flex-row w-full"
+                                buttonText={"Iniciar sesión"}
+                            />
                         </div>
                     </div>
-                    <div>
-                        <div className="flex items-center justify-center mb-7">
-                            {errorMessage && (
-                                <>
-                                    <p className="text-m text-red-500 font-semibold flex items-center justify-center">{errorMessage}</p>
-                                </>
-                            )}
-                        </div>
+                    <div className="flex items-center justify-center mb-4">
+                        {errorMessage && (
+                            <p className="text-m text-red-500 font-semibold">{errorMessage}</p>
+                        )}
                     </div>
-                    <p className="text-gray-400 text-sm pb-3 text-center">
+                    <div className="flex items-center gap-3 mx-4 mb-4">
+                        <div className="flex-1 h-px bg-gray-600" />
+                        <span className="text-gray-400 text-sm">o</span>
+                        <div className="flex-1 h-px bg-gray-600" />
+                    </div>
+                    <div className="flex justify-center mb-4">
+                        <GoogleLoginButton />
+                    </div>
+                    <div className="text-gray-400 text-sm pb-3 text-center">
                         ¿No tenes cuenta?{" "}
-                        <div className="flex items-center gap-3 mx-4 mb-4">
-                            <div className="flex-1 h-px bg-gray-600" />
-                            <span className="text-gray-400 text-sm">o</span>
-                            <div className="flex-1 h-px bg-gray-600" />
-                        </div>
-
-                        <div className="flex justify-center mb-6">
-                            <GoogleLoginButton />
-                        </div>
-  
                         <Link href="/register" className="text-gray-50 font-semibold hover:underline">
                             Registrate acá
                         </Link>
-                    </p>
-
+                    </div>
                 </div>
             </form>
         </div>

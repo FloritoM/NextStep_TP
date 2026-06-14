@@ -19,6 +19,17 @@ export async function getJobOffer(id: number, token: string) {
   return res.json();
 }
 
+
+// -Stages Applications-
+export async function getStages(token: string) {
+  const res = await fetch(`${API_URL}/stages`, {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: "no-store",
+  });
+  if (!res.ok) return [];
+  return res.json();
+}
+
 // ── Job Applications ──
 export async function getJobApplications(jobOfferId: number, token: string) {
   const res = await fetch(`${API_URL}/job-applications?jobOfferId=${jobOfferId}`, {
@@ -35,7 +46,7 @@ export async function getFeedbackByApplication(applicationId: number, token: str
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
-  if (!res.ok) throw new Error("Error al obtener el feedback");
+  if (!res.ok) return []; // ← en vez de tirar error, devuelve array vacío
   return res.json();
 }
 

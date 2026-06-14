@@ -14,7 +14,7 @@ export default function Navbar() {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/dashboard" className="hover:text-amber-500 transition-colors">
+                    <Link href="/screenRedirection" className="hover:text-amber-500 transition-colors">
                         Dashboard
                     </Link>
                 </li>
