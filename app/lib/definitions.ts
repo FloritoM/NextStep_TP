@@ -34,6 +34,7 @@ export type User = {
   };
   createdAt?: string | Date;
   updatedAt?: string | Date;
+  isActive: boolean;
 };
 
 export interface JobOffer {

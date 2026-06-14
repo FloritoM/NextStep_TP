@@ -13,8 +13,8 @@ export default async function UsersLogsPage() {
 
     return (
         <>
-            <h1 className="text-white text-3xl font-bold text-center mt-20 mb-8">Users</h1>
-            <UserLogs users={data} />
+            <h1 className="text-amber-600 text-5xl font-bold text-center mt-20 mb-8">Usuarios</h1>
+            <UserLogs users={data} token={session?.accessToken as string} />
         </>
     )
 }

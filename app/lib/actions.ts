@@ -19,6 +19,10 @@ export async function authenticate(
       switch (error.type) {
         case 'CredentialsSignin':
           return 'El email o la contraseña ingresados son incorrectos.';
+        case 'CallbackRouteError':
+          if (error.cause?.err?.message === 'inactive') {
+            return 'Tu cuenta está desactivada. Contactá al administrador.';
+          }
         default:
           return 'Algo salio mal.';
       }

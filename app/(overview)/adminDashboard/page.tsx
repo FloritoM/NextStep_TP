@@ -16,7 +16,7 @@ export default async function AdminDashboard() {
     return (
         <div className="bg-main">
 
-            <h1 className="mt-20 text-white font-bold text-center text-[2.375rem]">Dashboard Admin</h1>
+            <h1 className="mt-20 text-amber-600 font-bold text-center text-5xl">Dashboard Admin</h1>
 
             <section id="counters" className="mt-20">
                 <div className="max-w-[70%] mx-auto px-5 grid grid-cols-2 gap-9 justify-center">

@@ -12,7 +12,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-          }),
+    }),
 
     Credentials({
       async authorize(credentials) {
@@ -50,6 +50,10 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
           const userData = response.user;
 
+          if (!userData.isActive) {
+            throw new Error("inactive");
+          }
+
           return {
             id: userData.id.toString(),
             firstName: userData.firstName,
@@ -70,7 +74,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
   ],
 
   callbacks: {
-     async jwt({ token, user, account }) {
+    async jwt({ token, user, account }) {
       console.log('JWT USER:', user);
 
       if (user) {
@@ -81,7 +85,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         token.role = user.role;
         token.accessToken = user.token;
       }
-      
+
       if (account?.provider === 'google' && token.email) {
         try {
           const res = await fetch(
@@ -93,17 +97,17 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
             }
           );
 
-            if (res.ok) {
-              const response = await res.json();
-              token.id = response.user.id.toString();
-              token.firstName = response.user.firstName;
-              token.lastName = response.user.lastName;
-              token.role = response.user.role;
-              token.accessToken = response.token;
-            }
-            
-          } catch (error) {
-            console.error('Error en google-login:', error);
+          if (res.ok) {
+            const response = await res.json();
+            token.id = response.user.id.toString();
+            token.firstName = response.user.firstName;
+            token.lastName = response.user.lastName;
+            token.role = response.user.role;
+            token.accessToken = response.token;
+          }
+
+        } catch (error) {
+          console.error('Error en google-login:', error);
         }
         token.provider = 'google';
       }
@@ -124,7 +128,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         session.user.role = token.role as { id: number, name: string, isDefault?: boolean };
       }
       session.accessToken = token.accessToken as string;
-      
+
       console.log('SESSION:', session);
 
       return session;

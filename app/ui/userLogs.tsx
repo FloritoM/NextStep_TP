@@ -1,6 +1,6 @@
 "use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faSortUp, faSortDown, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons'
 import { User } from '../lib/definitions'
 import * as React from 'react'
 import {
@@ -17,7 +17,15 @@ import {
     useReactTable,
 } from '@tanstack/react-table'
 
-export default function UserLogs({ users }: { users: User[] }) {
+const ActionIcon = ({ isActive, userId, onToggle }: { isActive: boolean, userId: number | string, onToggle: (id: number | string) => void }) => {
+    return (
+        <span className="cursor-pointer" onClick={() => onToggle(userId)}>
+            <FontAwesomeIcon icon={isActive ? faXmark : faCheck} className={isActive ? "font-bold text-red-500" : "font-bold text-green-500"} />
+        </span>
+    );
+};
+
+export default function UserLogs({ users, token }: { users: User[], token: string }) {
 
     const columns = React.useMemo<ColumnDef<User>[]>(
         () => [
@@ -77,6 +85,32 @@ export default function UserLogs({ users }: { users: User[] }) {
                     })
                 },
                 footer: (props) => props.column.id,
+            },
+            {
+                accessorKey: 'isActive',
+                header: () => 'Activo',
+                footer: (props) => props.column.id,
+            },
+            {
+                id: 'action',
+                accessorKey: 'isActive',
+                header: () => 'Acción',
+                cell: (info) => (
+                    <ActionIcon
+                        isActive={info.getValue() as boolean}
+                        userId={info.row.original.id}
+                        onToggle={async (id) => {
+                            await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${id}`, {
+                                method: 'PATCH',
+                                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                                body: JSON.stringify({ isActive: !info.getValue() })
+                            });
+                            setData(prev => prev.map(user =>
+                                user.id === id ? { ...user, isActive: !info.getValue() as boolean } : user
+                            ));
+                        }}
+                    />
+                ),
             },
         ],
         [],
@@ -167,7 +201,7 @@ function MyTable({
                             <tr key={row.id} >
                                 {row.getVisibleCells().map((cell) => {
                                     return (
-                                        <td key={cell.id} className='border border-gray-700 bg-gray-800/50 py-3 pl-5'>
+                                        <td key={cell.id} className='border border-gray-700 bg-gray-800/50 py-3 text-center'>
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext(),
