@@ -7,7 +7,7 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const role = (auth?.user as { role?: string })?.role;
+      const role = (auth?.user as { role?: { name: string } })?.role?.name;
 
       console.log("ROL en middleware:", role);
       console.log("USER en middleware:", auth?.user);

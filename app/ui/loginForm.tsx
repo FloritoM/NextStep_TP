@@ -88,7 +88,7 @@ export default function Login() {
                             )}
                         </div>
                     </div>
-                    <p className="text-gray-400 text-sm pb-3 text-center">
+                    <div className="text-gray-400 text-sm pb-3 text-center">
                         ¿No tenes cuenta?{" "}
                         <div className="flex items-center gap-3 mx-4 mb-4">
                             <div className="flex-1 h-px bg-gray-600" />
@@ -103,7 +103,7 @@ export default function Login() {
                         <Link href="/register" className="text-gray-50 font-semibold hover:underline">
                             Registrate acá
                         </Link>
-                    </p>
+                    </div>
 
                 </div>
             </form>
