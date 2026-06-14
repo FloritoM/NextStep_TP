@@ -46,7 +46,7 @@ export default function CreateJobModal({ onClose, token, seniorities }: { onClos
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black/75 flex justify-center items-center z-50">
       <div className="bg-gray-800 p-8 rounded-xl w-[500px]">
         <h2 className="text-2xl font-bold text-white mb-6">Crear Nueva Vacante</h2>
         
