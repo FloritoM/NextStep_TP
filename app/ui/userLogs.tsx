@@ -19,9 +19,15 @@ import {
 
 const ActionIcon = ({ isActive, userId, onToggle }: { isActive: boolean, userId: number | string, onToggle: (id: number | string) => void }) => {
     return (
-        <span className="cursor-pointer" onClick={() => onToggle(userId)}>
-            <FontAwesomeIcon icon={isActive ? faXmark : faCheck} className={isActive ? "font-bold text-red-500" : "font-bold text-green-500"} />
-        </span>
+        <div
+            onClick={() => onToggle(userId)}
+            className={`cursor-pointer w-12 h-6 rounded-full transition-colors duration-200 flex items-center px-1 m-auto
+        ${isActive ? 'bg-green-500' : 'bg-red-500'}`}
+        >
+            <div className={`w-4 h-4 bg-white rounded-full transition-transform duration-200
+        ${isActive ? 'translate-x-6' : 'translate-x-0'}`}
+            />
+        </div>
     );
 };
 
@@ -139,7 +145,7 @@ function MyTable({
 }) {
     const [pagination, setPagination] = React.useState<PaginationState>({
         pageIndex: 0,
-        pageSize: 10,
+        pageSize: 5,
     })
     const [sorting, setSorting] = React.useState<SortingState>([])
     const table = useReactTable({
@@ -180,8 +186,8 @@ function MyTable({
                                                 header.getContext(),
                                             )}
                                             {{
-                                                asc: <FontAwesomeIcon icon={faSortUp} />,
-                                                desc: <FontAwesomeIcon icon={faSortDown} />,
+                                                asc: <FontAwesomeIcon icon={faSortUp} className='text-amber-600' />,
+                                                desc: <FontAwesomeIcon icon={faSortDown} className='text-amber-600'/>,
                                             }[header.column.getIsSorted() as string] ?? null}
                                             {header.column.getCanFilter() ? (
                                                 <div>
@@ -216,28 +222,28 @@ function MyTable({
             </table>
             <div className="mt-6 flex items-center gap-2 justify-center">
                 <button
-                    className='rounded border border-gray-700 bg-gray-800/50'
+                    className='rounded border border-gray-700 bg-gray-800/50 cursor-pointer'
                     onClick={() => table.firstPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
                     {'<<'}
                 </button>
                 <button
-                    className='rounded border border-gray-700 bg-gray-800/50'
+                    className='rounded border border-gray-700 bg-gray-800/50 cursor-pointer'
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
                     {'<'}
                 </button>
                 <button
-                    className='rounded border border-gray-700 bg-gray-800/50'
+                    className='rounded border border-gray-700 bg-gray-800/50 cursor-pointer'
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                 >
                     {'>'}
                 </button>
                 <button
-                    className='rounded border border-gray-700 bg-gray-800/50'
+                    className='rounded border border-gray-700 bg-gray-800/50 cursor-pointer'
                     onClick={() => table.lastPage()}
                     disabled={!table.getCanNextPage()}
                 >

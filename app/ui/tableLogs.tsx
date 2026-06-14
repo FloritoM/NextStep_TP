@@ -89,7 +89,7 @@ function MyTable({
 }) {
     const [pagination, setPagination] = React.useState<PaginationState>({
         pageIndex: 0,
-        pageSize: 10,
+        pageSize: 5,
     })
     const [sorting, setSorting] = React.useState<SortingState>([])
     const table = useReactTable({
@@ -130,8 +130,8 @@ function MyTable({
                                                 header.getContext(),
                                             )}
                                             {{
-                                                asc: <FontAwesomeIcon icon={faSortUp} />,
-                                                desc: <FontAwesomeIcon icon={faSortDown} />,
+                                                asc: <FontAwesomeIcon icon={faSortUp} className='text-amber-600'/>,
+                                                desc: <FontAwesomeIcon icon={faSortDown} className='text-amber-600'/>,
                                             }[header.column.getIsSorted() as string] ?? null}
                                             {header.column.getCanFilter() ? (
                                                 <div>
@@ -151,7 +151,7 @@ function MyTable({
                             <tr key={row.id} >
                                 {row.getVisibleCells().map((cell) => {
                                     return (
-                                        <td key={cell.id} className='border border-gray-700 bg-gray-800/50 py-3 pl-5'>
+                                        <td key={cell.id} className='border border-gray-700 bg-gray-800/50 py-3 text-center'>
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext(),
@@ -166,28 +166,28 @@ function MyTable({
             </table>
             <div className="mt-6 flex items-center gap-2 justify-center">
                 <button
-                    className='rounded border border-gray-700 bg-gray-800/50'
+                    className='rounded border border-gray-700 bg-gray-800/50 cursor-pointer'
                     onClick={() => table.firstPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
                     {'<<'}
                 </button>
                 <button
-                    className='rounded border border-gray-700 bg-gray-800/50'
+                    className='rounded border border-gray-700 bg-gray-800/50 cursor-pointer'
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                 >
                     {'<'}
                 </button>
                 <button
-                    className='rounded border border-gray-700 bg-gray-800/50'
+                    className='rounded border border-gray-700 bg-gray-800/50 cursor-pointer'
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                 >
                     {'>'}
                 </button>
                 <button
-                    className='rounded border border-gray-700 bg-gray-800/50'
+                    className='rounded border border-gray-700 bg-gray-800/50 cursor-pointer'
                     onClick={() => table.lastPage()}
                     disabled={!table.getCanNextPage()}
                 >
@@ -248,34 +248,7 @@ function Filter<TData, TValue>({
 
     const columnFilterValue = column.getFilterValue()
 
-    return typeof firstValue === 'number' ? (
-        <div className="flex space-x-2 pt-2" onClick={(e) => e.stopPropagation()}>
-            <input
-                type="number"
-                value={(columnFilterValue as [number, number])?.[0] ?? ''}
-                onChange={(e) =>
-                    column.setFilterValue((old: [number, number]) => [
-                        e.target.value,
-                        old?.[1],
-                    ])
-                }
-                placeholder={`Min`}
-                className="w-24 border border-gray-700 rounded text-white font-normal"
-            />
-            <input
-                type="number"
-                value={(columnFilterValue as [number, number])?.[1] ?? ''}
-                onChange={(e) =>
-                    column.setFilterValue((old: [number, number]) => [
-                        old?.[0],
-                        e.target.value,
-                    ])
-                }
-                placeholder={`Max`}
-                className="w-24 border border-gray-700 rounded font-normal"
-            />
-        </div>
-    ) : (
+    return (
         <div className='pt-2'>
             <input
                 onChange={(e) => column.setFilterValue(e.target.value)}
