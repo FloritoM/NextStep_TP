@@ -1,29 +1,61 @@
 "use client";
 
 import { useState } from "react";
+import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faUser, faLock, faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faUser, faLock, faFloppyDisk, faBan } from "@fortawesome/free-solid-svg-icons";
+import { User } from "@/app/lib/definitions";
 
-export default function EditProfile() {
+export default function EditProfile({ userId, token }: { userId: string, token: string }) {
+    const [user, setUser] = useState<User>();
+    const [editForm, setEditForm] = useState({ firstName: "", lastName: "", email: "", password: "", role: "", createdAt: "" });
+
+    useEffect(() => {
+        async function loadUser() {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${userId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            const data = await res.json();
+            setUser(data);
+            setEditForm({
+                firstName: data.firstName,
+                lastName: data.lastName,
+                email: data.email,
+                role: data.role.name,
+                createdAt: new Date(data.createdAt).toLocaleDateString('es-AR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                }),
+                password: ""
+            });
+        }
+        loadUser();
+    }, [userId]);
+
     const [isEditing, setIsEditing] = useState(false);
-    const [firstName, setFirstName] = useState("Nahuel");
-    const [lastName, setLastName] = useState("Raimondi");
-    const [email, setEmail] = useState("nahuel@nextstep.com");
-    const [password, setPassword] = useState("123456");
     const [passErrorMsg, setPassErrorMsg] = useState("");
     const [validPass, setValidPass] = useState(true)
 
-    const initials = `${firstName[0] ?? ""}${lastName[0] ?? ""}`.toUpperCase();
+    const initials = `${user?.firstName?.[0] ?? ""}${user?.lastName?.[0] ?? ""}`.toUpperCase();
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         if (isEditing) {
-            await fetch('/api/users/me', {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${userId}`, {
                 method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ firstName, lastName, email, password })
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                body: JSON.stringify({
+                    firstName: editForm.firstName,
+                    lastName: editForm.lastName,
+                    email: editForm.email,
+                    password: editForm.password || undefined
+                })
             });
+
+            const updated = await res.json();
+            setUser(updated);
         }
 
         setIsEditing(!isEditing);
@@ -31,7 +63,7 @@ export default function EditProfile() {
 
     function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
         const newPassword = e.target.value;
-        setPassword(newPassword)
+
 
         if (newPassword.length < 4) {
             setPassErrorMsg("La contraseña debe tener mínimo 4 caracteres")
@@ -39,6 +71,7 @@ export default function EditProfile() {
         } else {
             setPassErrorMsg("")
             setValidPass(true)
+            setEditForm(prev => ({ ...prev, password: e.target.value }))
         }
     }
 
@@ -52,12 +85,30 @@ export default function EditProfile() {
                     </div>
 
                     <div className="second flex justify-end">
+                        <div className="pr-10">
+                            {isEditing ? <button
+                                className="cursor-pointer border-none bg-yellow-400 rounded-lg text-xl text-black font-semibold hover:bg-amber-600 p-4"
+                                onClick={() => {
+                                    setIsEditing(false);
+                                    setEditForm({
+                                        firstName: user?.firstName ?? "",
+                                        lastName: user?.lastName ?? "",
+                                        email: user?.email ?? "",
+                                        role: user?.role.name ?? "",
+                                        createdAt: editForm.createdAt,
+                                        password: ""
+                                    });
+                                }}>
+                                <FontAwesomeIcon icon={faBan} className="text-black" />
+                                Cancelar</button> : null}
+                        </div>
                         <div>
                             <button
                                 type="submit"
                                 className="cursor-pointer border-none bg-yellow-400 rounded-lg text-xl text-black font-semibold hover:bg-amber-600 p-4"
                             >
                                 <FontAwesomeIcon icon={isEditing ? faFloppyDisk : faPenToSquare} className="text-black" />
+
                                 {isEditing ? " Guardar" : " Editar Perfil"}
                             </button>
                         </div>
@@ -68,8 +119,8 @@ export default function EditProfile() {
                             <p className="text-amber-600 font-bold text-[4.375rem] p-5 select-none">{initials}</p>
                         </div>
                         <div className="flex flex-col items-center">
-                            <p className="text-xl text-gray-50 font-bold">{firstName} {lastName}</p>
-                            <p className="text-gray-50">{email}</p>
+                            <p className="text-xl text-gray-50 font-bold">{user?.firstName} {user?.lastName}</p>
+                            <p className="text-gray-50">{user?.email}</p>
                         </div>
                     </div>
 
@@ -81,24 +132,24 @@ export default function EditProfile() {
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Nombre</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded" value={firstName} onChange={e => setFirstName(e.target.value)} />
-                                    : <p className="text-white">{firstName}</p>
+                                    ? <input className="bg-gray-700 text-white rounded" value={editForm.firstName} onChange={e => setEditForm(prev => ({ ...prev, firstName: e.target.value }))} />
+                                    : <p className="text-white">{user?.firstName}</p>
                                 }
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Apellido</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded" value={lastName} onChange={e => setLastName(e.target.value)} />
-                                    : <p className="text-white">{lastName}</p>
+                                    ? <input className="bg-gray-700 text-white rounded" value={editForm.lastName} onChange={e => setEditForm(prev => ({ ...prev, lastName: e.target.value }))} />
+                                    : <p className="text-white">{user?.lastName}</p>
                                 }
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Rol</label>
-                                <p className="text-white">Candidato</p>
+                                <p className="text-white">{editForm.role}</p>
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Creacion de cuenta</label>
-                                <p className="text-white">03/05/2025</p>
+                                <p className="text-white">{editForm.createdAt}</p>
                             </div>
                         </div>
                     </div>
@@ -111,8 +162,8 @@ export default function EditProfile() {
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Email</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded" value={email} onChange={e => setEmail(e.target.value)} />
-                                    : <p className="text-white">{email}</p>
+                                    ? <input className="bg-gray-700 text-white rounded" value={editForm.email} onChange={e => setEditForm(prev => ({ ...prev, email: e.target.value }))} />
+                                    : <p className="text-white">{user?.email}</p>
                                 }
                             </div>
                             <div className="sub-section">
@@ -122,7 +173,7 @@ export default function EditProfile() {
                                         id="password"
                                         type="password"
                                         className="bg-gray-700 text-white rounded"
-                                        value={password ?? ""}
+                                        value={user?.password ?? ""}
                                         onChange={handlePasswordChange}
                                     />
                                     : <p className="text-white">••••••••</p>

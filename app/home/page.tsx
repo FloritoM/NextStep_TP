@@ -22,10 +22,13 @@ async function getJobOffers(token: string | undefined) {
   }
 }
 
-async function getSeniorities() {
+async function getSeniorities(token: string | undefined) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/seniorities`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/seniority`, {
       cache: 'no-store',
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
     });
     if (!res.ok) return [];
     return res.json();
@@ -44,7 +47,7 @@ export default async function Home() {
     const token = session.accessToken;
     
     const jobOffers = await getJobOffers(token);
-    const seniorities = await getSeniorities(); 
+    const seniorities = await getSeniorities(token); 
 
     return <HomeContent user={user} token={token} initialJobs={jobOffers} seniorities={seniorities} />;
 }

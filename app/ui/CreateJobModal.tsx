@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Seniority } from "../lib/definitions";
 
-export default function CreateJobModal({ onClose, token, seniorities }: { onClose: () => void, token: string | undefined, seniorities: any[] }) {
+export default function CreateJobModal({ onClose, token, seniorities }: { onClose: () => void, token: string | undefined, seniorities: Seniority[] }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 

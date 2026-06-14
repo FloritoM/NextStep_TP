@@ -28,10 +28,6 @@ export default async function AdminDashboard() {
                         <div className="text-center font-bold text-white text-[2.375rem]">Logs</div>
                         <div className="text-center font-semibold text-amber-600 text-[2.375rem]">{logs.length}</div>
                     </div>
-                    {/* <div id="errors_total" className="flex flex-col rounded-xl border border-gray-700 bg-gray-800/50">
-                        <div className="text-center font-bold text-white text-[2.375rem]">Errores</div>
-                        <div className="text-center font-semibold text-red-800 text-[2.375rem]">0</div>
-                    </div> */}
                 </div>
             </section>
         </div>
