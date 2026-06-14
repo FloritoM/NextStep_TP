@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { getJobOffer, getJobApplications } from "@/lib/recruiter";
+import { getJobOffer, getJobApplications, getStages } from "@/lib/recruiter";
 import { User } from "@/app/lib/definitions";
 import JobDetailClient from "@/components/recruiter/JobDetailClient";
 
@@ -15,20 +15,15 @@ export default async function JobDetailPage({
   const user = session.user as unknown as User;
   if (user.role?.name !== "recruiter") redirect("/home");
 
-  const token = session.accessToken ?? "";    
+  const token = session.accessToken ?? "";
   const { id } = await params;
   const jobId = Number(id);
 
-  const [job, applications] = await Promise.all([
+  const [job, applications, stages] = await Promise.all([
     getJobOffer(jobId, token),
     getJobApplications(jobId, token),
+    getStages(token),
   ]);
-
-  const stages = applications
-    .map((app: any) => app.currentStage)
-    .filter((stage: any, index: number, self: any[]) =>
-      stage && self.findIndex((s) => s?.id === stage.id) === index
-    );
 
   return (
     <div className="p-6">
