@@ -35,7 +35,7 @@ export async function getFeedbackByApplication(applicationId: number, token: str
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
-  if (!res.ok) throw new Error("Error al obtener el feedback");
+  if (!res.ok) return []; // ← en vez de tirar error, devuelve array vacío
   return res.json();
 }
 

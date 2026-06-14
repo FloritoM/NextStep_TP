@@ -10,7 +10,7 @@ interface Stage {
 
 interface Application {
   id: number;
-  stage?: Stage;
+  currentStage?: Stage;
   applicant?: {
     firstName: string;
     lastName: string;
@@ -29,11 +29,11 @@ export default function JobDetailClient({ jobId, applications, stages }: JobDeta
   );
 
   const filtered = activeStageId
-    ? applications.filter((app) => app.stage?.id === activeStageId)
+    ? applications.filter((app) => app.currentStage?.id === activeStageId)
     : applications;
 
   const countByStage = (stageId: number) =>
-    applications.filter((app) => app.stage?.id === stageId).length;
+    applications.filter((app) => app.currentStage?.id === stageId).length;
 
   return (
     <div className="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden">

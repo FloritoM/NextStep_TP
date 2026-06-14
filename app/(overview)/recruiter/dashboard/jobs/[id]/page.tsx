@@ -7,7 +7,7 @@ import JobDetailClient from "@/components/recruiter/JobDetailClient";
 export default async function JobDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const session = await auth();
   if (!session || !session.user) redirect("/login");
@@ -15,8 +15,9 @@ export default async function JobDetailPage({
   const user = session.user as unknown as User;
   if (user.role?.name !== "recruiter") redirect("/home");
 
-  const token = session.accessToken ?? "";
-  const jobId = Number(params.id);
+  const token = session.accessToken ?? "";    
+  const { id } = await params;
+  const jobId = Number(id);
 
   const [job, applications] = await Promise.all([
     getJobOffer(jobId, token),
@@ -24,7 +25,7 @@ export default async function JobDetailPage({
   ]);
 
   const stages = applications
-    .map((app: any) => app.stage)
+    .map((app: any) => app.currentStage)
     .filter((stage: any, index: number, self: any[]) =>
       stage && self.findIndex((s) => s?.id === stage.id) === index
     );

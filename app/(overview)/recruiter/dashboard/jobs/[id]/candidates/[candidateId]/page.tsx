@@ -7,7 +7,7 @@ import FeedbackForm from "@/components/recruiter/FeedbackForm";
 export default async function CandidateFeedbackPage({
   params,
 }: {
-  params: { id: string; candidateId: string };
+  params: Promise<{ id: string; candidateId: string }>;
 }) {
   const session = await auth();
   if (!session || !session.user) redirect("/login");
@@ -16,8 +16,9 @@ export default async function CandidateFeedbackPage({
   if (user.role?.name !== "recruiter") redirect("/home");
 
   const token = session.accessToken ?? "";
-  const jobId = Number(params.id);
-  const applicationId = Number(params.candidateId);
+  const { id, candidateId } = await params;
+  const jobId = Number(id);
+  const applicationId = Number(candidateId);
 
   const feedbacks = await getFeedbackByApplication(applicationId, token);
 
