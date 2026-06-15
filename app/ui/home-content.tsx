@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import Navbar from './Navbar';
 import JobCard from './JobCard';
 import CreateJobModal from './CreateJobModal';
 import { JobOffer, Seniority, User } from '../lib/definitions';
@@ -37,16 +36,11 @@ export default function HomeContent({
 
     return (
         <div className="min-h-screen bg-main text-white">
-            <Navbar /> 
-
-            <div className="max-w-4xl mx-auto mt-12 px-6">
-                
+            <div className="max-w-4xl mx-auto pt-12 px-6">
                 <h1 className="text-2xl md:text-3xl font-bold mb-6 text-gray-100">
                     Encontrá el trabajo de tus sueños
                 </h1>
-
                 <div className="flex flex-col gap-4 mb-8">
-                    
                     <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
                         <div className="flex-1">
                             <input
@@ -57,7 +51,6 @@ export default function HomeContent({
                                 className="w-full bg-gray-700 text-white rounded-full py-4 px-6 focus:outline-none focus:ring-2 focus:ring-amber-500"
                             />
                         </div>
-                        
                         {canCreateJobOffer(user) && (
                             <button 
                                 onClick={() => setIsModalOpen(true)} 
@@ -67,7 +60,6 @@ export default function HomeContent({
                             </button>
                         )}
                     </div>
-
                     <div className="flex flex-wrap gap-2">
                         {seniorities.map((sen) => (
                             <button
@@ -84,7 +76,6 @@ export default function HomeContent({
                         ))}
                     </div>
                 </div>
-
                 <div className="space-y-5">
                     {filteredJobs.length === 0 ? (
                         <div className="text-center py-10 bg-gray-800 rounded-xl border border-gray-700">
@@ -102,7 +93,6 @@ export default function HomeContent({
                     )}
                 </div>
             </div>
-
             {isModalOpen && (
                 <CreateJobModal 
                     onClose={() => setIsModalOpen(false)}
