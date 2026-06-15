@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { auth } from "../../../../auth";
 import HomeContent from "../../../ui/home-content";
 import { User } from "../../../lib/definitions";
-import Navbar from "@/app/ui/Navbar";
 
 async function getJobOffers(token: string | undefined) {
   try {
@@ -51,9 +50,6 @@ export default async function Home() {
     const seniorities = await getSeniorities(token); 
 
     return (
-      <>
-        <Navbar />
         <HomeContent user={user} token={token} initialJobs={jobOffers} seniorities={seniorities} />
-      </>
     );
 }
