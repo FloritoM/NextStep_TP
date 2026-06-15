@@ -12,13 +12,10 @@ export default async function ScreenRedirection() {
   const user = session.user as unknown as User;
   const role = user.role?.name;
 
-  if (role === "recruiter") {
-    redirect("/recruiter/dashboard");
-  } else if (role === "applicant") {
-    redirect("/home");
-  } else if (role === "admin") {
-    redirect("/adminDashboard");
+  if (role) {
+    redirect(`/${role}/dashboard`);
   } else {
-    redirect("/home");
+    redirect("/login");
   }
+
 }

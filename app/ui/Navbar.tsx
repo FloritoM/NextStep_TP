@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import SignOutButton from './signOutButton';
 import NextStepIcon from '@/components/icon';
-import { Roles } from '../lib/definitions';
+import { auth } from '@/auth';
+import { User } from '../lib/definitions';
 
-interface NavbarProps {
-    role: Roles;
-}
-
-export default function Navbar({ role }: NavbarProps) {
+export default async function Navbar() {
+    const session = await auth();
+    const user = session?.user as unknown as User;
+    const role = user?.role?.name || "applicant";
+    
     return (
         <nav className="sticky top-0 z-40 bg-gray-800 border-b border-gray-700 shadow-lg px-10 py-4 flex justify-between items-center">
             <NextStepIcon />

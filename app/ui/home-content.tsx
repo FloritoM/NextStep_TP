@@ -37,7 +37,7 @@ export default function HomeContent({
 
     return (
         <div className="min-h-screen bg-main text-white">
-            <Navbar role={user.role.name} /> 
+            <Navbar /> 
 
             <div className="max-w-4xl mx-auto mt-12 px-6">
                 
