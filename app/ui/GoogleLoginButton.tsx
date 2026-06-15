@@ -6,7 +6,7 @@ export default function GoogleLoginButton() {
   return (
     <button
       type="button"
-      onClick={() => signIn("google", { callbackUrl: "/screenRedirection" })}
+      onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
       className="flex items-center gap-3 bg-white text-black font-semibold px-6 py-2 rounded-xl hover:bg-gray-100 transition-colors"
     >
       <svg className="w-5 h-5" viewBox="0 0 24 24">

@@ -2,7 +2,7 @@ import { auth } from "../../../../auth";
 import { redirect } from "next/navigation";
 import { getJobOffers } from "@/lib/recruiter";
 import JobCard from "@/components/recruiter/JobCard";
-import { User } from "@/app/lib/definitions";
+import { JobOffer, User } from "@/app/lib/definitions";
 
 export default async function RecruiterDashboard() {
   const session = await auth();
@@ -38,7 +38,7 @@ export default async function RecruiterDashboard() {
             <p className="text-gray-400">No hay búsquedas activas todavía.</p>
           </div>
         ) : (
-          jobs.map((job: any) => (
+          jobs.map((job: JobOffer) => (
             <JobCard
               key={job.id}
               id={job.id}
