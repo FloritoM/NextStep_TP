@@ -1,6 +1,6 @@
 import { auth } from "../../../../auth";
 import { redirect } from "next/navigation";
-import { getJobOffers } from "@/lib/recruiter";
+import { getJobOffers } from "@/app/lib/data";
 import JobCard from "@/components/recruiter/JobCard";
 import { JobOffer, User } from "@/app/lib/definitions";
 
@@ -9,7 +9,7 @@ export default async function RecruiterDashboard() {
   if (!session || !session.user) redirect("/login");
 
   const user = session.user as unknown as User;
-  if (user.role?.name !== "recruiter") redirect("/home");
+  if (user.role?.name !== "recruiter") redirect("/dashboard");
 
   const token = session.accessToken??"";
   const jobs = await getJobOffers(token);
