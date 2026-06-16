@@ -6,6 +6,7 @@ export async function getJobOffers(token: string) {
     headers: { Authorization: `Bearer ${token}` },
     cache: "no-store",
   });
+  console.log("STATUS:", res.status);
   if (!res.ok) throw new Error("Error al obtener las job offers");
   return res.json();
 }
