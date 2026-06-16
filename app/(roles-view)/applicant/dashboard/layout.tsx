@@ -8,6 +8,7 @@ export default function ApplicantLayout({ children }: { children: React.ReactNod
                     <SidebarLink href="/applicant/dashboard" label="Mi Actividad" />
                     <SidebarLink href="/applicant/dashboard/applications" label="Mis Postulaciones" />
                     <SidebarLink href="/applicant/dashboard/feedbacks" label="Feedbacks Recibidos" />
+                    <SidebarLink href="/applicant/dashboard/cv" label="Mi CV" />
                 </aside>
                 <main className="flex-1 p-8 bg-main">
                     {children}

@@ -1,9 +1,11 @@
 import { auth } from "../../../../auth";
 import { redirect } from "next/navigation";
-import { getJobOffers } from "@/app/lib/data";
+import { getJobOffers, getSeniorities } from "@/app/lib/data";
 import JobCard from "@/components/recruiter/JobCard";
 import { JobOffer, User } from "@/app/lib/definitions";
 import CvUpload from "@/components/CvUpload";
+import CreateJobButton from "@/components/recruiter/CreateJobButton";
+import { canCreateJobOffer } from "@/app/lib/permissions";
 
 export default async function RecruiterDashboard() {
   const session = await auth();
@@ -12,8 +14,12 @@ export default async function RecruiterDashboard() {
   const user = session.user as unknown as User;
   if (user.role?.name !== "recruiter") redirect("/dashboard");
 
-  const token = session.accessToken??"";
-  const jobs = await getJobOffers(token);
+  const token = session.accessToken ?? "";
+  
+  const [jobs, seniorities] = await Promise.all([
+    getJobOffers(token),
+    getSeniorities(token)
+  ]);
 
   return (
     <div className="min-h-screen bg-gray-900 p-6">
@@ -25,11 +31,10 @@ export default async function RecruiterDashboard() {
               Hola, {user.firstName} — gestioná tus búsquedas activas
             </p>
           </div>
-          <button className="bg-gray-800 border border-gray-700 text-white text-sm px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
-            + Nueva búsqueda
-          </button>
+          {canCreateJobOffer(user) && (
+            <CreateJobButton token={token} seniorities={seniorities} />
+          )}
         </div>
-
         <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
           Búsquedas activas
         </div>
