@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getJobOffers, getSeniorities } from "@/app/lib/data";
 import JobCard from "@/components/recruiter/JobCard";
 import { JobOffer, User } from "@/app/lib/definitions";
+import CvUpload from "@/components/CvUpload";
 import CreateJobButton from "@/components/recruiter/CreateJobButton";
 import { canCreateJobOffer } from "@/app/lib/permissions";
 
@@ -54,6 +55,13 @@ export default async function RecruiterDashboard() {
             />
           ))
         )}
+
+        {/* Temporal para probar carga de CV */}
+        <div className="mt-8 p-4 bg-gray-800 border border-gray-700 rounded-xl">
+          <p className="text-gray-400 text-sm mb-3">Probar carga de CV</p>
+          <CvUpload userId={user.id as number} />
+        </div>
+
       </div>
     </div>
   );
