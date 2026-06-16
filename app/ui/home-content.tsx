@@ -4,7 +4,6 @@ import { useState } from 'react';
 import JobCard from './JobCard';
 import CreateJobModal from './CreateJobModal';
 import { JobOffer, Seniority, User } from '../lib/definitions';
-import { canCreateJobOffer } from '../lib/permissions';
 
 export default function HomeContent({ 
     user, 
@@ -51,14 +50,6 @@ export default function HomeContent({
                                 className="w-full bg-gray-700 text-white rounded-full py-4 px-6 focus:outline-none focus:ring-2 focus:ring-amber-500"
                             />
                         </div>
-                        {canCreateJobOffer(user) && (
-                            <button 
-                                onClick={() => setIsModalOpen(true)} 
-                                className="bg-amber-600 hover:bg-amber-500 transition-colors font-bold py-4 px-8 rounded-full shrink-0 text-center"
-                            >
-                                Agregar Oferta
-                            </button>
-                        )}
                     </div>
                     <div className="flex flex-wrap gap-2">
                         {seniorities.map((sen) => (
@@ -79,7 +70,7 @@ export default function HomeContent({
                 <div className="space-y-5">
                     {filteredJobs.length === 0 ? (
                         <div className="text-center py-10 bg-gray-800 rounded-xl border border-gray-700">
-                            <p className="text-gray-400 text-lg">No se encontraron vacantes con esos filtros.</p>
+                            <p className="text-gray-400 text-lg">No se encontraron vacantes.</p>
                         </div>
                     ) : (
                         filteredJobs.map(job => (
