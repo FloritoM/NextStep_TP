@@ -22,8 +22,11 @@ export default function AuditLogs({ logs }: { logs: AuditLog[] }) {
     const columns = React.useMemo<ColumnDef<AuditLog>[]>(
         () => [
             {
-                accessorKey: 'userId',
-                cell: (info) => info.getValue(),
+                accessorKey: 'user',
+                cell: (info) => {
+                    const user = info.getValue() as { id: number } | null
+                    return user?.id ?? '-'
+                },
                 header: () => 'Usuario ID',
                 footer: (props) => props.column.id,
             },
@@ -130,8 +133,8 @@ function MyTable({
                                                 header.getContext(),
                                             )}
                                             {{
-                                                asc: <FontAwesomeIcon icon={faSortUp} className='text-amber-600'/>,
-                                                desc: <FontAwesomeIcon icon={faSortDown} className='text-amber-600'/>,
+                                                asc: <FontAwesomeIcon icon={faSortUp} className='text-amber-600' />,
+                                                desc: <FontAwesomeIcon icon={faSortDown} className='text-amber-600' />,
                                             }[header.column.getIsSorted() as string] ?? null}
                                             {header.column.getCanFilter() ? (
                                                 <div>
