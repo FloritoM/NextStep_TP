@@ -1,7 +1,7 @@
 "use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortUp, faSortDown, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons'
-import { User } from '../lib/definitions'
+import { User } from '@/app/lib/definitions'
 import * as React from 'react'
 import {
     Column,

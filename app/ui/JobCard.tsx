@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { JobOffer } from '../lib/definitions';
+import { JobOffer } from '@/app/lib/definitions';
 
 interface JobCardProps {
     job: JobOffer;

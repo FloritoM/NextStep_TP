@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import { auth } from "../../../../auth";
-import HomeContent from "../../../ui/home-content";
-import { User } from "../../../lib/definitions";
+import { auth } from "@/auth";
+import HomeContent from "@/app/ui/home-content";
+import { User } from "@/app/lib/definitions";
 import { getSeniorities } from "@/app/lib/data";
 import { getJobOffers } from "@/app/lib/data";
 

@@ -1,4 +1,4 @@
-import { auth } from "../../../../auth";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { getJobOffers, getSeniorities } from "@/app/lib/data";
 import JobCard from "@/components/recruiter/JobCard";

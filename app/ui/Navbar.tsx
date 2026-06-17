@@ -2,8 +2,8 @@ import Link from 'next/link';
 import SignOutButton from './signOutButton';
 import NextStepIcon from '@/components/icon';
 import { auth } from '@/auth';
-import { User } from '../lib/definitions';
-import { canApplyToJobOffer } from '../lib/permissions';
+import { User } from '@/app/lib/definitions';
+import { canApplyToJobOffer } from '@/app/lib/permissions';
 
 export default async function Navbar() {
     const session = await auth();

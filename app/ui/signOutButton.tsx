@@ -1,6 +1,5 @@
-import { signOut } from "@/auth"
 import { Button } from "./button";
-import { handleSignOut } from "../lib/actions";
+import { handleSignOut } from "@/app/lib/actions";
 
 export default function SignOutButton() {
     return (

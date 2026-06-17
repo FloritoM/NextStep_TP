@@ -1,4 +1,4 @@
-import Navbar from '../ui/Navbar';
+import Navbar from '@/app/ui/Navbar';
 
 export default function OverviewLayout({
     children,

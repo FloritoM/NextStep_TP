@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import JobCard from './JobCard';
 import CreateJobModal from './CreateJobModal';
-import { JobOffer, Seniority, User } from '../lib/definitions';
+import { JobOffer, Seniority, User } from '@/app/lib/definitions';
 
 export default function HomeContent({ 
     user, 
