@@ -1,10 +1,7 @@
-import { Suspense } from "react";
 import Login from "@/app/ui/loginForm";
 
 export default function LoginPage() {
     return (
-        <Suspense fallback={<div>Cargando...</div>}>
-            <Login />
-        </Suspense>
+        <Login />
     )
 }
