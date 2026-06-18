@@ -7,7 +7,7 @@ export default function SignOutButton() {
             action={handleSignOut}
         >
             <Button className="cursor-pointer border-none bg-yellow-400 rounded-lg text-xl text-black font-semibold hover:bg-amber-600 flex flex-row items-center"
-                buttonText="Cerrar sesion"  />
+                buttonText="Cerrar sesión"  />
         </form>
     )
 }

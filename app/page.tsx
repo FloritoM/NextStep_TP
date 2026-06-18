@@ -20,7 +20,7 @@ export default function Landing() {
             <nav className="w-[100%]">
               <ul className="flex justify-center gap-15 text-white text-[1.5rem] bg-gray-700 py-3">
                 <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#nosotros">Clientes</a></li>
                 <li><a href="#contacto">Contacto</a></li>
               </ul>
             </nav>
@@ -28,7 +28,7 @@ export default function Landing() {
         </header>
 
         <div>
-          <p className="px-17 pt-5 pb-10 text-white font-semibold text-[2rem]">¿Que ofrecemos?</p>
+          <p className="px-17 pt-5 pb-10 text-white font-semibold text-[2rem]">¿Qué ofrecemos?</p>
           <div className="flex justify-evenly">
             <div className="flex items-center border border-gray-700 w-[45%] rounded-xl bg-gray-700">
               <FontAwesomeIcon icon={faUserTie} className="text-amber-600 text-[3rem] pl-4" />
