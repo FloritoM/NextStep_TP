@@ -158,6 +158,7 @@ function MyTable({
 
     return (
         <div className="mt-20 text-white">
+            <div className="overflow-x-auto">
             <table className="mx-auto rounded-xl border border-gray-700">
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
@@ -211,7 +212,7 @@ function MyTable({
                         )
                     })}
                 </tbody>
-            </table>
+            </table></div>
             <div className="mt-6 flex items-center gap-2 justify-center">
                 <button
                     className='rounded border border-gray-700 bg-gray-800/50 cursor-pointer'

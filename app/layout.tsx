@@ -21,7 +21,7 @@ export default function RootLayout({
     <html
       lang="en"
     >
-      <body className={`${manrope.className} antialiased h-screen`} suppressHydrationWarning>
+      <body className={`${manrope.className} antialiased h-screen overflow-x-hidden`} suppressHydrationWarning>
         <SessionProvider>
           {children}
         </SessionProvider>

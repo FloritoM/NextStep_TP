@@ -14,7 +14,7 @@ export default async function JobOffersLogPage() {
 
     return (
         <>
-            <h1 className="text-amber-600 text-5xl font-bold text-center mt-20 mb-8">Logs</h1>
+            <h1 className="text-amber-600 text-5xl font-bold text-center mt-20 mb-8">Job Offers</h1>
             <JobOffersLogs jobOffers={data} token={session?.accessToken as string} />
         </>
     )

@@ -11,7 +11,7 @@ export default async function Navbar() {
     const role = user?.role?.name || "applicant";
     
     return (
-        <nav className="sticky top-0 z-40 bg-gray-800 border-b border-gray-700 shadow-lg px-10 py-4 flex justify-between items-center">
+        <nav className="sticky top-0 z-40 w-full bg-gray-800 border-b border-gray-700 shadow-lg px-10 py-4 flex justify-between items-center">
             <NextStepIcon />
             <div className="flex items-center gap-5 md:gap-10">
                 <ul className="flex gap-5 md:gap-10 text-[1.2rem] font-semibold text-gray-300">

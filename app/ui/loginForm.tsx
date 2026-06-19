@@ -23,9 +23,11 @@ export default function Login() {
                 <div className="w-100 m-auto flex flex-col">
                     <div className="flex justify-center mt-5">
                         <div className="flex">
-                            <p className="text-center text-[3rem] text-white font-bold py-4 select-none">
-                                Next<span className={`${pacifico.className} italic text-amber-600 font-semibold select-none`}>Step</span>
-                            </p>
+                            <Link href="/">
+                                <p className="text-center text-[3rem] text-white font-bold py-4 select-none">
+                                    Next<span className={`${pacifico.className} italic text-amber-600 font-semibold select-none`}>Step</span>
+                                </p>
+                            </Link>
                         </div>
                     </div>
                     <div>
