@@ -64,3 +64,35 @@ export type AuditLog = {
   entityId: string;
   createdAt: string | Date;
 };
+
+
+//cambio1906
+
+export type Stage = {
+  id: number;
+  name: string;
+  sequenceOrder: number;
+  isTerminal: boolean;
+};
+
+export type JobApplication = {
+  id: number;
+  jobOffer: JobOffer;
+  currentStage: Stage;
+  cvPath: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Feedback = {
+  id: number;
+  application: { id: number };
+  recruiter: { id: number; firstName: string; lastName: string };
+  stage: Stage;
+  technicalScore: number | null;
+  softSkillsScore: number | null;
+  comment: string | null;
+  internalNotes: string | null;
+  publicFeedback: string | null;
+  createdAt: string;
+};
