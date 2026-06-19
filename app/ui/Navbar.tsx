@@ -4,6 +4,7 @@ import NextStepIcon from '@/components/icon';
 import { auth } from '@/auth';
 import { User } from '@/app/lib/definitions';
 import { canApplyToJobOffer } from '@/app/lib/permissions';
+import NavLink from './Navlink';
 
 export default async function Navbar() {
     const session = await auth();
@@ -17,20 +18,20 @@ export default async function Navbar() {
                 <ul className="flex gap-5 md:gap-10 text-[1.2rem] font-semibold text-gray-300">
                     <li>
                         {canApplyToJobOffer(user) && (
-                            <Link href="/applicant/jobs" className="hover:text-amber-500 transition-colors">
+                            <NavLink href="/applicant/jobs">
                                 Vacantes
-                            </Link>
+                            </NavLink>
                         )}
                     </li>
                     <li>
-                        <Link href={`/${role}/dashboard`} className="hover:text-amber-500 transition-colors">
+                        <NavLink href={`/${role}/dashboard`}>
                             Dashboard
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link href="/profile" className="hover:text-amber-500 transition-colors">
+                        <NavLink href="/profile">
                             Perfil
-                        </Link>
+                        </NavLink>
                     </li>
                 </ul>
                 <SignOutButton />
