@@ -1,7 +1,8 @@
 "use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortUp, faSortDown, faXmark, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
 import { User } from '@/app/lib/definitions'
+import ActionIcon from '@/app/ui/ActionIcon'
 import * as React from 'react'
 import {
     Column,
@@ -16,20 +17,6 @@ import {
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table'
-
-const ActionIcon = ({ isActive, userId, onToggle }: { isActive: boolean, userId: number | string, onToggle: (id: number | string) => void }) => {
-    return (
-        <div
-            onClick={() => onToggle(userId)}
-            className={`cursor-pointer w-12 h-6 rounded-full transition-colors duration-200 flex items-center px-1 m-auto
-        ${isActive ? 'bg-green-500' : 'bg-red-500'}`}
-        >
-            <div className={`w-4 h-4 bg-white rounded-full transition-transform duration-200
-        ${isActive ? 'translate-x-6' : 'translate-x-0'}`}
-            />
-        </div>
-    );
-};
 
 export default function UserLogs({ users, token }: { users: User[], token: string }) {
 
@@ -88,6 +75,7 @@ export default function UserLogs({ users, token }: { users: User[], token: strin
                         minute: '2-digit',
                         second: '2-digit',
                         hour12: false,
+                        timeZone: 'America/Argentina/Buenos_Aires',
                     })
                 },
                 footer: (props) => props.column.id,
@@ -104,7 +92,7 @@ export default function UserLogs({ users, token }: { users: User[], token: strin
                 cell: (info) => (
                     <ActionIcon
                         isActive={info.getValue() as boolean}
-                        userId={info.row.original.id}
+                        entityId={info.row.original.id}
                         onToggle={async (id) => {
                             await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${id}`, {
                                 method: 'PATCH',
@@ -187,7 +175,7 @@ function MyTable({
                                             )}
                                             {{
                                                 asc: <FontAwesomeIcon icon={faSortUp} className='text-amber-600' />,
-                                                desc: <FontAwesomeIcon icon={faSortDown} className='text-amber-600'/>,
+                                                desc: <FontAwesomeIcon icon={faSortDown} className='text-amber-600' />,
                                             }[header.column.getIsSorted() as string] ?? null}
                                             {header.column.getCanFilter() ? (
                                                 <div>

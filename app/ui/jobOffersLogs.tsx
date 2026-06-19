@@ -2,7 +2,8 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
-import { AuditLog } from '@/app/lib/definitions'
+import { JobOfferLog } from '@/app/lib/definitions'
+import ActionIcon from '@/app/ui/ActionIcon'
 import * as React from 'react'
 import {
     Column,
@@ -18,40 +19,43 @@ import {
     useReactTable,
 } from '@tanstack/react-table'
 
-export default function JobOffersLogs({ logs }: { logs: AuditLog[] }) {
+export default function JobOffersLogs({ jobOffers, token }: { jobOffers: JobOfferLog[], token: string }) {
 
-    const columns = React.useMemo<ColumnDef<AuditLog>[]>(
+    const columns = React.useMemo<ColumnDef<JobOfferLog>[]>(
         () => [
             {
-                accessorKey: 'user',
-                cell: (info) => {
-                    const user = info.getValue() as { id: number } | null
-                    return user?.id ?? '-'
-                },
-                header: () => 'Usuario ID',
+                accessorKey: 'title',
+                cell: (info) => info.getValue(),
+                header: () => 'Título',
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'action',
+                accessorKey: 'description',
                 cell: (info) => info.getValue(),
-                header: () => 'Acción',
+                header: () => 'Descripción',
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'entity',
+                accessorKey: 'recruiterId',
                 cell: (info) => info.getValue(),
-                header: () => 'Entidad',
+                header: () => 'Reclutador ID',
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'entity_id',
+                accessorKey: 'seniorityId',
                 cell: (info) => info.getValue(),
-                header: () => 'Entidad ID',
+                header: () => 'Seniority ID',
+                footer: (props) => props.column.id,
+            },
+            {
+                accessorKey: 'isActive',
+                cell: (info) => (info.getValue() ? 'Activa' : 'Inactiva'),
+                header: () => 'Estado',
                 footer: (props) => props.column.id,
             },
             {
                 accessorKey: 'createdAt',
-                header: 'Fecha',
+                header: 'Creada',
                 cell: (info) => {
                     const date = new Date(info.getValue() as string)
                     return date.toLocaleString('es-AR', {
@@ -62,15 +66,55 @@ export default function JobOffersLogs({ logs }: { logs: AuditLog[] }) {
                         minute: '2-digit',
                         second: '2-digit',
                         hour12: false,
+                        timeZone: 'America/Argentina/Buenos_Aires',
                     })
                 },
                 footer: (props) => props.column.id,
+            },
+            {
+                accessorKey: 'updatedAt',
+                header: 'Actualizada',
+                cell: (info) => {
+                    const date = new Date(info.getValue() as string)
+                    return date.toLocaleString('es-AR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false,
+                        timeZone: 'America/Argentina/Buenos_Aires',
+                    })
+                },
+                footer: (props) => props.column.id,
+            },
+            {
+                id: 'action',
+                accessorKey: 'isActive',
+                header: () => 'Acción',
+                cell: (info) => (
+                    <ActionIcon
+                        isActive={info.getValue() as boolean}
+                        entityId={info.row.original.id}
+                        onToggle={async (id) => {
+                            await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-offers/${id}`, {
+                                method: 'PATCH',
+                                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+                                body: JSON.stringify({ isActive: !info.getValue() })
+                            });
+                            setData(prev => prev.map(offer =>
+                                offer.id === id ? { ...offer, isActive: !info.getValue() as boolean } : offer
+                            ));
+                        }}
+                    />
+                ),
             },
         ],
         [],
     )
 
-    const [data, setData] = React.useState(() => [...logs])
+    const [data, setData] = React.useState(() => [...jobOffers])
 
     return (
         <>
@@ -88,8 +132,8 @@ function MyTable({
     data,
     columns,
 }: {
-    data: AuditLog[]
-    columns: ColumnDef<AuditLog>[]
+    data: JobOfferLog[]
+    columns: ColumnDef<JobOfferLog>[]
 }) {
     const [pagination, setPagination] = React.useState<PaginationState>({
         pageIndex: 0,
