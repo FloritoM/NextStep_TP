@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import JobCard from './JobCard';
-import CreateJobModal from './CreateJobModal';
 import { JobOffer, Seniority, User } from '@/app/lib/definitions';
 
 export default function HomeContent({ 
@@ -18,7 +17,6 @@ export default function HomeContent({
 }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedSeniorities, setSelectedSeniorities] = useState<number[]>([]); 
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const toggleSeniority = (id: number) => {
         setSelectedSeniorities(prev => 
@@ -84,13 +82,6 @@ export default function HomeContent({
                     )}
                 </div>
             </div>
-            {isModalOpen && (
-                <CreateJobModal 
-                    onClose={() => setIsModalOpen(false)}
-                    token={token}
-                    seniorities={seniorities}
-                />
-            )}
         </div>
     );
 }

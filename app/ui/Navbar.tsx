@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import SignOutButton from './signOutButton';
 import NextStepIcon from '@/components/icon';
 import { auth } from '@/auth';

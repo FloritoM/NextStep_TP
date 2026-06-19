@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import CreateJobModal from '@/app/ui/CreateJobModal';
+import CreateJobModal from '@/components/recruiter/CreateJobModal';
 import { Seniority } from '@/app/lib/definitions';
 
 export default function CreateJobButton({ 
@@ -19,7 +19,7 @@ export default function CreateJobButton({
                 onClick={() => setIsModalOpen(true)} 
                 className="bg-gray-800 border border-gray-700 text-white text-sm px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors"
             >
-                + Nueva búsqueda
+                + Nueva vacante
             </button>
             
             {isModalOpen && (
