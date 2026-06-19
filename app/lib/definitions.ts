@@ -65,9 +65,6 @@ export type AuditLog = {
   createdAt: string | Date;
 };
 
-
-//cambio1906
-
 export type Stage = {
   id: number;
   name: string;
@@ -95,4 +92,15 @@ export type Feedback = {
   internalNotes: string | null;
   publicFeedback: string | null;
   createdAt: string;
+}
+
+export type JobOfferLog = {
+  id: number;
+  description: string;
+  recruiterId: number;
+  isActive: boolean;
+  title: string;
+  seniorityId: number;
+  createdAt: string | Date;
+  updatedAt: string | Date;
 };
