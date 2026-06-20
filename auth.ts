@@ -26,8 +26,9 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
         const { email, password } = parsedCredentials.data;
 
+        let res: Response;
         try {
-          const res = await fetch(
+          res = await fetch(
             `${process.env.BACKEND_URL}/auth/login`,
             {
               method: 'POST',
@@ -40,29 +41,28 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
               }),
             }
           );
-
-          if (!res.ok) return null;
-
-          const response = await res.json();
-          const userData = response.user;
-
-          if (!userData.isActive) {
-            throw new Error("inactive");
-          }
-
-          return {
-            id: userData.id.toString(),
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            email: userData.email,
-            role: userData.role,
-            token: response.token,
-          };
-
-        } catch (error) {
-          console.error('Error llamando al backend:', error);
-          return null;
+        } catch (networkError) {
+          console.error('Backend no disponible:', networkError);
+          throw new Error('server_unavailable');
         }
+
+        if (!res.ok) return null;
+
+        const response = await res.json();
+        const userData = response.user;
+
+        if (!userData.isActive) {
+          throw new Error("inactive");
+        }
+
+        return {
+          id: userData.id.toString(),
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          email: userData.email,
+          role: userData.role,
+          token: response.token,
+        };
       },
       credentials: undefined,
     }),
