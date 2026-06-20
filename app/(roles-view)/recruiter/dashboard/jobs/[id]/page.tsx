@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { getJobOffer, getJobApplications, getStages } from "@/lib/recruiter";
 import { User } from "@/app/lib/definitions";
 import JobDetailClient from "@/components/recruiter/JobDetailClient";
+import JobOfferToggle from "../../../JobOfferToggle";
 
 export default async function JobDetailPage({
   params,
@@ -32,12 +33,14 @@ export default async function JobDetailPage({
           <a href="/recruiter/dashboard" className="text-gray-400 hover:text-white text-sm transition-colors">
             ← Volver
           </a>
+          
           <h1 className="text-xl font-bold text-white">{job?.title}</h1>
-          <span className={`text-xs px-3 py-1 rounded-full font-semibold ${
-            job?.isActive ? "bg-green-900 text-green-300" : "bg-yellow-900 text-yellow-300"
-          }`}>
-            {job?.isActive ? "Activa" : "Pausada"}
-          </span>
+          <JobOfferToggle
+            jobId={jobId}
+            initialIsActive={job?.isActive ?? false}
+            token={token}
+          />
+
         </div>
 
         <JobDetailClient
