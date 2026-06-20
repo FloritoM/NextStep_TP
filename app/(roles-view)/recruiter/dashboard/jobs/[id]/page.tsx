@@ -33,18 +33,32 @@ export default async function JobDetailPage({
   return (
     <div className="p-6">
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-2">
           <a href="/recruiter/dashboard" className="text-gray-400 hover:text-white text-sm transition-colors">
             ← Volver
           </a>
-          
+
           <h1 className="text-xl font-bold text-white">{job?.title}</h1>
           <JobOfferToggle
             jobId={jobId}
             initialIsActive={job?.isActive ?? false}
             token={token}
           />
+        </div>
 
+        <div className="mb-6 ml-1">
+          <p className="text-gray-400 text-sm">
+            Seniority: <span className="text-white">{job?.seniority?.name ?? "Sin definir"}</span>
+          </p>
+          <p className="text-gray-400 text-sm mt-1 mb-3">{job?.description}</p>
+          <EditJobButton
+            token={token}
+            seniorities={seniorities}
+            jobId={jobId}
+            initialTitle={job?.title ?? ""}
+            initialDescription={job?.description ?? ""}
+            initialSeniorityId={job?.seniority?.id}
+          />
         </div>
 
         <JobDetailClient
@@ -52,25 +66,6 @@ export default async function JobDetailPage({
           applications={applications}
           stages={stages}
         />
-
-        <EditJobButton
-            token={token}
-            seniorities={seniorities}
-            jobId={jobId}
-            initialTitle={job?.title ?? ""}
-            initialDescription={job?.description ?? ""}
-            initialSeniorityId={job?.seniority?.id}
-          />
-
-           <EditJobButton
-            token={token}
-            seniorities={seniorities}
-            jobId={jobId}
-            initialTitle={job?.title ?? ""}
-            initialDescription={job?.description ?? ""}
-            initialSeniorityId={job?.seniority?.id}
-          />
-        
       </div>
     </div>
   );
