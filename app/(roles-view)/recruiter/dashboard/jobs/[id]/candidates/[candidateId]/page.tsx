@@ -1,8 +1,9 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { getFeedbackByApplication, getLatestCvByUser } from "@/lib/recruiter";
+import { getFeedbackByApplication, getLatestCvByUser,getStages } from "@/lib/recruiter";
 import { User } from "@/app/lib/definitions";
 import CandidateDetailClient from "@/components/recruiter/CandidateDetailClient";
+
 
 export default async function CandidateFeedbackPage({
   params,
@@ -21,6 +22,7 @@ export default async function CandidateFeedbackPage({
   const applicationId = Number(candidateId);
 
   const feedbacks = await getFeedbackByApplication(applicationId, token);
+  const stages = await getStages(token);
 
   const application = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/job-applications/${applicationId}`,
@@ -73,6 +75,8 @@ export default async function CandidateFeedbackPage({
           applicationId={applicationId}
           token={token}
           initialFeedbacks={feedbacks}
+          stages={stages}
+          currentStageId={application?.currentStage?.id}
         />
       </div>
     </div>
