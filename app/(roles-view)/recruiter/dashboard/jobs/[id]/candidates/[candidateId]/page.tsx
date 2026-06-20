@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { getFeedbackByApplication } from "@/lib/recruiter";
+import { getFeedbackByApplication, getLatestCvByUser } from "@/lib/recruiter";
 import { User } from "@/app/lib/definitions";
 import CandidateDetailClient from "@/components/recruiter/CandidateDetailClient";
 
@@ -22,6 +22,19 @@ export default async function CandidateFeedbackPage({
 
   const feedbacks = await getFeedbackByApplication(applicationId, token);
 
+  const application = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/job-applications/${applicationId}`,
+    { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" }
+  ).then((res) => res.json());
+
+  //console.log("APPLICATION DATA:", JSON.stringify(application));
+
+  const cv = application?.applicant?.id
+    ? await getLatestCvByUser(application.applicant.id, token)
+    : null;
+
+  //console.log("CV DATA:", JSON.stringify(cv));
+
   return (
     <div className="p-6">
       <div className="max-w-3xl mx-auto">
@@ -34,6 +47,26 @@ export default async function CandidateFeedbackPage({
           </a>
           <h1 className="text-xl font-bold text-white">Feedback del candidato</h1>
         </div>
+
+    <div className="bg-gray-800 border border-gray-700 rounded-xl p-4 mb-6 flex items-center justify-between">
+        <div>
+          <p className="text-gray-400 text-xs uppercase tracking-wider">CV del candidato</p>
+          <p className="text-white text-sm mt-1">
+            {cv ? cv.originalName : "No hay CV cargado"}
+          </p>
+        </div>
+        {cv && (
+          
+           <a href={`${process.env.NEXT_PUBLIC_API_URL}/${cv.directory}/${cv.storedName}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-orange-500 hover:bg-orange-600 text-white text-sm px-4 py-2 rounded-lg transition-colors cursor-pointer"
+          >
+            Ver CV
+          </a>
+        )}
+    </div>
+
 
         <CandidateDetailClient
           jobId={jobId}

@@ -100,6 +100,20 @@ export async function createScorecard(data: object, token: string) {
   return res.json();
 }
 
+export async function getLatestCvByUser(userId: number, token: string) {
+  const res = await fetch(`${API_URL}/cv/user/${userId}/latest`, {
+    headers: { Authorization: `Bearer ${token}` },
+    cache: "no-store",
+  });
+  if (!res.ok) return null;
+
+  const text=await res.text();
+  if(!text) return null; //body vacio, no hay cv
+
+  return JSON.parse(text);
+ 
+}
+
 export async function updateScorecard(id: number, data: object, token: string) {
   const res = await fetch(`${API_URL}/scorecards/${id}`, {
     method: "PATCH",
