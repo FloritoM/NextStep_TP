@@ -80,7 +80,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                 <div className="profile-grid max-w-7xl mx-auto mt-32">
                     <div className="first justify-start py-6">
                         <h1 className="text-[1.75rem] text-gray-50 font-bold">Mi perfil</h1>
-                        <p className="text-gray-50">Gestiona tu informacion personal y de acceso</p>
+                        <p className="text-gray-50">Gestioná tu información personal y de acceso</p>
                     </div>
 
                     <div className="second flex justify-end">
@@ -98,7 +98,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                         password: ""
                                     });
                                 }}>
-                                <FontAwesomeIcon icon={faBan} className="text-black" />
+                                <FontAwesomeIcon icon={faBan} className="text-black pr-1" />
                                 Cancelar</button> : null}
                         </div>
                         <div>
@@ -106,7 +106,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                 type="submit"
                                 className="cursor-pointer border-none bg-yellow-400 rounded-lg text-xl text-black font-semibold hover:bg-amber-600 p-4"
                             >
-                                <FontAwesomeIcon icon={isEditing ? faFloppyDisk : faPenToSquare} className="text-black" />
+                                <FontAwesomeIcon icon={isEditing ? faFloppyDisk : faPenToSquare} />
 
                                 {isEditing ? " Guardar" : " Editar Perfil"}
                             </button>
@@ -125,20 +125,20 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
 
                     <div className="fourth rounded-xl border border-gray-700 bg-gray-800/50 p-5 text-white">
                         <p className="pb-5 pt-1 text-[1.375rem]">
-                            <FontAwesomeIcon icon={faUser} className="text-amber-600" /> Informacion personal
+                            <FontAwesomeIcon icon={faUser} className="text-amber-600" /> Información personal
                         </p>
                         <div className="section gap-5">
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Nombre</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded" value={editForm.firstName} onChange={e => setEditForm(prev => ({ ...prev, firstName: e.target.value }))} />
+                                    ? <input className="bg-gray-700 text-white rounded pl-2" value={editForm.firstName} onChange={e => setEditForm(prev => ({ ...prev, firstName: e.target.value }))} />
                                     : <p className="text-white">{user?.firstName}</p>
                                 }
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Apellido</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded" value={editForm.lastName} onChange={e => setEditForm(prev => ({ ...prev, lastName: e.target.value }))} />
+                                    ? <input className="bg-gray-700 text-white rounded pl-2" value={editForm.lastName} onChange={e => setEditForm(prev => ({ ...prev, lastName: e.target.value }))} />
                                     : <p className="text-white">{user?.lastName}</p>
                                 }
                             </div>
@@ -155,13 +155,13 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
 
                     <div className="fifth rounded-xl border border-gray-700 bg-gray-800/50 p-5 text-white">
                         <p className="pb-5 pt-1 text-[1.375rem]">
-                            <FontAwesomeIcon icon={faLock} className="text-amber-600" /> Informacion de acceso
+                            <FontAwesomeIcon icon={faLock} className="text-amber-600" /> Información de acceso
                         </p>
                         <div className="section gap-5">
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Email</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded" value={editForm.email} onChange={e => setEditForm(prev => ({ ...prev, email: e.target.value }))} />
+                                    ? <input className="bg-gray-700 text-white rounded pl-2" value={editForm.email} onChange={e => setEditForm(prev => ({ ...prev, email: e.target.value }))} />
                                     : <p className="text-white">{user?.email}</p>
                                 }
                             </div>
@@ -171,11 +171,11 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                     ? <input
                                         id="password"
                                         type="password"
-                                        className="bg-gray-700 text-white rounded"
+                                        className="bg-gray-700 text-white rounded pl-2"
                                         value={editForm.password}
                                         onChange={handlePasswordChange}
                                     />
-                                    : <p className="text-white">••••••••</p>
+                                    : <p className="text-white pl-2">••••••••</p>
                                 }
                                 {!validPass && <p className="text-white text-sm">{passErrorMsg}</p>}
                             </div>
