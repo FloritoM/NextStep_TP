@@ -39,7 +39,7 @@ export default function EditJobModal({
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-offers/${jobId}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers/${jobId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

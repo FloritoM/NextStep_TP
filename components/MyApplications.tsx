@@ -12,7 +12,7 @@ export default function MyApplications({ token }: { token: string }) {
 
     useEffect(() => {
         async function loadApplications() {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-applications/my-applications`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-applications/my-applications`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const data = await res.json();
@@ -30,7 +30,7 @@ export default function MyApplications({ token }: { token: string }) {
 
         setSelectedApp(app);
         setLoadingFeedback(true);
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/feedback/my-feedback?applicationId=${app.id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/feedback/my-feedback?applicationId=${app.id}`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();
