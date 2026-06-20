@@ -10,6 +10,8 @@ export async function getJobOffers(token: string | undefined) {
       console.error("Error trayendo vacantes:", res.status, await res.text());
       return [];
     }
+    //teneer swagger para entender mejor los errores del backend
+
     return res.json();
   } catch (error) {
     console.error("Error de conexión con el backend:", error);

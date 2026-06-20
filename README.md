@@ -159,3 +159,6 @@ admin      →  /admin/dashboard
 lsof -ti:3000 | xargs kill -9
 npm run dev
 ```
+
+## agregar seeds para ejecutar con instrucciones de postgress y supabase
+hacer un scrip que cuando levante ya hayan seeds de datos pre cargados
