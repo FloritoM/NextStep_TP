@@ -4,6 +4,8 @@ import { getJobOffer, getJobApplications, getStages } from "@/lib/recruiter";
 import { User } from "@/app/lib/definitions";
 import JobDetailClient from "@/components/recruiter/JobDetailClient";
 import JobOfferToggle from "../../../JobOfferToggle";
+import { getSeniorities } from "@/app/lib/data";
+import EditJobButton from "@/components/recruiter/EditJobButton";
 
 export default async function JobDetailPage({
   params,
@@ -20,10 +22,12 @@ export default async function JobDetailPage({
   const { id } = await params;
   const jobId = Number(id);
 
-  const [job, applications, stages] = await Promise.all([
+  const [job, applications, stages, seniorities] = await Promise.all([
     getJobOffer(jobId, token),
     getJobApplications(jobId, token),
     getStages(token),
+    getSeniorities(token),
+
   ]);
 
   return (
@@ -48,6 +52,25 @@ export default async function JobDetailPage({
           applications={applications}
           stages={stages}
         />
+
+        <EditJobButton
+            token={token}
+            seniorities={seniorities}
+            jobId={jobId}
+            initialTitle={job?.title ?? ""}
+            initialDescription={job?.description ?? ""}
+            initialSeniorityId={job?.seniority?.id}
+          />
+
+           <EditJobButton
+            token={token}
+            seniorities={seniorities}
+            jobId={jobId}
+            initialTitle={job?.title ?? ""}
+            initialDescription={job?.description ?? ""}
+            initialSeniorityId={job?.seniority?.id}
+          />
+        
       </div>
     </div>
   );
