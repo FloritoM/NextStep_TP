@@ -4,11 +4,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faUser, faLock, faFloppyDisk, faBan } from "@fortawesome/free-solid-svg-icons";
+import { EyeIcon, EyeOffIcon } from '@/app/ui/passwordIcons'
 import { User } from "@/app/lib/definitions";
 
 export default function EditProfile({ userId, token }: { userId: string, token: string }) {
     const [user, setUser] = useState<User>();
     const [editForm, setEditForm] = useState({ firstName: "", lastName: "", email: "", password: "", role: "", createdAt: "" });
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         async function loadUser() {
@@ -114,8 +116,8 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                     </div>
 
                     <div className="third rounded-xl border border-gray-700 bg-gray-800/50 p-5 flex flex-col items-center">
-                        <div className="border border-white rounded-full mb-2">
-                            <p className="text-amber-600 font-bold text-[4.375rem] p-5 select-none">{initials}</p>
+                        <div className="border border-white rounded-full mb-2 w-28 h-28 flex items-center justify-center">
+                            <p className="text-amber-600 font-bold text-[4.375rem] select-none">{initials}</p>
                         </div>
                         <div className="flex flex-col items-center">
                             <p className="text-xl text-gray-50 font-bold">{user?.firstName} {user?.lastName}</p>
@@ -168,13 +170,22 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Contraseña</label>
                                 {isEditing
-                                    ? <input
-                                        id="password"
-                                        type="password"
-                                        className="bg-gray-700 text-white rounded pl-2"
-                                        value={editForm.password}
-                                        onChange={handlePasswordChange}
-                                    />
+                                    ? <div className="relative">
+                                        <input
+                                            id="password"
+                                            type={showPassword ? "text" : "password"}
+                                            className="bg-gray-700 text-white rounded pl-2 pr-10"
+                                            value={editForm.password}
+                                            onChange={handlePasswordChange}
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword((v) => !v)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors focus:outline-none"
+                                        >
+                                            {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                                        </button>
+                                    </div>
                                     : <p className="text-white pl-2">••••••••</p>
                                 }
                                 {!validPass && <p className="text-white text-sm">{passErrorMsg}</p>}
