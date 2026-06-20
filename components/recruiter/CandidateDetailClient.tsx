@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import FeedbackForm from "./FeedbackForm";
+import StageSelector from "./StageSelector";
 
 interface Feedback {
   id: number;
@@ -11,12 +12,19 @@ interface Feedback {
   comment?: string;
   publicFeedback?: string;
 }
+interface Stage {
+  id: number;
+  name: string;
+  sequenceOrder: number;
+}
 
 interface CandidateDetailClientProps {
   jobId: number;
   applicationId: number;
   token: string;
   initialFeedbacks: Feedback[];
+  stages: Stage[];
+  currentStageId: number;
 }
 
 export default function CandidateDetailClient({
@@ -24,13 +32,21 @@ export default function CandidateDetailClient({
   applicationId,
   token,
   initialFeedbacks,
+  stages,
+  currentStageId,
+
 }: CandidateDetailClientProps) {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>(initialFeedbacks);
+  const [activeStageId, setActiveStageId] = useState<number>(currentStageId);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   function handleSuccess() {
     setSuccessMessage("Feedback guardado correctamente");
     setTimeout(() => setSuccessMessage(null), 3000);
+  }
+
+   function handleStageChange(newStageId: number) {
+    setActiveStageId(newStageId);
   }
 
   return (
@@ -40,6 +56,17 @@ export default function CandidateDetailClient({
           {successMessage}
         </div>
       )}
+
+    <div className="bg-gray-800 border border-gray-700 rounded-xl p-4 mb-6">
+        <StageSelector
+          applicationId={applicationId}
+          currentStageId={activeStageId}
+          stages={stages}
+          token={token}
+          onSuccess={handleStageChange}
+        />
+    </div>
+
 
     <div className="mb-6 flex flex-col gap-4">
     {feedbacks.map((fb) => (
@@ -78,7 +105,7 @@ export default function CandidateDetailClient({
         <h2 className="text-white font-semibold mb-4">Agregar feedback</h2>
         <FeedbackForm
           applicationId={applicationId}
-          stageId={1}
+          stageId={activeStageId}
           token={token}
           onSuccess={handleSuccess}
         />
