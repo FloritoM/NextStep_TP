@@ -4,11 +4,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faUser, faLock, faFloppyDisk, faBan } from "@fortawesome/free-solid-svg-icons";
+import { EyeIcon, EyeOffIcon } from '@/app/ui/passwordIcons'
 import { User } from "@/app/lib/definitions";
 
 export default function EditProfile({ userId, token }: { userId: string, token: string }) {
     const [user, setUser] = useState<User>();
     const [editForm, setEditForm] = useState({ firstName: "", lastName: "", email: "", password: "", role: "", createdAt: "" });
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
         async function loadUser() {
@@ -80,7 +82,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                 <div className="profile-grid max-w-7xl mx-auto mt-32">
                     <div className="first justify-start py-6">
                         <h1 className="text-[1.75rem] text-gray-50 font-bold">Mi perfil</h1>
-                        <p className="text-gray-50">Gestiona tu informacion personal y de acceso</p>
+                        <p className="text-gray-50">Gestioná tu información personal y de acceso</p>
                     </div>
 
                     <div className="second flex justify-end">
@@ -98,7 +100,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                         password: ""
                                     });
                                 }}>
-                                <FontAwesomeIcon icon={faBan} className="text-black" />
+                                <FontAwesomeIcon icon={faBan} className="text-black pr-1" />
                                 Cancelar</button> : null}
                         </div>
                         <div>
@@ -106,7 +108,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                 type="submit"
                                 className="cursor-pointer border-none bg-yellow-400 rounded-lg text-xl text-black font-semibold hover:bg-amber-600 p-4"
                             >
-                                <FontAwesomeIcon icon={isEditing ? faFloppyDisk : faPenToSquare} className="text-black" />
+                                <FontAwesomeIcon icon={isEditing ? faFloppyDisk : faPenToSquare} />
 
                                 {isEditing ? " Guardar" : " Editar Perfil"}
                             </button>
@@ -114,8 +116,8 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                     </div>
 
                     <div className="third rounded-xl border border-gray-700 bg-gray-800/50 p-5 flex flex-col items-center">
-                        <div className="border border-white rounded-full mb-2">
-                            <p className="text-amber-600 font-bold text-[4.375rem] p-5 select-none">{initials}</p>
+                        <div className="border border-white rounded-full mb-2 w-28 h-28 flex items-center justify-center">
+                            <p className="text-amber-600 font-bold text-[4.375rem] select-none">{initials}</p>
                         </div>
                         <div className="flex flex-col items-center">
                             <p className="text-xl text-gray-50 font-bold">{user?.firstName} {user?.lastName}</p>
@@ -125,20 +127,20 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
 
                     <div className="fourth rounded-xl border border-gray-700 bg-gray-800/50 p-5 text-white">
                         <p className="pb-5 pt-1 text-[1.375rem]">
-                            <FontAwesomeIcon icon={faUser} className="text-amber-600" /> Informacion personal
+                            <FontAwesomeIcon icon={faUser} className="text-amber-600" /> Información personal
                         </p>
                         <div className="section gap-5">
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Nombre</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded" value={editForm.firstName} onChange={e => setEditForm(prev => ({ ...prev, firstName: e.target.value }))} />
+                                    ? <input className="bg-gray-700 text-white rounded pl-2" value={editForm.firstName} onChange={e => setEditForm(prev => ({ ...prev, firstName: e.target.value }))} />
                                     : <p className="text-white">{user?.firstName}</p>
                                 }
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Apellido</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded" value={editForm.lastName} onChange={e => setEditForm(prev => ({ ...prev, lastName: e.target.value }))} />
+                                    ? <input className="bg-gray-700 text-white rounded pl-2" value={editForm.lastName} onChange={e => setEditForm(prev => ({ ...prev, lastName: e.target.value }))} />
                                     : <p className="text-white">{user?.lastName}</p>
                                 }
                             </div>
@@ -155,27 +157,36 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
 
                     <div className="fifth rounded-xl border border-gray-700 bg-gray-800/50 p-5 text-white">
                         <p className="pb-5 pt-1 text-[1.375rem]">
-                            <FontAwesomeIcon icon={faLock} className="text-amber-600" /> Informacion de acceso
+                            <FontAwesomeIcon icon={faLock} className="text-amber-600" /> Información de acceso
                         </p>
                         <div className="section gap-5">
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Email</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded" value={editForm.email} onChange={e => setEditForm(prev => ({ ...prev, email: e.target.value }))} />
+                                    ? <input className="bg-gray-700 text-white rounded pl-2" value={editForm.email} onChange={e => setEditForm(prev => ({ ...prev, email: e.target.value }))} />
                                     : <p className="text-white">{user?.email}</p>
                                 }
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Contraseña</label>
                                 {isEditing
-                                    ? <input
-                                        id="password"
-                                        type="password"
-                                        className="bg-gray-700 text-white rounded"
-                                        value={editForm.password}
-                                        onChange={handlePasswordChange}
-                                    />
-                                    : <p className="text-white">••••••••</p>
+                                    ? <div className="relative">
+                                        <input
+                                            id="password"
+                                            type={showPassword ? "text" : "password"}
+                                            className="bg-gray-700 text-white rounded pl-2 pr-10"
+                                            value={editForm.password}
+                                            onChange={handlePasswordChange}
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowPassword((v) => !v)}
+                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors focus:outline-none"
+                                        >
+                                            {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                                        </button>
+                                    </div>
+                                    : <p className="text-white pl-2">••••••••</p>
                                 }
                                 {!validPass && <p className="text-white text-sm">{passErrorMsg}</p>}
                             </div>

@@ -23,8 +23,12 @@ export async function authenticate(
           if (error.cause?.err?.message === 'inactive') {
             return 'Tu cuenta está desactivada. Contactá al administrador.';
           }
+          if (error.cause?.err?.message === 'server_unavailable') {
+            return 'El servidor no está disponible en este momento. Intentá más tarde.';
+          }
+          return 'Algo salió mal.';
         default:
-          return 'Algo salio mal.';
+          return 'Algo salió mal.';
       }
     }
     throw error;
