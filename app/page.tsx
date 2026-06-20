@@ -19,9 +19,9 @@ export default function Landing() {
           <div className="flex justify-center pb-5">
             <nav className="w-[100%]">
               <ul className="flex justify-center gap-15 text-white text-[1.5rem] bg-gray-700 py-3">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#nosotros">Clientes</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#inicio" className="hover:text-amber-500">Inicio</a></li>
+                <li><a href="#nosotros" className="hover:text-amber-500">Clientes</a></li>
+                <li><a href="#contacto" className="hover:text-amber-500">Contacto</a></li>
               </ul>
             </nav>
           </div>
