@@ -44,7 +44,7 @@ export default function AuditLogs({ logs }: { logs: AuditLog[] }) {
                 footer: (props) => props.column.id,
             },
             {
-                accessorKey: 'entity_id',
+                accessorKey: 'entityId',
                 cell: (info) => info.getValue(),
                 header: () => 'Entidad ID',
                 footer: (props) => props.column.id,
