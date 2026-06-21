@@ -39,7 +39,7 @@ export default async function ApplicantCvPage() {
       )}
 
       <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 max-w-2xl">
-        <CvUpload userId={user.id as number} />
+        <CvUpload userId={user.id as number} token={token as string} />
       </div>
     </div>
   );

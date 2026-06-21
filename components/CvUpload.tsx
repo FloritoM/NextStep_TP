@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 
-export default function CvUpload({ userId }: { userId: number }) {
+export default function CvUpload({ userId, token }: { userId: number, token: string }) {
   const [file, setFile] = useState<File | null>(null);
   const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'error'>('idle');
   const [result, setResult] = useState<{ name: string; url: string } | null>(null);
@@ -36,7 +36,7 @@ export default function CvUpload({ userId }: { userId: number }) {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/cv/upload`,
-        { method: 'POST', body: formData }
+        { method: 'POST', body: formData, headers: { Authorization: `Bearer ${token}` } }
       );
 
       const data = await res.json();
