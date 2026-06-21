@@ -65,8 +65,6 @@ export type AuditLog = {
   createdAt: string | Date;
 };
 
-
-
 export type Stage = {
   id: number;
   name: string;

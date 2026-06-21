@@ -11,6 +11,38 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
     const [user, setUser] = useState<User>();
     const [editForm, setEditForm] = useState({ firstName: "", lastName: "", email: "", password: "", role: "", createdAt: "" });
     const [showPassword, setShowPassword] = useState(false);
+    const [formErrors, setFormErrors] = useState<{ firstName?: string; lastName?: string; email?: string }>({});
+
+    function validateForm() {
+        const newErrors: { firstName?: string; lastName?: string; email?: string } = {};
+
+        if (!editForm.firstName.trim()) {
+            newErrors.firstName = "El nombre es requerido";
+        } else if (editForm.firstName.trim().length < 2) {
+            newErrors.firstName = "El nombre debe tener al menos 2 caracteres";
+        } else if (editForm.firstName.trim().length > 50) {
+            newErrors.firstName = "El nombre es demasiado largo";
+        }
+
+        if (!editForm.lastName.trim()) {
+            newErrors.lastName = "El apellido es requerido";
+        } else if (editForm.lastName.trim().length < 2) {
+            newErrors.lastName = "El apellido debe tener al menos 2 caracteres";
+        } else if (editForm.lastName.trim().length > 50) {
+            newErrors.lastName = "El apellido es demasiado largo";
+        }
+
+        if (!editForm.email.trim()) {
+            newErrors.email = "El email es requerido";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editForm.email)) {
+            newErrors.email = "El email no es válido";
+        } else if (editForm.email.length > 50) {
+            newErrors.email = "El email es demasiado largo";
+        }
+
+        setFormErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
 
     useEffect(() => {
         async function loadUser() {
@@ -41,10 +73,16 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
 
     const initials = `${user?.firstName?.[0] ?? ""}${user?.lastName?.[0] ?? ""}`.toUpperCase();
 
+    const [emailError, setEmailError] = useState("");
+
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         if (isEditing) {
+            if (!validateForm()) return;
+
+            setEmailError("");
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
@@ -55,6 +93,15 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                     password: editForm.password || undefined
                 })
             });
+
+            if (!res.ok) {
+                if (res.status === 409) {
+                    setEmailError("Ese email ya está en uso por otro usuario");
+                } else {
+                    setEmailError("Ocurrió un error al actualizar el perfil");
+                }
+                return;
+            }
 
             const updated = await res.json();
             setUser(updated);
@@ -91,6 +138,8 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                 className="cursor-pointer border-none bg-yellow-400 rounded-lg text-xl text-black font-semibold hover:bg-amber-600 p-4"
                                 onClick={() => {
                                     setIsEditing(false);
+                                    setEmailError("");
+                                    setFormErrors({});
                                     setEditForm({
                                         firstName: user?.firstName ?? "",
                                         lastName: user?.lastName ?? "",
@@ -116,8 +165,8 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                     </div>
 
                     <div className="third rounded-xl border border-gray-700 bg-gray-800/50 p-5 flex flex-col items-center">
-                        <div className="border border-white rounded-full mb-2 w-28 h-28 flex items-center justify-center">
-                            <p className="text-amber-600 font-bold text-[4.375rem] select-none">{initials}</p>
+                        <div className="border border-white rounded-full mb-2 w-32 h-32 flex items-center justify-center">
+                            <p className="text-amber-600 font-bold text-[3.5rem] select-none">{initials}</p>
                         </div>
                         <div className="flex flex-col items-center">
                             <p className="text-xl text-gray-50 font-bold">{user?.firstName} {user?.lastName}</p>
@@ -136,6 +185,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                     ? <input className="bg-gray-700 text-white rounded pl-2" value={editForm.firstName} onChange={e => setEditForm(prev => ({ ...prev, firstName: e.target.value }))} />
                                     : <p className="text-white">{user?.firstName}</p>
                                 }
+                                {formErrors.firstName && <p className="text-red-400 text-sm">{formErrors.firstName}</p>}
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Apellido</label>
@@ -143,6 +193,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                     ? <input className="bg-gray-700 text-white rounded pl-2" value={editForm.lastName} onChange={e => setEditForm(prev => ({ ...prev, lastName: e.target.value }))} />
                                     : <p className="text-white">{user?.lastName}</p>
                                 }
+                                {formErrors.lastName && <p className="text-red-400 text-sm">{formErrors.lastName}</p>}
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Rol</label>
@@ -163,9 +214,11 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Email</label>
                                 {isEditing
-                                    ? <input className="bg-gray-700 text-white rounded pl-2" value={editForm.email} onChange={e => setEditForm(prev => ({ ...prev, email: e.target.value }))} />
+                                    ? <input className="bg-gray-700 text-white rounded pl-2" value={editForm.email} onChange={e => { setEditForm(prev => ({ ...prev, email: e.target.value })); setEmailError(""); }} />
                                     : <p className="text-white">{user?.email}</p>
                                 }
+                                {formErrors.email && <p className="text-red-400 text-sm">{formErrors.email}</p>}
+                                {emailError && <p className="text-red-400 text-sm">{emailError}</p>}
                             </div>
                             <div className="sub-section">
                                 <label className="text-white font-semibold">Contraseña</label>
@@ -174,7 +227,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                         <input
                                             id="password"
                                             type={showPassword ? "text" : "password"}
-                                            className="bg-gray-700 text-white rounded pl-2 pr-10"
+                                            className="bg-gray-700 text-white rounded pl-2 pr-10 [&::-ms-reveal]:hidden [&::-ms-clear]:hidden"
                                             value={editForm.password}
                                             onChange={handlePasswordChange}
                                         />

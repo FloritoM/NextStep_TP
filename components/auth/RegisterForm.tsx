@@ -193,7 +193,7 @@ export default function RegisterForm({ role, onSuccess, onBack }: RegisterFormPr
                 errors.password
                   ? "border-red-500/60 bg-red-500/5"
                   : "border-[#1e2d3d] hover:border-[#2a3d52]"
-              }`}
+              } [&::-ms-reveal]:hidden [&::-ms-clear]:hidden`}
             />
             <button
               type="button"

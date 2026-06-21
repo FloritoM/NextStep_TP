@@ -60,7 +60,7 @@ export default function Login() {
                             </label>
                             <div className="relative">
                                 <input
-                                    className="block bg-gray-50 w-full py-[9px] pl-3 pr-10 text-sm placeholder:text-gray-500 rounded-xl outline-none"
+                                    className="block bg-gray-50 w-full py-[9px] pl-3 pr-10 text-sm placeholder:text-gray-500 rounded-xl outline-none [&::-ms-reveal]:hidden [&::-ms-clear]:hidden"
                                     id="password"
                                     type={showPassword ? "text" : "password"}
                                     name="password"
