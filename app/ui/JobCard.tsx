@@ -34,7 +34,7 @@ export default function JobCard({ job, userRole, token }: JobCardProps) {
         setErrorMessage('');
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-applications`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-applications`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -98,7 +98,7 @@ export default function JobOffersLogs({ jobOffers, token }: { jobOffers: JobOffe
                         isActive={info.getValue() as boolean}
                         entityId={info.row.original.id}
                         onToggle={async (id) => {
-                            await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-offers/${id}`, {
+                            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers/${id}`, {
                                 method: 'PATCH',
                                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                                 body: JSON.stringify({ isActive: !info.getValue() })

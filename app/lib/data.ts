@@ -1,6 +1,6 @@
 export async function getJobOffers(token: string | undefined) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-offers`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers`, {
       cache: 'no-store',
       headers: {
         'Authorization': `Bearer ${token}` 
@@ -21,7 +21,7 @@ export async function getJobOffers(token: string | undefined) {
 
 export async function getSeniorities(token: string | undefined) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/seniority`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seniority`, {
       cache: 'no-store',
       headers: {
         'Authorization': `Bearer ${token}` 

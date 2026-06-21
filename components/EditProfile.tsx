@@ -46,7 +46,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
 
     useEffect(() => {
         async function loadUser() {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${userId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const data = await res.json();
@@ -83,7 +83,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
 
             setEmailError("");
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${userId}`, {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify({

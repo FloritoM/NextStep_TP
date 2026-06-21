@@ -3,6 +3,9 @@ import { redirect } from "next/navigation";
 import { getJobOffer, getJobApplications, getStages } from "@/lib/recruiter";
 import { User } from "@/app/lib/definitions";
 import JobDetailClient from "@/components/recruiter/JobDetailClient";
+import JobOfferToggle from "../../../JobOfferToggle";
+import { getSeniorities } from "@/app/lib/data";
+import EditJobButton from "@/components/recruiter/EditJobButton";
 
 export default async function JobDetailPage({
   params,
@@ -19,25 +22,43 @@ export default async function JobDetailPage({
   const { id } = await params;
   const jobId = Number(id);
 
-  const [job, applications, stages] = await Promise.all([
+  const [job, applications, stages, seniorities] = await Promise.all([
     getJobOffer(jobId, token),
     getJobApplications(jobId, token),
     getStages(token),
+    getSeniorities(token),
+
   ]);
 
   return (
     <div className="p-6">
       <div className="max-w-5xl mx-auto">
-        <div className="flex items-center gap-3 mb-6">
+        <div className="flex items-center gap-3 mb-2">
           <a href="/recruiter/dashboard" className="text-gray-400 hover:text-white text-sm transition-colors">
             ← Volver
           </a>
+
           <h1 className="text-xl font-bold text-white">{job?.title}</h1>
-          <span className={`text-xs px-3 py-1 rounded-full font-semibold ${
-            job?.isActive ? "bg-green-900 text-green-300" : "bg-yellow-900 text-yellow-300"
-          }`}>
-            {job?.isActive ? "Activa" : "Pausada"}
-          </span>
+          <JobOfferToggle
+            jobId={jobId}
+            initialIsActive={job?.isActive ?? false}
+            token={token}
+          />
+        </div>
+
+        <div className="mb-6 ml-1">
+          <p className="text-gray-400 text-sm">
+            Seniority: <span className="text-white">{job?.seniority?.name ?? "Sin definir"}</span>
+          </p>
+          <p className="text-gray-400 text-sm mt-1 mb-3">{job?.description}</p>
+          <EditJobButton
+            token={token}
+            seniorities={seniorities}
+            jobId={jobId}
+            initialTitle={job?.title ?? ""}
+            initialDescription={job?.description ?? ""}
+            initialSeniorityId={job?.seniority?.id}
+          />
         </div>
 
         <JobDetailClient

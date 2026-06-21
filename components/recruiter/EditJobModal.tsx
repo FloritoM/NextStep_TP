@@ -4,7 +4,25 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Seniority } from "@/app/lib/definitions";
 
-export default function CreateJobModal({ onClose, token, seniorities }: { onClose: () => void, token: string | undefined, seniorities: Seniority[] }) {
+interface EditJobModalProps {
+  onClose: () => void;
+  token: string | undefined;
+  seniorities: Seniority[];
+  jobId: number;
+  initialTitle: string;
+  initialDescription: string;
+  initialSeniorityId?: number;
+}
+
+export default function EditJobModal({
+  onClose,
+  token,
+  seniorities,
+  jobId,
+  initialTitle,
+  initialDescription,
+  initialSeniorityId,
+}: EditJobModalProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -13,21 +31,21 @@ export default function CreateJobModal({ onClose, token, seniorities }: { onClos
     setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    
-    const newJob = {
+
+    const updatedJob = {
       title: formData.get("title"),
-      seniorityId: Number(formData.get("seniorityId")), 
+      seniorityId: Number(formData.get("seniorityId")),
       description: formData.get("description"),
     };
 
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers`, {
-        method: "POST",
-        headers: { 
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers/${jobId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(newJob),
+        body: JSON.stringify(updatedJob),
       });
 
       if (res.ok) {
@@ -48,21 +66,22 @@ export default function CreateJobModal({ onClose, token, seniorities }: { onClos
   return (
     <div className="fixed inset-0 bg-black/75 flex justify-center items-center z-50">
       <div className="bg-gray-800 p-8 rounded-xl w-[500px]">
-        <h2 className="text-2xl font-bold text-white mb-6">Crear Nueva Vacante</h2>
-        
+        <h2 className="text-2xl font-bold text-white mb-6">Editar Vacante</h2>
+
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <input 
-            name="title" 
-            placeholder="Título (Ej. Desarrollador Frontend)" 
-            required 
-            className="p-3 bg-gray-700 text-white rounded"
-          />
-          
-          <select 
-            name="seniorityId" 
+          <input
+            name="title"
+            placeholder="Título (Ej. Desarrollador Frontend)"
+            defaultValue={initialTitle}
             required
             className="p-3 bg-gray-700 text-white rounded"
-            defaultValue=""
+          />
+
+          <select
+            name="seniorityId"
+            required
+            className="p-3 bg-gray-700 text-white rounded"
+            defaultValue={initialSeniorityId ?? ""}
           >
             <option value="" disabled>Seleccioná un seniority</option>
             {seniorities.map((sen) => (
@@ -72,18 +91,19 @@ export default function CreateJobModal({ onClose, token, seniorities }: { onClos
             ))}
           </select>
 
-          <textarea 
-            name="description" 
-            placeholder="Descripción del puesto..." 
-            required 
+          <textarea
+            name="description"
+            placeholder="Descripción del puesto..."
+            defaultValue={initialDescription}
+            required
             rows={4}
             className="p-3 bg-gray-700 text-white rounded"
           />
-          
+
           <div className="flex justify-end gap-4 mt-4">
             <button type="button" onClick={onClose} className="text-gray-400">Cancelar</button>
             <button type="submit" disabled={isLoading} className="bg-amber-600 text-white px-6 py-2 rounded font-bold">
-              {isLoading ? 'Guardando...' : 'Publicar Vacante'}
+              {isLoading ? 'Guardando...' : 'Guardar cambios'}
             </button>
           </div>
         </form>

@@ -94,7 +94,7 @@ export default function UserLogs({ users, token }: { users: User[], token: strin
                         isActive={info.getValue() as boolean}
                         entityId={info.row.original.id}
                         onToggle={async (id) => {
-                            await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${id}`, {
+                            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
                                 method: 'PATCH',
                                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                                 body: JSON.stringify({ isActive: !info.getValue() })
