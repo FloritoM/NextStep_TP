@@ -71,10 +71,12 @@ export default function FeedbackForm({
         }),
       });
 
-      if (!feedbackRes.ok) throw new Error("Error al guardar el feedback");
-
       const feedback = await feedbackRes.json();
 
+      if (!feedbackRes.ok) {
+        throw new Error(feedback.message || "Error al guardar el feedback");
+      }
+      
       await Promise.all(
         scorecards.map((sc) =>
           fetch(`${API_URL}/scorecards`, {

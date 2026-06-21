@@ -3,15 +3,18 @@
 import { useState } from "react";
 import FeedbackForm from "./FeedbackForm";
 import StageSelector from "./StageSelector";
+import FeedbackCard from "./FeedbackCard";
+
 
 interface Feedback {
   id: number;
-  stage?: { name: string };
+  stage?: { id:number, name: string };
   createdAt: string;
   internalNotes?: string;
   comment?: string;
   publicFeedback?: string;
 }
+
 interface Stage {
   id: number;
   name: string;
@@ -39,15 +42,27 @@ export default function CandidateDetailClient({
   const [feedbacks, setFeedbacks] = useState<Feedback[]>(initialFeedbacks);
   const [activeStageId, setActiveStageId] = useState<number>(currentStageId);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-
+  
   function handleSuccess() {
     setSuccessMessage("Feedback guardado correctamente");
     setTimeout(() => setSuccessMessage(null), 3000);
+    window.location.reload();  
   }
 
    function handleStageChange(newStageId: number) {
     setActiveStageId(newStageId);
   }
+
+  function handleFeedbackUpdated(updated: Feedback) {
+    setFeedbacks((prev) =>
+      prev.map((fb) => (fb.id === updated.id ? { ...fb, ...updated } : fb))
+    );
+    setSuccessMessage("Cambios guardados correctamente");
+    setTimeout(() => setSuccessMessage(null), 3000);
+  }
+
+  
+
 
   return (
     <div>
@@ -67,38 +82,20 @@ export default function CandidateDetailClient({
         />
     </div>
 
+    
 
     <div className="mb-6 flex flex-col gap-4">
+    
     {feedbacks.map((fb) => (
-        <div key={fb.id} className="bg-gray-800 border border-gray-700 rounded-xl p-4">
-        <div className="flex items-center justify-between mb-3">
-            <span className="text-amber-500 text-sm font-semibold">
-            {fb.stage?.name}
-            </span>
-            <span className="text-gray-500 text-xs">
-            {new Date(fb.createdAt).toLocaleDateString()}
-            </span>
-        </div>
-        {!fb.internalNotes && !fb.comment ? (
-            <p className="text-gray-500 text-sm italic">Sin feedback cargado todavía</p>
-        ) : (
-            <>
-            {fb.internalNotes && (
-                <div className="mb-2">
-                <p className="text-xs text-gray-500 mb-1">Notas internas</p>
-                <p className="text-gray-300 text-sm">{fb.internalNotes}</p>
-                </div>
-            )}
-            {fb.comment && (
-                <div>
-                <p className="text-xs text-gray-500 mb-1">Comentario</p>
-                <p className="text-gray-300 text-sm">{fb.comment}</p>
-                </div>
-            )}
-            </>
-        )}
-        </div>
+        <FeedbackCard
+          key={fb.id}
+          feedback={fb}
+          token={token}
+          onUpdated={handleFeedbackUpdated}
+        />
     ))}
+
+
     </div>
 
       <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">

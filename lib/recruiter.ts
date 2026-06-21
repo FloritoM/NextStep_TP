@@ -77,6 +77,21 @@ export async function updateFeedback(id: number, data: object, token: string) {
   return res.json();
 }
 
+export async function generatePublicFeedback(applicationId: number, token: string) {
+  const res = await fetch(`${API_URL}/feedback/generate/${applicationId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || "Error al generar el feedback");
+  }
+  return res.json();
+}
+
 // ── Scorecards ──
 export async function getScorecardsByFeedback(feedbackId: number, token: string) {
   const res = await fetch(`${API_URL}/scorecards/feedback/${feedbackId}`, {
