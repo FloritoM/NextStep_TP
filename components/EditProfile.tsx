@@ -46,23 +46,31 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
 
     useEffect(() => {
         async function loadUser() {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            const data = await res.json();
-            setUser(data);
-            setEditForm({
-                firstName: data.firstName,
-                lastName: data.lastName,
-                email: data.email,
-                role: data.role.name,
-                createdAt: new Date(data.createdAt).toLocaleDateString('es-AR', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric'
-                }),
-                password: ""
-            });
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/my-info`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (!res.ok) {
+                    console.error("Error al cargar el usuario:", await res.text());
+                    return;
+                }
+                const data = await res.json();
+                setUser(data);
+                setEditForm({
+                    firstName: data.firstName || "",
+                    lastName: data.lastName || "",
+                    email: data.email || "",
+                    role: data?.role?.name || data?.role || "",
+                    createdAt: data.createdAt ? new Date(data.createdAt).toLocaleDateString('es-AR', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric'
+                    }) : "",
+                    password: ""
+                });
+            } catch (err) {
+                console.error("Error al cargar el perfil:", err);
+            }
         }
         loadUser();
     }, [userId]);
@@ -144,7 +152,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                         firstName: user?.firstName ?? "",
                                         lastName: user?.lastName ?? "",
                                         email: user?.email ?? "",
-                                        role: user?.role.name ?? "",
+                                        role: user?.role?.name ?? "",
                                         createdAt: editForm.createdAt,
                                         password: ""
                                     });
