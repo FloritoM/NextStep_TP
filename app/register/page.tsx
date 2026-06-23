@@ -11,7 +11,10 @@ export default function RegisterPage() {
   }
 
   return (
-    <div>
+    <div
+      className="min-h-screen bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: "url('/login-background.png')" }}
+    >
       <RegisterModal onClose={handleClose} />
     </div>
   );

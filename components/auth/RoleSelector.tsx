@@ -1,18 +1,20 @@
 "use client";
 
-import {UserRole} from "@/types/auth";
+import { UserRole } from "@/types/auth";
+import { pacifico } from "@/app/ui/fonts";
+import Link from "next/link";
 
-interface RoleSelectorProps{
-    onSelect:(role:UserRole)=>void;
+interface RoleSelectorProps {
+  onSelect: (role: UserRole) => void;
 }
 
-const roles=[
-    {
-        value:"applicant" as UserRole,
-        label: "Candidato",
-        description: "Buscas nuevas oportunidades y te gustaría recibir feedbacks reales de tus procesos",
-        icon:(
-              <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
+const roles = [
+  {
+    value: "applicant" as UserRole,
+    label: "Candidato",
+    description: "Buscas nuevas oportunidades y te gustaría recibir feedbacks reales de tus procesos",
+    icon: (
+      <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
         <circle cx="14" cy="9" r="4.5" stroke="currentColor" strokeWidth="1.8" />
         <path d="M5 24c0-4.418 4.03-8 9-8s9 3.582 9 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
       </svg>
@@ -21,9 +23,9 @@ const roles=[
   {
     value: "recruiter" as UserRole,
     label: "Reclutador",
-    description:"Publicas búsquedas laborales, evaluas candidatos y cargas feedback estructurado",
+    description: "Publicas búsquedas laborales, evaluas candidatos y cargas feedback estructurado",
     icon: (
-        <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
+      <svg className="w-7 h-7" viewBox="0 0 28 28" fill="none">
         <rect x="4" y="6" width="20" height="16" rx="2.5" stroke="currentColor" strokeWidth="1.8" />
         <path d="M4 11h20" stroke="currentColor" strokeWidth="1.8" />
         <path d="M9 17h6M9 20h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
@@ -33,28 +35,27 @@ const roles=[
 
     ),
   },
-  
 ];
 
 export default function RoleSelector({ onSelect }: RoleSelectorProps) {
   return (
     <div >
       <div className="text-center mb-8">
-        <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">
-          ¿Cómo vas a usar NextStep?
+        <h1 className="text-[1.75rem] font-bold text-white mb-2 tracking-tight">
+          ¿Cómo vas a usar <span className="text-white font-bold">Next<span className={`${pacifico.className} italic text-amber-600 font-semibold`}>Step</span></span> ?
         </h1>
-        <p className="text-[#8899aa] text-sm">
+        <p className="text-[#8899aa] text-white">
           Elegí el rol que mejor describe tu perfil
         </p>
       </div>
 
       <div className="flex flex-col gap-4">
         {roles.map((role) => (
-              <button
-                key={role.value}
-                onClick={() => onSelect(role.value)}
-                className="relative text-left w-full rounded-2xl border border-[#1e2d3d] bg-[#0d1824] hover:border-[#3b9ede]/60 hover:bg-[#0f1f30] transition-colors duration-200 p-6 cursor-pointer focus:outline-none"
-              >
+          <button
+            key={role.value}
+            onClick={() => onSelect(role.value)}
+            className="relative text-left w-full rounded-2xl border border-[#1e2d3d] bg-[#0d1824] hover:border-[#3b9ede]/60 hover:bg-[#0f1f30] transition-colors duration-200 p-6 cursor-pointer focus:outline-none"
+          >
 
             <div className="flex items-start gap-4 relative">
               <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#0a1a28] border border-[#1e2d3d] flex items-center justify-center text-[#3b9ede]">
@@ -74,13 +75,16 @@ export default function RoleSelector({ onSelect }: RoleSelectorProps) {
                     <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <p className="text-[#6a7f94] text-sm leading-relaxed">
+                <p className="text-gray-300 leading-relaxed">
                   {role.description}
                 </p>
               </div>
             </div>
           </button>
         ))}
+      </div>
+      <div className="flex justify-center mt-6 font-bold text-[1.3rem] text-amber-600 hover:text-yellow-400">
+        <Link href="/">← Volver</Link>
       </div>
     </div>
   );

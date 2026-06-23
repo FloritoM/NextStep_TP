@@ -34,7 +34,7 @@ export default function Login() {
                         </div>
                     </div>
                     <div>
-                        <p className="text-[1.75rem] text-gray-50 font-bold text-center mb-6">
+                        <p className="text-[1.75rem] text-gray-50 font-bold text-center mb-3">
                             Inicio de sesión
                         </p>
                     </div>
@@ -107,6 +107,9 @@ export default function Login() {
                             Registrate acá
                         </Link>
                     </div>
+                </div>
+                <div className="flex justify-center mt-1 mb-4 font-bold text-[1.3rem] text-amber-600 hover:text-yellow-400">
+                    <Link href="/">← Volver</Link>
                 </div>
             </form>
         </div>
