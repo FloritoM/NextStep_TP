@@ -4,7 +4,7 @@ import { auth } from '@/auth'
 export default async function LogsPage() {
     const session = await auth()
 
-    const res = await fetch(`${process.env.BACKEND_URL}/audit-logs`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/audit-logs`, {
         headers: {
             Authorization: `Bearer ${session?.accessToken}`
         }

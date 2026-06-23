@@ -8,13 +8,13 @@ export default async function AdminDashboard() {
     const session = await auth()
 
     const [users, logs, jobOffers] = await Promise.all([
-        fetch(`${process.env.BACKEND_URL}/users`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
             headers: { Authorization: `Bearer ${session?.accessToken}` }
         }).then(res => res.json()),
-        fetch(`${process.env.BACKEND_URL}/audit-logs`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/audit-logs`, {
             headers: { Authorization: `Bearer ${session?.accessToken}` }
         }).then(res => res.json()),
-        fetch(`${process.env.BACKEND_URL}/job-offers`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers`, {
             headers: { Authorization: `Bearer ${session?.accessToken}` }
         }).then(res => res.json()),
     ])

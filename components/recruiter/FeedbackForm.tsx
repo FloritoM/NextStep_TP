@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import ScorecardInput from "./ScorecardInput";
+import { createFeedback, createScorecard } from "@/lib/recruiter";
+
 
 interface Scorecard {
   skillName: string;
@@ -30,7 +32,6 @@ export default function FeedbackForm({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
   function addSkill() {
     if (!newSkill.trim()) return;
@@ -57,41 +58,27 @@ export default function FeedbackForm({
     setError(null);
 
     try {
-      const feedbackRes = await fetch(`${API_URL}/feedback`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
+      const feedback = await createFeedback(
+        {
           application_id: applicationId,
           stage_id: stageId,
           comment,
           internalNotes,
-        }),
-      });
+        },
+        token
+      );
 
-      const feedback = await feedbackRes.json();
-
-      if (!feedbackRes.ok) {
-        throw new Error(feedback.message || "Error al guardar el feedback");
-      }
-      
       await Promise.all(
         scorecards.map((sc) =>
-          fetch(`${API_URL}/scorecards`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
+          createScorecard(
+            {
               feedbackId: feedback.id,
               skillName: sc.skillName,
               score: sc.score,
               type: sc.type,
-            }),
-          })
+            },
+            token
+          )
         )
       );
 
@@ -102,7 +89,8 @@ export default function FeedbackForm({
       setIsLoading(false);
     }
   }
-
+        
+       
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       {error && (

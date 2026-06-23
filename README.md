@@ -76,7 +76,6 @@ Crear el archivo `.env.local` en la raíz del proyecto:
 ```env
 # URL del backend (debe estar corriendo en el puerto 3001)
 NEXT_PUBLIC_API_URL=http://localhost:3001
-BACKEND_URL=http://localhost:3001
 
 # NextAuth
 AUTH_SECRET=tu_secreto_nextauth_aqui
@@ -152,7 +151,7 @@ admin      →  /admin/dashboard
 
 **Login no funciona (ECONNREFUSED)**
 - Verificar que el backend esté corriendo en el puerto 3001
-- Verificar que `BACKEND_URL` en `.env.local` sea `http://localhost:3001`
+- Verificar que `NEXT_PUBLIC_API_URL` en `.env.local` sea `http://localhost:3001`
 
 **Puerto en uso**
 ```bash

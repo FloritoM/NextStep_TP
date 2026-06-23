@@ -60,8 +60,10 @@ export async function createFeedback(data: object, token: string) {
     },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error("Error al crear el feedback");
-  return res.json();
+
+  const result = await res.json();
+  if (!res.ok) throw new Error(result.message || "Error al crear el feedback");
+  return result;
 }
 
 export async function updateFeedback(id: number, data: object, token: string) {
@@ -140,4 +142,16 @@ export async function updateScorecard(id: number, data: object, token: string) {
   });
   if (!res.ok) throw new Error("Error al actualizar la scorecard");
   return res.json();
+}
+
+export async function generateFeedbackForOne(feedbackId: number, token: string) {
+  const res = await fetch(`${API_URL}/feedback/${feedbackId}/generate`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || "Error al generar el feedback");
+  }
+  return data;
 }

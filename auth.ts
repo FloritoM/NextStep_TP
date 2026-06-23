@@ -29,7 +29,7 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
         let res: Response;
         try {
           res = await fetch(
-            `${process.env.BACKEND_URL}/auth/login`,
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
             {
               method: 'POST',
               headers: {
