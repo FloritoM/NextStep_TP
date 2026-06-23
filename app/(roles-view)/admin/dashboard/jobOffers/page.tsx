@@ -11,6 +11,7 @@ export default async function JobOffersLogPage() {
     })
 
     const data = await res.json()
+    console.log(data);
 
     return (
         <>

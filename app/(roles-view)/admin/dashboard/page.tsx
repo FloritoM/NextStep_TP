@@ -22,7 +22,7 @@ export default async function AdminDashboard() {
     return (
         <div className="bg-main">
 
-            <div>
+            <div className='mt-10'>
                 <h1 className="text-3xl font-bold text-gray-100">Resumen de Actividad</h1>
                 <p className="text-gray-400 mt-2">Gestioná usuarios, ofertas laborales y revisá la actividad del sistema.</p>
             </div>
@@ -44,7 +44,7 @@ export default async function AdminDashboard() {
                 </div>
             </section>
             <section id="charts" className="mt-20">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[95%] mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[100%] mx-auto">
                     <div className="rounded-xl border border-gray-700 bg-gray-800/50 p-6">
                         <h2 className="text-center text-white font-bold text-xl mb-4">Usuarios activos vs inactivos</h2>
                         <AdminUserGraph users={users} />
