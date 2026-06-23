@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { updateFeedback, getScorecardsByFeedback } from "@/lib/recruiter";
+import { updateFeedback, getScorecardsByFeedback,generateFeedbackForOne } from "@/lib/recruiter";
+
 
 interface Feedback {
   id: number;
@@ -35,7 +36,6 @@ export default function FeedbackCard({ feedback, token, onUpdated }: FeedbackCar
   const [error, setError] = useState<string | null>(null);
   const [scorecards, setScorecards] = useState<Scorecard[]>([]);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
   useEffect(() => {
     getScorecardsByFeedback(feedback.id, token)
@@ -75,26 +75,16 @@ export default function FeedbackCard({ feedback, token, onUpdated }: FeedbackCar
     setError(null);
 
     try {
-      const res = await fetch(`${API_URL}/feedback/${feedback.id}/generate`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const updated = await generateFeedbackForOne(feedback.id, token);
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || "Error al generar el feedback");
+        setPublicFeedback(updated.publicFeedback ?? "");
+        onUpdated(updated);
+        }catch (err) {
+        setError(err instanceof Error ? err.message : "Ocurrió un error");
+      }finally {
+        setIsGenerating(false);
       }
-
-      const updated = await res.json();
-      setPublicFeedback(updated.publicFeedback ?? "");
-      onUpdated(updated);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Ocurrió un error");
-    } finally {
-      setIsGenerating(false);
     }
-  }
-
   return (
     <div className="bg-gray-800 border border-gray-700 rounded-xl p-4">
       <div className="flex items-center justify-between mb-3">

@@ -21,7 +21,7 @@ export const authConfig = {
       if (account?.provider === 'google' && token.email) {
         try {
           const res = await fetch(
-            `${process.env.BACKEND_URL}/auth/google-login`,
+            `${process.env.NEXT_PUBLIC_API_URL}/auth/google-login`,
             {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },

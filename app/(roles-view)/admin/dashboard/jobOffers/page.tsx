@@ -4,7 +4,7 @@ import { auth } from '@/auth'
 export default async function JobOffersLogPage() {
     const session = await auth()
 
-    const res = await fetch(`${process.env.BACKEND_URL}/job-offers`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers`, {
         headers: {
             Authorization: `Bearer ${session?.accessToken}`
         }
