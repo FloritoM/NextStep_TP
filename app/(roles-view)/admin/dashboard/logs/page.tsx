@@ -1,16 +1,10 @@
 import TableLogs from "@/app/ui/tableLogs"
 import { auth } from '@/auth'
+import { getAuditLogs } from '@/app/lib/data'
 
 export default async function LogsPage() {
     const session = await auth()
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/audit-logs`, {
-        headers: {
-            Authorization: `Bearer ${session?.accessToken}`
-        }
-    })
-
-    const data = await res.json()
+    const data = await getAuditLogs(session?.accessToken)
 
     return (
         <>
