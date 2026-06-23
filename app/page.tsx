@@ -13,8 +13,8 @@ export default function Landing() {
         <header className="sticky top-0 w-full">
           <div className="bg-[url('/landing-header.png')] bg-cover">
             <h1 className="text-center text-[4rem] text-black font-bold py-4 select-none">Next<span className={`${pacifico.className} italic text-amber-600 font-semibold select-none`}>Step</span></h1>
-            <p className="px-17 text-black font-semibold text-[1.5rem] text-center select-none">Simplificamos los procesos de selección</p>
-            <p className="px-17 pb-3 text-black font-semibold text-[1.5rem] text-center select-none">Mejor experiencia para recruiters y candidatos</p>
+            <p className="px-17 text-black font-semibold text-[1.5rem] text-center select-none">Simplificamos los procesos de selección y</p>
+            <p className="px-17 pb-3 text-black font-semibold text-[1.5rem] text-center select-none">mejoramos la experiencia para reclutadores y candidatos.</p>
           </div>
           <div className="flex justify-center pb-5">
             <nav className="w-[100%]">
@@ -28,16 +28,16 @@ export default function Landing() {
         </header>
 
         <div>
-          <p className="px-17 pt-5 pb-10 text-white font-semibold text-[2rem]">¿Qué ofrecemos?</p>
+          <p className="text-center pt-5 pb-10 text-white font-semibold text-[2rem]">¿Qué ofrecemos?</p>
           <div className="flex justify-evenly">
             <div className="flex items-center border border-gray-700 w-[45%] rounded-xl bg-gray-700">
               <FontAwesomeIcon icon={faUserTie} className="text-amber-600 text-[3rem] pl-4" />
-              <p className="px-8 py-3 text-white text-[1.3rem]"><span className="font-semibold text-amber-600">Recruiter:</span> puede publicar una búsqueda laboral, reciba postulantes y
-                cargue feedback estructurado para cada candidato.</p>
+              <p className="px-8 py-3 text-white text-[1.3rem]"><span className="font-semibold text-amber-600">Reclutador:</span> Puede publicar una búsqueda laboral, visualizar la información de los postulantes y
+                cargar feedback estructurado para cada candidato.</p>
             </div>
             <div className="flex items-center border border-gray-700 w-[45%] rounded-xl bg-gray-700">
               <FontAwesomeIcon icon={faUser} className="text-yellow-400 text-[3rem] pl-4" />
-              <p className="px-8 py-3 text-white text-[1.3rem]"><span className="font-semibold text-yellow-400">Candidato:</span> puede visualizar el estado de su postulación y recibir devoluciones
+              <p className="px-8 py-3 text-white text-[1.3rem]"><span className="font-semibold text-yellow-400">Candidato:</span> Puede aplicar a vacantes laborales, seguir el estado de sus postulaciones y recibir devoluciones
                 útiles para seguir mejorando.</p>
             </div>
           </div>
@@ -57,13 +57,13 @@ export default function Landing() {
 
       <section id="nosotros" className="bg-main">
         <div>
-          <p className="px-17 pb-15 text-white font-semibold text-[2rem]">Empresas que trabajan con nosotros</p>
+          <p className="pb-10 text-center text-white font-semibold text-[2rem]">Empresas que confían en nosotros</p>
           <div className="carousel">
             <div className="group">
               <div className="card">
                 <Image
                   src="/carousel_images/meli.jpg"
-                  alt="meli"
+                  alt="Logo de Mercado Libre"
                   width={300}
                   height={200}
                   loading="eager"
@@ -72,7 +72,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/ford.jpg"
-                  alt="ford"
+                  alt="Logo de Ford"
                   width={300}
                   height={200}
                 />
@@ -80,7 +80,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/blizz.jpg"
-                  alt="blizzard"
+                  alt="Logo de Blizzard"
                   width={300}
                   height={200}
                 />
@@ -88,7 +88,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/ypf.jpg"
-                  alt="ypf"
+                  alt="Logo de YPF"
                   width={300}
                   height={200}
                 />
@@ -96,7 +96,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/samsung.jpg"
-                  alt="samsung"
+                  alt="Logo de Samsung"
                   width={300}
                   height={200}
                 />
@@ -104,7 +104,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/riot.jpg"
-                  alt="riot"
+                  alt="Logo de Riot Games"
                   width={300}
                   height={200}
                 />
@@ -115,7 +115,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/meli.jpg"
-                  alt="meli"
+                  alt="Logo de Mercado Libre"
                   width={300}
                   height={200}
                   loading="eager"
@@ -124,7 +124,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/ford.jpg"
-                  alt="meli"
+                  alt="Logo de Ford"
                   width={300}
                   height={200}
                 />
@@ -132,7 +132,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/blizz.jpg"
-                  alt="meli"
+                  alt="Logo de Blizzard"
                   width={300}
                   height={200}
                 />
@@ -140,7 +140,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/ypf.jpg"
-                  alt="meli"
+                  alt="Logo de YPF"
                   width={300}
                   height={200}
                 />
@@ -148,7 +148,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/samsung.jpg"
-                  alt="meli"
+                  alt="Logo de Samsung"
                   width={300}
                   height={200}
                 />
@@ -156,7 +156,7 @@ export default function Landing() {
               <div className="card">
                 <Image
                   src="/carousel_images/riot.jpg"
-                  alt="meli"
+                  alt="Logo de Riot Games"
                   width={300}
                   height={200}
                 />
@@ -167,14 +167,44 @@ export default function Landing() {
         </div>
       </section>
 
-      <section id="contacto" className="bg-main pb-10">
-        <p className="px-17 py-15 text-white font-semibold text-[2rem]">Contacto</p>
-        <div className="px-35 flex flex-col gap-4 items-start">
-          <a href="https://www.instagram.com/centrouniversitariovl" target="_blank" className="flex items-center gap-3 text-white text-[1.5rem]"><FontAwesomeIcon icon={faInstagram} className="text-amber-500 text-[3rem] pr-2" />Instagram</a>
-          <a href="https://github.com/floritoM" target="_blank" className="flex items-center gap-3 text-white text-[1.5rem]"><FontAwesomeIcon icon={faGithub} className="text-amber-500 text-[3rem] pr-2" />GitHub</a>
-          <a href="https://www.youtube.com/watch?v=6dIr256vl1U" target="_blank" className="flex items-center gap-3 text-white text-[1.5rem]"><FontAwesomeIcon icon={faYoutube} className="text-amber-500 text-[3rem] pr-2" />YouTube</a>
+      <footer id="contacto" className="bg-main pt-12 pb-6 px-4">
+        <div className="max-w-6xl mx-auto flex flex-col items-center">
+          <h2 className="text-white font-semibold text-[2rem] mb-8 text-center">
+            Contacto
+          </h2>
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-8 md:gap-12 pb-10 w-full">
+            <a 
+              href="https://www.instagram.com/centrouniversitariovl" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-3 text-white text-[1.25rem] md:text-[1.5rem] transition-all duration-300 hover:text-amber-500 hover:scale-105">
+              <FontAwesomeIcon icon={faInstagram} className="text-amber-500 text-[2.5rem] md:text-[3rem]" />
+              Instagram
+            </a>
+            <a 
+              href="https://github.com/floritoM" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-3 text-white text-[1.25rem] md:text-[1.5rem] transition-all duration-300 hover:text-amber-500 hover:scale-105">
+              <FontAwesomeIcon icon={faGithub} className="text-amber-500 text-[2.5rem] md:text-[3rem]" />
+              GitHub
+            </a>
+            <a 
+              href="https://www.youtube.com/watch?v=6dIr256vl1U" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center gap-3 text-white text-[1.25rem] md:text-[1.5rem] transition-all duration-300 hover:text-amber-500 hover:scale-105">
+              <FontAwesomeIcon icon={faYoutube} className="text-amber-500 text-[2.5rem] md:text-[3rem]" />
+              YouTube
+            </a>
+          </div>
+          <div className="w-full border-t border-white/10 my-4" />
+          <div className="w-full pt-4 text-center text-white/60 text-sm md:text-base tracking-wide">
+            <p>&copy; {new Date().getFullYear()} Centro Universitario VL. Todos los derechos reservados.</p>
+          </div>
         </div>
-      </section>
+      </footer>
+
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <SidebarLink href="/admin/dashboard" label="Métricas" />
                     <SidebarLink href="/admin/dashboard/users" label="Usuarios" />
                     <SidebarLink href="/admin/dashboard/logs" label="Logs" />
-                    <SidebarLink href="/admin/dashboard/jobOffers" label="JobOffers" />
+                    <SidebarLink href="/admin/dashboard/jobOffers" label="Vacantes" />
                 </aside>
                 <main className="flex-1 min-w-0 p-8 bg-main">
                     {children}
