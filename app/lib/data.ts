@@ -95,3 +95,30 @@ export async function getMyFeedbacks(token: string | undefined) {
   }
 }
 
+export async function getMyFeedback(token: string, applicationId: number) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/feedback/my-feedback?applicationId=${applicationId}`, {
+      cache: 'no-store',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error("Error trayendo feedback:", error);
+    return [];
+  }
+}
+
+export async function getScorecardsByFeedback(token: string, feedbackId: number) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/scorecards/feedback/${feedbackId}`, {
+      cache: 'no-store',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error("Error trayendo scorecards:", error);
+    return [];
+  }
+}

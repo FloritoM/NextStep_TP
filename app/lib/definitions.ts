@@ -112,3 +112,11 @@ export type JobOfferLog = {
   createdAt: string | Date;
   updatedAt: string | Date;
 };
+
+export type Scorecard = {
+  id: number;
+  skillName: string;
+  score: number;
+  type: 'technical' | 'soft';
+  createdAt: string;
+};
