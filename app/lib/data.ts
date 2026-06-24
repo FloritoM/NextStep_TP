@@ -67,7 +67,7 @@ export async function getUsers(token: string | undefined) {
   }
 }
 
-export async function getMyApplications(token: string) {
+export async function getMyApplications(token: string | undefined) {
   try {
     const res = await fetch(`${API_URL}/job-applications/my-applications`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -81,9 +81,9 @@ export async function getMyApplications(token: string) {
   }
 }
 
-export async function getMyFeedbacks(token: string) {
+export async function getMyFeedbacks(token: string | undefined) {
   try {
-    const res = await fetch(`${API_URL}/job-applications/my-feedbacks`, {
+    const res = await fetch(`${API_URL}/feedback/my-feedbacks`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store'
     });

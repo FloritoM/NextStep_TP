@@ -4,6 +4,12 @@
   --background-color-main: #121928;
 }
 
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+}
+
 .profile-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

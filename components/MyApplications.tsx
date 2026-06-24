@@ -84,20 +84,17 @@ export default function MyApplications({ token }: { token: string }) {
                                 <div className="mt-5 pt-5 border-t border-gray-600">
                                     {loadingFeedback ? (
                                         <p className="text-gray-400">Cargando feedback...</p>
-                                    ) : feedbacks.filter((fb) => fb.publicFeedback || fb.comment).length === 0 ? (
+                                    ) : feedbacks.filter((fb) => fb.publicFeedback).length === 0 ? (
                                         <p className="text-gray-400">Todavía no recibiste feedback para esta postulación.</p>
                                     ) : (
                                         <div className="flex flex-col gap-4">
                                             {feedbacks
-                                                .filter((fb) => fb.publicFeedback || fb.comment)
+                                                .filter((fb) => fb.publicFeedback)
                                                 .map((fb) => (
                                                     <div key={fb.id} className="bg-gray-900 rounded-lg p-4">
                                                         <p className="text-amber-500 font-semibold mb-2">{fb.stage.name}</p>
                                                         {fb.publicFeedback && (
                                                             <p className="text-gray-200">{fb.publicFeedback}</p>
-                                                        )}
-                                                        {fb.comment && (
-                                                            <p className="text-gray-300 mt-2">{fb.comment}</p>
                                                         )}
                                                     </div>
                                                 ))}
