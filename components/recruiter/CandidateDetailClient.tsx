@@ -109,6 +109,7 @@ function handleFeedbackUpdated(updated: Feedback) {
             Etapa actual
           </h3>
           <FeedbackCard
+            key={feedbackForActiveStage.id}
             feedback={feedbackForActiveStage}
             token={token}
             onUpdated={handleFeedbackUpdated}

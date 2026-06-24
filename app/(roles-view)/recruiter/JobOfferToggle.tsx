@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import ActionIcon from "@/app/ui/ActionIcon";
+import {toggleJobOfferActive} from "@/app/lib/actions/jobOffers.actions";
 
 interface JobOfferToggleProps {
   jobId: number;
@@ -17,24 +18,13 @@ export default function JobOfferToggle({
   const [isActive, setIsActive] = useState(initialIsActive);
   const [isLoading, setIsLoading] = useState(false);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
   async function handleToggle() {
     setIsLoading(true);
     const newValue = !isActive;
 
     try {
-      const res = await fetch(`${API_URL}/job-offers/${jobId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ isActive: newValue }),
-      });
-
-      if (!res.ok) throw new Error("Error al actualizar el estado");
-
+     await toggleJobOfferActive(jobId, newValue, token);
       setIsActive(newValue);
     } catch (err) {
       console.error(err);

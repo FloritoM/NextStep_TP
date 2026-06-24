@@ -1,8 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { updateFeedback, getScorecardsByFeedback,generateFeedbackForOne } from "@/lib/recruiter";
-
+import {
+  updateFeedback,
+  getScorecardsByFeedback,
+  generateFeedbackForOne,
+  createScorecard,
+  updateScorecard,
+} from "@/lib/recruiter";
 
 interface Feedback {
   id: number;
@@ -36,12 +41,42 @@ export default function FeedbackCard({ feedback, token, onUpdated }: FeedbackCar
   const [error, setError] = useState<string | null>(null);
   const [scorecards, setScorecards] = useState<Scorecard[]>([]);
 
+  const [newSkill, setNewSkill] = useState("");
+  const [newType, setNewType] = useState<"technical" | "soft">("technical");
+  const [pendingNewScorecards, setPendingNewScorecards] = useState
+   < { skillName: string; score: number; type: "technical" | "soft" }[]
+  >([]);
 
   useEffect(() => {
     getScorecardsByFeedback(feedback.id, token)
       .then(setScorecards)
       .catch(() => setScorecards([]));
   }, [feedback.id, token]);
+
+  function addPendingSkill() {
+    if (!newSkill.trim()) return;
+    setPendingNewScorecards((prev) => [
+      ...prev,
+      { skillName: newSkill.trim(), score: 0, type: newType },
+    ]);
+    setNewSkill("");
+  }
+
+  function removePendingSkill(index: number) {
+    setPendingNewScorecards((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function updatePendingScore(index: number, score: number) {
+    setPendingNewScorecards((prev) =>
+      prev.map((s, i) => (i === index ? { ...s, score } : s)),
+    );
+  }
+
+  function updateExistingScore(scorecardId: number, score: number) {
+    setScorecards((prev) =>
+      prev.map((sc) => (sc.id === scorecardId ? { ...sc, score } : sc)),
+    );
+  }
 
   async function handleSave() {
     setIsSaving(true);
@@ -51,8 +86,30 @@ export default function FeedbackCard({ feedback, token, onUpdated }: FeedbackCar
       const updated = await updateFeedback(
         feedback.id,
         { internalNotes, comment, publicFeedback },
-        token
+        token,
       );
+
+      await Promise.all(
+        scorecards.map((sc) => updateScorecard(sc.id, { score: sc.score }, token)),
+      );
+
+      const createdScorecards = await Promise.all(
+        pendingNewScorecards.map((sc) =>
+          createScorecard(
+            {
+              feedbackId: feedback.id,
+              skillName: sc.skillName,
+              score: sc.score,
+              type: sc.type,
+            },
+            token,
+          ),
+        ),
+      );
+
+      setScorecards((prev) => [...prev, ...createdScorecards]);
+      setPendingNewScorecards([]);
+
       onUpdated(updated);
       setIsEditing(false);
     } catch (err) {
@@ -66,6 +123,7 @@ export default function FeedbackCard({ feedback, token, onUpdated }: FeedbackCar
     setInternalNotes(feedback.internalNotes ?? "");
     setComment(feedback.comment ?? "");
     setPublicFeedback(feedback.publicFeedback ?? "");
+    setPendingNewScorecards([]);
     setIsEditing(false);
     setError(null);
   }
@@ -76,15 +134,15 @@ export default function FeedbackCard({ feedback, token, onUpdated }: FeedbackCar
 
     try {
       const updated = await generateFeedbackForOne(feedback.id, token);
-
-        setPublicFeedback(updated.publicFeedback ?? "");
-        onUpdated(updated);
-        }catch (err) {
-        setError(err instanceof Error ? err.message : "Ocurrió un error");
-      }finally {
-        setIsGenerating(false);
-      }
+      setPublicFeedback(updated.publicFeedback ?? "");
+      onUpdated(updated);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Ocurrió un error");
+    } finally {
+      setIsGenerating(false);
     }
+  }
+
   return (
     <div className="bg-gray-800 border border-gray-700 rounded-xl p-4">
       <div className="flex items-center justify-between mb-3">
@@ -198,6 +256,103 @@ export default function FeedbackCard({ feedback, token, onUpdated }: FeedbackCar
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500 resize-none"
             />
           </div>
+
+          {scorecards.length > 0 && (
+            <div>
+              <label className="text-xs text-gray-500 mb-2 block">Scorecards</label>
+              <div className="bg-gray-700 rounded-lg px-3">
+                {scorecards.map((sc) => (
+                  <div key={sc.id} className="flex items-center gap-3 py-2 border-b border-gray-700 last:border-0">
+                    <div className="flex-1">
+                      <p className="text-white text-sm">{sc.skillName}</p>
+                      <span className={`text-xs ${sc.type === "technical" ? "text-blue-400" : "text-purple-400"}`}>
+                        {sc.type === "technical" ? "Técnica" : "Soft skill"}
+                      </span>
+                    </div>
+                    <div className="flex gap-1">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => updateExistingScore(sc.id, star)}
+                          className={`text-xl transition-colors ${
+                            star <= sc.score ? "text-amber-400" : "text-gray-600 hover:text-amber-300"
+                          }`}
+                        >
+                          ★
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {pendingNewScorecards.length > 0 && (
+            <div className="bg-gray-700 rounded-lg px-3">
+              {pendingNewScorecards.map((sc, i) => (
+                <div key={i} className="flex items-center gap-3 py-2 border-b border-gray-700 last:border-0">
+                  <div className="flex-1">
+                    <p className="text-white text-sm">{sc.skillName}</p>
+                    <span className={`text-xs ${sc.type === "technical" ? "text-blue-400" : "text-purple-400"}`}>
+                      {sc.type === "technical" ? "Técnica" : "Soft skill"}
+                    </span>
+                  </div>
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => updatePendingScore(i, star)}
+                        className={`text-xl transition-colors ${
+                          star <= sc.score ? "text-amber-400" : "text-gray-600 hover:text-amber-300"
+                        }`}
+                      >
+                        ★
+                      </button>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removePendingSkill(i)}
+                    className="text-gray-500 hover:text-red-400 transition-colors ml-2 text-lg"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div>
+            <label className="text-xs text-gray-500 mb-2 block">Agregar skill</label>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={newSkill}
+                onChange={(e) => setNewSkill(e.target.value)}
+                placeholder="Nombre del skill..."
+                className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm placeholder-gray-500 outline-none focus:border-blue-500"
+              />
+              <select
+                value={newType}
+                onChange={(e) => setNewType(e.target.value as "technical" | "soft")}
+                className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm outline-none"
+              >
+                <option value="technical">Técnica</option>
+                <option value="soft">Soft</option>
+              </select>
+              <button
+                type="button"
+                onClick={addPendingSkill}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              >
+                + Agregar
+              </button>
+            </div>
+          </div>
+
           <div>
             <label className="text-xs text-gray-500 mb-1 block">Feedback público (lo ve el candidato)</label>
             <textarea
@@ -207,6 +362,7 @@ export default function FeedbackCard({ feedback, token, onUpdated }: FeedbackCar
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-blue-500 resize-none"
             />
           </div>
+
           <div className="flex justify-end gap-3 mt-1">
             <button onClick={handleCancel} className="text-gray-400 text-sm cursor-pointer">
               Cancelar
