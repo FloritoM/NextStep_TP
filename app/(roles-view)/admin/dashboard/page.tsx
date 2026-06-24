@@ -2,21 +2,15 @@ import { auth } from '@/auth'
 import AdminLogsGraph from '@/app/ui/adminLogsGraph'
 import AdminUserGraph from '@/app/ui/adminUsersGraph'
 import AdminJobOffersGraph from '@/app/ui/adminJobOffersGraph'
+import { getUsers, getAuditLogs, getJobOffers } from '@/app/lib/data'
 
 export default async function AdminDashboard() {
-
     const session = await auth()
 
     const [users, logs, jobOffers] = await Promise.all([
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
-            headers: { Authorization: `Bearer ${session?.accessToken}` }
-        }).then(res => res.json()),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/audit-logs`, {
-            headers: { Authorization: `Bearer ${session?.accessToken}` }
-        }).then(res => res.json()),
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers`, {
-            headers: { Authorization: `Bearer ${session?.accessToken}` }
-        }).then(res => res.json()),
+        getUsers(session?.accessToken),
+        getAuditLogs(session?.accessToken),
+        getJobOffers(session?.accessToken),
     ])
 
     console.log('USERS SHAPE:', JSON.stringify(users, null, 2))

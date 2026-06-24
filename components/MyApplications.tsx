@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { JobApplication, Feedback } from "@/app/lib/definitions";
+import { getMyApplications } from "@/app/lib/data";
 
 export default function MyApplications({ token }: { token: string }) {
     const [applications, setApplications] = useState<JobApplication[]>([]);
@@ -12,12 +13,14 @@ export default function MyApplications({ token }: { token: string }) {
 
     useEffect(() => {
         async function loadApplications() {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-applications/my-applications`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            const data = await res.json();
-            setApplications(data);
-            setLoading(false);
+            try {
+                const data = await getMyApplications(token);
+                setApplications(data || []);
+            } catch (error) {
+                console.error("Error al cargar postulaciones:", error);
+            } finally {
+                setLoading(false);
+            }
         }
         loadApplications();
     }, [token]);

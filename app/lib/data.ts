@@ -1,6 +1,8 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export async function getJobOffers(token: string | undefined) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers`, {
+    const res = await fetch(`${API_URL}/job-offers`, {
       cache: 'no-store',
       headers: {
         'Authorization': `Bearer ${token}` 
@@ -10,8 +12,6 @@ export async function getJobOffers(token: string | undefined) {
       console.error("Error trayendo vacantes:", res.status, await res.text());
       return [];
     }
-    //teneer swagger para entender mejor los errores del backend
-
     return res.json();
   } catch (error) {
     console.error("Error de conexión con el backend:", error);
@@ -21,7 +21,7 @@ export async function getJobOffers(token: string | undefined) {
 
 export async function getSeniorities(token: string | undefined) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/seniority`, {
+    const res = await fetch(`${API_URL}/seniority`, {
       cache: 'no-store',
       headers: {
         'Authorization': `Bearer ${token}` 
@@ -34,3 +34,64 @@ export async function getSeniorities(token: string | undefined) {
     return [];
   }
 }
+
+export async function getAuditLogs(token: string | undefined) {
+  try {
+    const res = await fetch(`${API_URL}/audit-logs`, {
+      cache: 'no-store',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error("Error trayendo audit logs:", error);
+    return [];
+  }
+}
+
+export async function getUsers(token: string | undefined) {
+  try {
+    const res = await fetch(`${API_URL}/users`, {
+      cache: 'no-store',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error("Error trayendo usuarios:", error);
+    return [];
+  }
+}
+
+export async function getMyApplications(token: string) {
+  try {
+    const res = await fetch(`${API_URL}/job-applications/my-applications`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store'
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (error) {
+    console.error("Error trayendo postulaciones:", error);
+    return [];
+  }
+}
+
+export async function getMyFeedbacks(token: string) {
+  try {
+    const res = await fetch(`${API_URL}/job-applications/my-feedbacks`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store'
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (error) {
+    console.error("Error trayendo feedbacks:", error);
+    return [];
+  }
+}
+

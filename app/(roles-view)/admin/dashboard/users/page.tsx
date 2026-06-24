@@ -1,15 +1,10 @@
 import UserLogs from "@/app/ui/userLogs"
 import { auth } from '@/auth'
+import { getUsers } from '@/app/lib/data'
 
 export default async function UsersLogsPage() {
     const session = await auth()
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
-        headers: {
-            Authorization: `Bearer ${session?.accessToken}`
-        }
-    })
-    const data = await res.json()
+    const data = await getUsers(session?.accessToken)
 
     return (
         <>
