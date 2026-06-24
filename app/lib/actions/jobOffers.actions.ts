@@ -62,3 +62,18 @@ export async function updateJobOffer(
   }
   return result;
 }
+
+export async function getMyOffers(token: string | undefined) {
+  const res = await fetch(`${API_URL}/job-offers/my-offers`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const result = await res.json();
+  if (!res.ok) {
+    throw new Error(
+      Array.isArray(result.message) ? result.message.join(", ") : result.message,
+    );
+  }
+  return result;
+}
