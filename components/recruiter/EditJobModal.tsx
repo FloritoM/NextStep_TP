@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Seniority } from "@/app/lib/definitions";
+import { updateJobOffer } from "@/app/lib/actions/jobOffers.actions";
 
 interface EditJobModalProps {
   onClose: () => void;
@@ -25,48 +26,42 @@ export default function EditJobModal({
 }: EditJobModalProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
 
     const formData = new FormData(e.currentTarget);
-
     const updatedJob = {
-      title: formData.get("title"),
+      title: formData.get("title") as string,
       seniorityId: Number(formData.get("seniorityId")),
-      description: formData.get("description"),
+      description: formData.get("description") as string,
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers/${jobId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedJob),
-      });
-
-      if (res.ok) {
+        await updateJobOffer(jobId, updatedJob, token || "");           
+     
         onClose();
         router.refresh();
-      } else {
-        const errorData = await res.json();
-        console.error("Detalle del error:", errorData);
-        alert(`Error del servidor: ${JSON.stringify(errorData.message)}`);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
+    }   catch (err) {
+        setError(err instanceof Error ? err.message : "Error al guardar los cambios");
+    }   finally {
+        setIsLoading(false);
     }
-  };
-
-  return (
+};
+ return (
     <div className="fixed inset-0 bg-black/75 flex justify-center items-center z-50">
       <div className="bg-gray-800 p-8 rounded-xl w-[500px]">
         <h2 className="text-2xl font-bold text-white mb-6">Editar Vacante</h2>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-900/30 border border-red-700 rounded text-red-400 text-sm">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
@@ -85,9 +80,7 @@ export default function EditJobModal({
           >
             <option value="" disabled>Seleccioná un seniority</option>
             {seniorities.map((sen) => (
-              <option key={sen.id} value={sen.id}>
-                {sen.name}
-              </option>
+              <option key={sen.id} value={sen.id}>{sen.name}</option>
             ))}
           </select>
 
@@ -101,9 +94,11 @@ export default function EditJobModal({
           />
 
           <div className="flex justify-end gap-4 mt-4">
-            <button type="button" onClick={onClose} className="text-gray-400">Cancelar</button>
+            <button type="button" onClick={onClose} className="text-gray-400">
+              Cancelar
+            </button>
             <button type="submit" disabled={isLoading} className="bg-amber-600 text-white px-6 py-2 rounded font-bold">
-              {isLoading ? 'Guardando...' : 'Guardar cambios'}
+              {isLoading ? "Guardando..." : "Guardar cambios"}
             </button>
           </div>
         </form>
