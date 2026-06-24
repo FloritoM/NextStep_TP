@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { updateJobApplicationStage } from "@/app/lib/actions/jobApplications.actions";
+
 
 interface Stage {
   id: number;
@@ -27,7 +29,6 @@ export default function StageSelector({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
   async function handleChange(newStageId: number) {
     setSelectedStageId(newStageId);
@@ -35,18 +36,7 @@ export default function StageSelector({
     setError(null);
 
     try {
-      const res = await fetch(`${API_URL}/job-applications/${applicationId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ stageId: newStageId }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Error al cambiar la etapa");
-
+      await updateJobApplicationStage(applicationId, newStageId, token);
       onSuccess(newStageId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Ocurrió un error");
@@ -56,7 +46,7 @@ export default function StageSelector({
     }
   }
 
-  return (
+   return (
     <div className="flex items-center gap-3">
       <label className="text-sm text-gray-400">Etapa actual:</label>
       <select

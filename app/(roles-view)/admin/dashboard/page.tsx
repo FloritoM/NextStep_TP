@@ -13,6 +13,8 @@ export default async function AdminDashboard() {
         getJobOffers(session?.accessToken),
     ])
 
+    console.log('USERS SHAPE:', JSON.stringify(users, null, 2))
+
     return (
         <div className="bg-main">
 
