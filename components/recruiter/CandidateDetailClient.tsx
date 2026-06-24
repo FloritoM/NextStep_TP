@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import FeedbackForm from "./FeedbackForm";
+import { useState, useMemo } from "react";
 import StageSelector from "./StageSelector";
 import FeedbackCard from "./FeedbackCard";
+import CollapsibleFeedbackCard from "./CollapsibleFeedbackCard";
 
 
 interface Feedback {
@@ -43,26 +43,46 @@ export default function CandidateDetailClient({
   const [activeStageId, setActiveStageId] = useState<number>(currentStageId);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   
-  function handleSuccess() {
-    setSuccessMessage("Feedback guardado correctamente");
-    setTimeout(() => setSuccessMessage(null), 3000);
-    window.location.reload();  
-  }
+  // Mapa rápido stageId -> sequenceOrder, usando los stages que ya tenemos
+  const sequenceByStageId = useMemo(() => {
+    const map = new Map<number, number>();
+    stages.forEach((s) => map.set(s.id, s.sequenceOrder));
+    return map;
+  }, [stages]);
+
+  const activeSequence = sequenceByStageId.get(activeStageId) ?? 0;
+
+  // Feedback de la etapa activa (siempre existe gracias al factory del back)
+  const feedbackForActiveStage = useMemo(
+    () => feedbacks.find((fb) => fb.stage?.id === activeStageId) ?? null,
+    [feedbacks, activeStageId],
+  );
+
+  // Feedbacks de etapas YA TRANSITADAS (sequenceOrder menor a la activa)
+  // Ordenados de la más reciente a la más vieja para que lo último visto quede arriba
+  const previousFeedbacks = useMemo(() => {
+    return feedbacks
+      .filter((fb) => {
+        const seq = fb.stage ? sequenceByStageId.get(fb.stage.id) : undefined;
+        return seq !== undefined && seq < activeSequence;
+      })
+      .sort((a, b) => {
+        const seqA = sequenceByStageId.get(a.stage!.id) ?? 0;
+        const seqB = sequenceByStageId.get(b.stage!.id) ?? 0;
+        return seqB - seqA;
+      });
+  }, [feedbacks, sequenceByStageId, activeSequence]);
 
    function handleStageChange(newStageId: number) {
     setActiveStageId(newStageId);
   }
-
-  function handleFeedbackUpdated(updated: Feedback) {
+function handleFeedbackUpdated(updated: Feedback) {
     setFeedbacks((prev) =>
-      prev.map((fb) => (fb.id === updated.id ? { ...fb, ...updated } : fb))
+      prev.map((fb) => (fb.id === updated.id ? { ...fb, ...updated } : fb)),
     );
     setSuccessMessage("Cambios guardados correctamente");
     setTimeout(() => setSuccessMessage(null), 3000);
   }
-
-  
-
 
   return (
     <div>
@@ -72,7 +92,7 @@ export default function CandidateDetailClient({
         </div>
       )}
 
-    <div className="bg-gray-800 border border-gray-700 rounded-xl p-4 mb-6">
+      <div className="bg-gray-800 border border-gray-700 rounded-xl p-4 mb-6">
         <StageSelector
           applicationId={applicationId}
           currentStageId={activeStageId}
@@ -80,33 +100,41 @@ export default function CandidateDetailClient({
           token={token}
           onSuccess={handleStageChange}
         />
-    </div>
-
-    
-
-    <div className="mb-6 flex flex-col gap-4">
-    
-    {feedbacks.map((fb) => (
-        <FeedbackCard
-          key={fb.id}
-          feedback={fb}
-          token={token}
-          onUpdated={handleFeedbackUpdated}
-        />
-    ))}
-
-
-    </div>
-
-      <div className="bg-gray-800 border border-gray-700 rounded-xl p-6">
-        <h2 className="text-white font-semibold mb-4">Agregar feedback</h2>
-        <FeedbackForm
-          applicationId={applicationId}
-          stageId={activeStageId}
-          token={token}
-          onSuccess={handleSuccess}
-        />
       </div>
+
+      {/* Feedback de la etapa ACTUAL: siempre editable, vacío o no */}
+      {feedbackForActiveStage && (
+        <div className="mb-6">
+          <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3">
+            Etapa actual
+          </h3>
+          <FeedbackCard
+            feedback={feedbackForActiveStage}
+            token={token}
+            onUpdated={handleFeedbackUpdated}
+          />
+        </div>
+      )}
+
+      {/* Feedbacks de etapas anteriores, colapsados por default */}
+      {previousFeedbacks.length > 0 && (
+        <div className="mb-6">
+          <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3">
+            Etapas anteriores
+          </h3>
+          <div className="flex flex-col gap-2">
+            {previousFeedbacks.map((fb) => (
+              <CollapsibleFeedbackCard
+                key={fb.id}
+                feedback={fb}
+                token={token}
+                onUpdated={handleFeedbackUpdated}
+                defaultOpen={false}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

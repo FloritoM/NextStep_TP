@@ -27,7 +27,7 @@ interface FeedbackCardProps {
 }
 
 export default function FeedbackCard({ feedback, token, onUpdated }: FeedbackCardProps) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(!feedback.comment);
   const [internalNotes, setInternalNotes] = useState(feedback.internalNotes ?? "");
   const [comment, setComment] = useState(feedback.comment ?? "");
   const [publicFeedback, setPublicFeedback] = useState(feedback.publicFeedback ?? "");

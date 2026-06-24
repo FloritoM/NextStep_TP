@@ -19,6 +19,8 @@ export default async function AdminDashboard() {
         }).then(res => res.json()),
     ])
 
+    console.log('USERS SHAPE:', JSON.stringify(users, null, 2))
+
     return (
         <div className="bg-main">
 
