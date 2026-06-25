@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import SidebarLink from '../../components/SidebarLink';
+import SidebarLink from '@/app/ui/SidebarLink';
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
