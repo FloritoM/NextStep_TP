@@ -2,7 +2,9 @@ import { auth } from '@/auth'
 import AdminLogsGraph from '@/app/ui/adminLogsGraph'
 import AdminUserGraph from '@/app/ui/adminUsersGraph'
 import AdminJobOffersGraph from '@/app/ui/adminJobOffersGraph'
-import { getUsers, getAuditLogs, getJobOffers } from '@/app/lib/data'
+import { getUsers } from '@/lib/services/users.service'
+import { getAuditLogs } from '@/lib/services/auditLogs.service'
+import { getJobOffers } from '@/lib/services/jobOffers.service'
 
 export default async function AdminDashboard() {
     const session = await auth()

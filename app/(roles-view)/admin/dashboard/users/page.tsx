@@ -1,6 +1,6 @@
 import UserLogs from "@/app/ui/userLogs"
 import { auth } from '@/auth'
-import { getUsers } from '@/app/lib/data'
+import { getUsers } from '@/lib/services/users.service'
 
 export default async function UsersLogsPage() {
     const session = await auth()

@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import ScorecardInput from "./ScorecardInput";
-import { createFeedback, createScorecard } from "@/lib/recruiter";
+import { createFeedback } from "@/lib/services/feedbacks.service";
+import { createScorecard } from "@/lib/services/scorecards.service";
 
 
 interface Scorecard {

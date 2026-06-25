@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import HomeContent from "@/app/ui/home-content";
-import { User } from "@/app/lib/definitions";
-import { getSeniorities } from "@/app/lib/data";
-import { getJobOffers } from "@/app/lib/data";
+import { User } from "@/lib/definitions";
+import { getSeniorities } from "@/lib/services/seniorities.service";
+import { getJobOffers } from "@/lib/services/jobOffers.service";
 
 export default async function Home() {
     const session = await auth();

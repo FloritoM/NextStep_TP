@@ -1,6 +1,7 @@
-import { getMyApplications, getMyFeedbacks } from "@/app/lib/data";
+import { getMyApplications } from "@/lib/services/jobApplications.service";
+import { getMyFeedbacks } from "@/lib/services/feedbacks.service";
 import { auth } from "@/auth";
-import { getStages } from "@/lib/recruiter";
+import { getStages } from "@/lib/services/stages.service";
 
 export const dynamic = 'force-dynamic';
 

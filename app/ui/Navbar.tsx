@@ -1,7 +1,7 @@
 import SignOutButton from './signOutButton';
 import NextStepIcon from '@/components/icon';
 import { auth } from '@/auth';
-import { User } from '@/app/lib/definitions';
+import { User } from '@/lib/definitions';
 import { canApplyToJobOffer } from '@/app/lib/permissions';
 import NavLink from './Navlink';
 

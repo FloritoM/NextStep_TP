@@ -1,6 +1,6 @@
 "use client"
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'
-import { User } from '@/app/lib/definitions'
+import { User } from '@/lib/definitions'
 
 const COLORS = {
     activos: '#10b981',

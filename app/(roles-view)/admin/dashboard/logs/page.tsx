@@ -1,6 +1,6 @@
 import TableLogs from "@/app/ui/tableLogs"
 import { auth } from '@/auth'
-import { getAuditLogs } from '@/app/lib/data'
+import { getAuditLogs } from '@/lib/services/auditLogs.service'
 
 export default async function LogsPage() {
     const session = await auth()

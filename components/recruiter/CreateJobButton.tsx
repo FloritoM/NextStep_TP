@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import CreateJobModal from '@/components/recruiter/CreateJobModal';
-import { Seniority } from '@/app/lib/definitions';
+import { Seniority } from '@/lib/definitions';
 
 export default function CreateJobButton({ 
     token, 

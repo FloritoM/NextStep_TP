@@ -1,5 +1,5 @@
-import { User } from './definitions';
-import { Roles } from './definitions';
+import { User } from '../../lib/definitions';
+import { Roles } from '../../lib/definitions';
 
 export function canCreateJobOffer(user: User | null | undefined): boolean {
   if (!user || !user.role) return false;

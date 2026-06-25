@@ -45,6 +45,12 @@ export interface JobOffer {
   isActive: boolean;
 }
 
+export interface JobOfferPayload {
+  title: string;
+  description: string;
+  seniorityId: number;
+}
+
 export enum Roles {
   ADMIN = 'admin',
   APPLICANT = 'applicant',

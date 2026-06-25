@@ -1,13 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  updateFeedback,
-  getScorecardsByFeedback,
-  generateFeedbackForOne,
-  createScorecard,
-  updateScorecard,
-} from "@/lib/recruiter";
+import { updateFeedback, generateFeedbackForOne } from "@/lib/services/feedbacks.service";
+import { createScorecard, updateScorecard, getScorecardsByFeedback } from "@/lib/services/scorecards.service";
 
 interface Feedback {
   id: number;

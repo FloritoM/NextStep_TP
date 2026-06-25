@@ -1,4 +1,4 @@
-import { getJobOffers } from '@/app/lib/data'
+import { getJobOffers } from '@/lib/services/jobOffers.service'
 import JobOffersLogs from '@/app/ui/jobOffersLogs'
 import { auth } from '@/auth'
 

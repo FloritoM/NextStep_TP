@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { User } from "@/app/lib/definitions";
+import { User } from "@/lib/definitions";
 import CvUpload from "@/components/CvUpload";
-import { getLatestCvByUser } from "@/lib/recruiter";
+import { getLatestCvByUser } from "@/lib/services/cvs.service";
 
 export default async function ApplicantCvPage() {
   const session = await auth();

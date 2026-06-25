@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import ActionIcon from "@/app/ui/ActionIcon";
-import {toggleJobOfferActive} from "@/app/lib/actions/jobOffers.actions";
+import { toggleJobOfferActive } from "@/lib/services/jobOffers.service";
 
 interface JobOfferToggleProps {
   jobId: number;

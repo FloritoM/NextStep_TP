@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { JobApplication, Feedback } from "@/app/lib/definitions";
-import { getMyApplications } from "@/app/lib/data";
+import { JobApplication, Feedback } from "@/lib/definitions";
+import { getMyApplications } from "@/lib/services/jobApplications.service";
 
 export default function MyApplications({ token }: { token: string }) {
     const [applications, setApplications] = useState<JobApplication[]>([]);

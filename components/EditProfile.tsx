@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faUser, faLock, faFloppyDisk, faBan } from "@fortawesome/free-solid-svg-icons";
 import { EyeIcon, EyeOffIcon } from '@/app/ui/passwordIcons'
-import { User } from "@/app/lib/definitions";
+import { User } from "@/lib/definitions";
 
 export default function EditProfile({ userId, token }: { userId: string, token: string }) {
     const [user, setUser] = useState<User>();

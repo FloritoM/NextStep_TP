@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Seniority } from "@/app/lib/definitions";
-import { createJobOffer } from "@/app/lib/actions/jobOffers.actions";
+import { Seniority } from "@/lib/definitions";
+import { createJobOffer } from "@/lib/services/jobOffers.service";
 
 export default function CreateJobModal({
   onClose,

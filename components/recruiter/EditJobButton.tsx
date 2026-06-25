@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import EditJobModal from '@/components/recruiter/EditJobModal';
-import { Seniority } from '@/app/lib/definitions';
+import { Seniority } from '@/lib/definitions';
 
 interface EditJobButtonProps {
   token: string;

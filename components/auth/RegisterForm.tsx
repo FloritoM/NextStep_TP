@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { UserRole } from "@/types/auth";
-import { registerWithEmail, isAdult } from "@/lib/auth";
+import { registerWithEmail, isAdult } from "@/lib/services/auth.service";
 import { EyeIcon, EyeOffIcon } from '@/app/ui/passwordIcons'
 
 interface RegisterFormProps {

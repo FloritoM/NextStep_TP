@@ -1,6 +1,6 @@
 "use client"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { JobOffer } from '@/app/lib/definitions'
+import { JobOffer } from '@/lib/definitions'
 
 export default function JobOffersBySeniorityChart({ jobOffers }: { jobOffers: JobOffer[] }) {
     // Agrupamos las ofertas por nombre de seniority y contamos

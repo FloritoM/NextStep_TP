@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Seniority } from "@/app/lib/definitions";
-import { updateJobOffer } from "@/app/lib/actions/jobOffers.actions";
+import { Seniority } from "@/lib/definitions";
+import { updateJobOffer } from "@/lib/services/jobOffers.service";
 
 interface EditJobModalProps {
   onClose: () => void;

@@ -1,7 +1,9 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { getFeedbackByApplication, getLatestCvByUser,getStages } from "@/lib/recruiter";
-import { User } from "@/app/lib/definitions";
+import { getFeedbackByApplication } from "@/lib/services/feedbacks.service";
+import { getLatestCvByUser } from "@/lib/services/cvs.service";
+import { getStages } from "@/lib/services/stages.service";
+import { User } from "@/lib/definitions";
 import CandidateDetailClient from "@/components/recruiter/CandidateDetailClient";
 
 

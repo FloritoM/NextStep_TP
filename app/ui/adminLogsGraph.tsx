@@ -1,6 +1,6 @@
 "use client"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { AuditLog } from '@/app/lib/definitions'
+import { AuditLog } from '@/lib/definitions'
 
 export default function AdminLogsGraph({ logs }: { logs: AuditLog[] }) {
     const counts = logs.reduce((acc, log) => {

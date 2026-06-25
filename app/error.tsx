@@ -29,7 +29,7 @@ export default function GlobalError({
             ¡Ups! Algo salió mal
           </h2>
           <p className="text-gray-400 text-sm">
-            Tuvimos un problema inesperado procesando tu solicitud.
+            {error.message || "Tuvimos un problema inesperado procesando tu solicitud."}
           </p>
         </div>
 

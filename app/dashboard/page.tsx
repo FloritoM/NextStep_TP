@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { User } from "@/app/lib/definitions";
+import { User } from "@/lib/definitions";
 
 export default async function ScreenRedirection() {
   const session = await auth();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { updateJobApplicationStage } from "@/app/lib/actions/jobApplications.actions";
+import { updateJobApplicationStage } from "@/lib/services/jobApplications.service";
 
 
 interface Stage {

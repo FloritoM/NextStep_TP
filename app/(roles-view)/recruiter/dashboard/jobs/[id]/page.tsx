@@ -1,10 +1,12 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { getJobOffer, getJobApplications, getStages } from "@/lib/recruiter";
-import { User } from "@/app/lib/definitions";
+import { getJobOffer } from "@/lib/services/jobOffers.service";
+import { getJobApplicationsByJobOffer } from "@/lib/services/jobApplications.service";
+import { getStages } from "@/lib/services/stages.service";
+import { User } from "@/lib/definitions";
 import JobDetailClient from "@/components/recruiter/JobDetailClient";
 import JobOfferToggle from "../../../JobOfferToggle";
-import { getSeniorities } from "@/app/lib/data";
+import { getSeniorities } from "@/lib/services/seniorities.service";
 import EditJobButton from "@/components/recruiter/EditJobButton";
 
 export default async function JobDetailPage({
@@ -24,7 +26,7 @@ export default async function JobDetailPage({
 
   const [job, applications, stages, seniorities] = await Promise.all([
     getJobOffer(jobId, token),
-    getJobApplications(jobId, token),
+    getJobApplicationsByJobOffer(jobId, token),
     getStages(token),
     getSeniorities(token),
 
