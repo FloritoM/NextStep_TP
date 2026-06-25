@@ -10,7 +10,7 @@ export async function getFeedbackByApplication(applicationId: number, token: str
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
 
@@ -24,7 +24,7 @@ export async function getMyFeedbacks(token: string | undefined) {
     return await res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
 
@@ -34,11 +34,11 @@ export async function getMyFeedback(token: string, applicationId: number) {
       cache: 'no-store',
       headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error("Error al obtener el feedback");
     return res.json();
   } catch (error) {
     console.error("Error trayendo feedback:", error);
-    return [];
+    throw new Error('Error de conexión');
   }
 }
 
@@ -71,7 +71,7 @@ export async function createFeedback(data: object, token: string) {
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
 
@@ -92,7 +92,7 @@ export async function updateFeedback(id: number, data: object, token: string) {
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
 
@@ -112,7 +112,7 @@ export async function generatePublicFeedback(applicationId: number, token: strin
         return res.json();
     } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
 
@@ -129,6 +129,6 @@ export async function generateFeedbackForOne(feedbackId: number, token: string) 
     return data;
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }

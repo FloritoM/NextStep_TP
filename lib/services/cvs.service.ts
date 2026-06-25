@@ -12,6 +12,6 @@ export async function getLatestCvByUser(userId: number, token: string) {
     return JSON.parse(text);
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }

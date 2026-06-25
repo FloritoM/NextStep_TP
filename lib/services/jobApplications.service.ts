@@ -10,7 +10,7 @@ export async function getJobApplicationsByJobOffer(jobOfferId: number, token: st
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
 
@@ -24,23 +24,28 @@ export async function getMyApplications(token: string | undefined) {
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
 
 export async function getCandidatesByStage(token: string | undefined) {
-  const res = await fetch(`${API_URL}/job-applications/my-candidates-by-stage`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const result = await res.json();
-  if (!res.ok) {
-    throw new Error(
-      Array.isArray(result.message) ? result.message.join(", ") : result.message,
-    );
+  try {
+    const res = await fetch(`${API_URL}/job-applications/my-candidates-by-stage`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await res.json();
+    if (!res.ok) {
+      throw new Error(
+        Array.isArray(result.message) ? result.message.join(", ") : result.message,
+      );
+    }
+    return result;
+  } catch (error) {
+    console.error("Hubo un error:", error);
+    throw new Error('Error de conexión');
   }
-  return result;
 }
 
 export async function createJobApplication(jobOfferId: number, token: string) {
@@ -81,6 +86,6 @@ export async function updateJobApplicationStage(
     return data;
     } catch (error) {
         console.error("Hubo un error:", error);
-        throw error;
+        throw new Error('Error de conexión');
     }
 }

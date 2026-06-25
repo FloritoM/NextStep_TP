@@ -3,25 +3,27 @@ import { RegisterPayLoad } from "@/types/auth";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function registerWithEmail(payload: RegisterPayLoad) {
-  const res = await fetch(`${API_URL}/auth/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-  
-    body: JSON.stringify({
-      firstName: payload.firstName,
-      lastName: payload.lastName,
-      email: payload.email.toLowerCase(),
-      password: payload.password,
-      roleName: payload.role,
-    }),
-  });
-
-  if (!res.ok) {
-    const error = await res.json().catch(() => ({}));
-    throw new Error(error.message || "Error al registrarse");
+  try {
+    const res = await fetch(`${API_URL}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        email: payload.email.toLowerCase(),
+        password: payload.password,
+        roleName: payload.role,
+      }),
+    });
+    if (!res.ok) {
+      const error = await res.json().catch(() => ({}));
+      throw new Error(error.message || "Error al registrarse");
+    }
+    return res.json();
+  } catch (error) {
+    console.error("Hubo un error:", error);
+    throw new Error('Error de conexión');
   }
-
-  return res.json();
 }
 
 export function isAdult(birth_date: string): boolean {

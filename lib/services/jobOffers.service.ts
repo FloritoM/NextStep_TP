@@ -13,7 +13,7 @@ export async function getJobOffers(token: string | undefined) {
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
 
@@ -27,23 +27,28 @@ export async function getJobOffer(id: number, token: string) {
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
 
 export async function getMyOffers(token: string | undefined) {
-  const res = await fetch(`${API_URL}/job-offers/my-offers`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const result = await res.json();
-  if (!res.ok) {
-    throw new Error(
-      Array.isArray(result.message) ? result.message.join(", ") : result.message,
-    );
+  try {
+    const res = await fetch(`${API_URL}/job-offers/my-offers`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const result = await res.json();
+    if (!res.ok) {
+      throw new Error(
+        Array.isArray(result.message) ? result.message.join(", ") : result.message,
+      );
+    }
+    return result;
+  } catch (error) {
+    console.error("Hubo un error:", error);
+    throw new Error('Error de conexión');
   }
-  return result;
 }
 
 export async function toggleJobOfferActive(
@@ -51,16 +56,21 @@ export async function toggleJobOfferActive(
   isActive: boolean,
   token: string,
 ) {
-  const res = await fetch(`${API_URL}/job-offers/${jobId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+  try {
+    const res = await fetch(`${API_URL}/job-offers/${jobId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ isActive }),
-  });
-  if (!res.ok) throw new Error("Error al actualizar el estado");
-  return res.json();
+    });
+    if (!res.ok) throw new Error("Error al actualizar el estado");
+    return res.json();
+  } catch (error) {
+    console.error("Hubo un error:", error);
+    throw new Error('Error de conexión');
+  }
 }
 
 export async function createJobOffer(data: JobOfferPayload, token: string) {
@@ -82,7 +92,7 @@ export async function createJobOffer(data: JobOfferPayload, token: string) {
     return result;
     } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
 
@@ -109,6 +119,6 @@ export async function updateJobOffer(
     return result;
     } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }

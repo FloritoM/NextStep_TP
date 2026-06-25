@@ -12,6 +12,6 @@ export async function getSeniorities(token: string | undefined) {
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw error;
+    throw new Error('Error de conexión');
   }
 }
