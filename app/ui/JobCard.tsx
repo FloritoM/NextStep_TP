@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { JobOffer } from '@/lib/definitions';
+import { createJobApplication } from '@/lib/services/jobApplications.service';
 
 interface JobCardProps {
     job: JobOffer;
@@ -34,26 +35,12 @@ export default function JobCard({ job, userRole, token }: JobCardProps) {
         setErrorMessage('');
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-applications`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({ jobOfferId: job.id })
-            });
-
-            if (res.ok) {
-                setStatus('success');
-            } else {
-                const errorData = await res.json();
-                setStatus('error');
-                setErrorMessage(errorData.message || 'Error al postularse'); 
-            }
-        } catch (error) {
+            await createJobApplication(job.id, token);
+            setStatus('success');
+        } catch (error: unknown) {
             console.error(error);
             setStatus('error');
-            setErrorMessage('Error de conexión');
+            setErrorMessage((error as Error).message);
         } finally {
             setIsApplying(false);
         }
