@@ -1,8 +1,8 @@
 import { auth } from '@/auth'
 
-import { getMySentFeedbacks } from '@/app/lib/actions/feedbacks.actions'
-import { getCandidatesByStage } from '@/app/lib/actions/stages.actions'
-import { getMyOffers } from '@/app/lib/actions/jobOffers.actions'
+import { getMySentFeedbacks } from '@/lib/services/feedbacks.service'
+import { getCandidatesByStage } from '@/lib/services/jobApplications.service'
+import { getMyOffers } from '@/lib/services/jobOffers.service'
 
 export default async function RecruiterDashboard() {
     const session = await auth()
