@@ -1,4 +1,4 @@
-import { isAdult, registerWithEmail } from './auth.service';
+import { isAdult, registerWithEmail } from '../auth.service';
 
 describe('isAdult', () => {
   beforeEach(() => {

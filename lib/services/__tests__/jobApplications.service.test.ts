@@ -3,7 +3,7 @@ import {
   getMyApplications,
   getCandidatesByStage,
   updateJobApplicationStage,
-} from './jobApplications.service';
+} from '../jobApplications.service';
 
 describe('jobApplications.service', () => {
   beforeEach(() => {

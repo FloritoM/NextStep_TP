@@ -1,4 +1,4 @@
-import { getStages } from './stages.service';
+import { getStages } from '../stages.service';
 
 describe('stages.service', () => {
   beforeEach(() => {

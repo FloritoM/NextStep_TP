@@ -1,4 +1,4 @@
-import { getSeniorities } from './seniorities.service';
+import { getSeniorities } from '../seniorities.service';
 
 describe('seniorities.service', () => {
   beforeEach(() => {

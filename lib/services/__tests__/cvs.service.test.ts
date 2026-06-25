@@ -1,4 +1,4 @@
-import { getLatestCvByUser } from './cvs.service';
+import { getLatestCvByUser } from '../cvs.service';
 
 describe('cvs.service', () => {
   beforeEach(() => {

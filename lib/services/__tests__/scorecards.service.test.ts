@@ -2,7 +2,7 @@ import {
   getScorecardsByFeedback,
   createScorecard,
   updateScorecard,
-} from './scorecards.service';
+} from '../scorecards.service';
 
 describe('scorecards.service', () => {
   beforeEach(() => {

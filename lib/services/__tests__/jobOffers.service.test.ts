@@ -5,7 +5,7 @@ import {
   toggleJobOfferActive,
   createJobOffer,
   updateJobOffer,
-} from './jobOffers.service';
+} from '../jobOffers.service';
 
 describe('jobOffers.service', () => {
   beforeEach(() => {

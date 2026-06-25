@@ -7,7 +7,7 @@ import {
   updateFeedback,
   generatePublicFeedback,
   generateFeedbackForOne,
-} from './feedbacks.service';
+} from '../feedbacks.service';
 
 describe('feedbacks.service', () => {
   beforeEach(() => {
