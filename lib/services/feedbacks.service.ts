@@ -28,6 +28,35 @@ export async function getMyFeedbacks(token: string | undefined) {
   }
 }
 
+export async function getMyFeedback(token: string, applicationId: number) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/feedback/my-feedback?applicationId=${applicationId}`, {
+      cache: 'no-store',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) return [];
+    return res.json();
+  } catch (error) {
+    console.error("Error trayendo feedback:", error);
+    return [];
+  }
+}
+
+export async function getMySentFeedbacks(token: string | undefined) {
+  const res = await fetch(`${API_URL}/feedback/my-sent-feedbacks`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const result = await res.json();
+  if (!res.ok) {
+    throw new Error(
+      Array.isArray(result.message) ? result.message.join(", ") : result.message,
+    );
+  }
+  return result;
+}
+
 export async function createFeedback(data: object, token: string) {
   try {
     const res = await fetch(`${API_URL}/feedback`, {
