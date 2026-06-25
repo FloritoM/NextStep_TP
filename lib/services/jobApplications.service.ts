@@ -43,6 +43,25 @@ export async function getCandidatesByStage(token: string | undefined) {
   return result;
 }
 
+export async function createJobApplication(jobOfferId: number, token: string) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-applications`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ jobOfferId })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Error al postularse");
+    return data;
+  } catch (error) {
+    console.error("Hubo un error:", error);
+    throw new Error('Error de conexión');
+  }
+}
+
 export async function updateJobApplicationStage(
   applicationId: number,
   stageId: number,
