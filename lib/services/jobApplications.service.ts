@@ -54,7 +54,7 @@ export async function getCandidatesByStage(token: string | undefined) {
     return result;
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -73,10 +73,7 @@ export async function createJobApplication(jobOfferId: number, token: string) {
     return data;
   } catch (error) {
     console.error("Hubo un error:", error);
-    if (error instanceof Error) {
-      throw error;
-    }
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -99,6 +96,6 @@ export async function updateJobApplicationStage(
     return data;
     } catch (error) {
         console.error("Hubo un error:", error);
-        throw new Error('Error de conexión');
+        throw error instanceof Error ? error : new Error('Error de conexión');
     }
 }

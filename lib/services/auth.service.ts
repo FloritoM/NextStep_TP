@@ -22,7 +22,7 @@ export async function registerWithEmail(payload: RegisterPayLoad) {
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 

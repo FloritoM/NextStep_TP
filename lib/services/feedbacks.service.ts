@@ -94,7 +94,7 @@ export async function createFeedback(data: object, token: string) {
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -115,7 +115,7 @@ export async function updateFeedback(id: number, data: object, token: string) {
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -135,7 +135,7 @@ export async function generatePublicFeedback(applicationId: number, token: strin
         return res.json();
     } catch (error) {
     console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -152,6 +152,6 @@ export async function generateFeedbackForOne(feedbackId: number, token: string) 
     return data;
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }

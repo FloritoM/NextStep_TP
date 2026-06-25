@@ -32,7 +32,7 @@ export async function getJobOffer(id: number, token: string) {
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -77,7 +77,7 @@ export async function toggleJobOfferActive(
     return res.json();
   } catch (error) {
     console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -100,7 +100,7 @@ export async function createJobOffer(data: JobOfferPayload, token: string) {
     return result;
     } catch (error) {
     console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -127,6 +127,6 @@ export async function updateJobOffer(
     return result;
     } catch (error) {
     console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
