@@ -2,6 +2,7 @@ import { getMyApplications } from "@/lib/services/jobApplications.service";
 import { getMyFeedbacks } from "@/lib/services/feedbacks.service";
 import { auth } from "@/auth";
 import { getStages } from "@/lib/services/stages.service";
+import { JobApplication, Stage } from "@/lib/definitions";
 
 export const dynamic = 'force-dynamic';
 
@@ -18,14 +19,14 @@ export default async function ApplicantDashboardPage() {
   const totalApplications = applications?.length || 0;
   const totalFeedbacks = feedbacks?.length || 0;
   
-  const counts = stages.reduce((acc, stage) => {
+  const counts = stages.reduce((acc: Record<string, number>, stage: Stage) => {
     acc[stage.name.toLowerCase()] = 0;
     return acc;
   }, {} as Record<string, number>);
 
-  applications.forEach((app) => {
+  applications.forEach((app: JobApplication) => {
     const stageName = app.currentStage?.name?.toLowerCase();
-    if (counts.hasOwnProperty(stageName)) {
+    if (stageName && stageName in counts) {
       counts[stageName]++;
     }
   });
@@ -65,7 +66,7 @@ export default async function ApplicantDashboardPage() {
       <section id="stages-counters" className="mt-10">
         <h2 className="text-xl font-bold text-gray-100 mb-6">Desglose por Etapas</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {stages.map((stage, index) => {
+          {stages.map((stage: Stage, index: number) => {
             const colors = [
               "text-emerald-500",
               "text-yellow-500",
