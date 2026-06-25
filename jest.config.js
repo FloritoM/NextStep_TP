@@ -13,6 +13,7 @@ const config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
   },
+  collectCoverage: true,
   collectCoverageFrom: [
     'app/lib/permissions.ts',
     'lib/**/*.ts',

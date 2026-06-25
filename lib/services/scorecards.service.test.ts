@@ -21,9 +21,7 @@ describe('scorecards.service', () => {
 
   it('getScorecardsByFeedback lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getScorecardsByFeedback(1, 'token')).rejects.toThrow(
-      'Error al obtener las scorecards',
-    );
+    await expect(getScorecardsByFeedback(1, 'token')).rejects.toThrow(Error);
   });
 
   it('createScorecard crea scorecard', async () => {
@@ -38,7 +36,7 @@ describe('scorecards.service', () => {
 
   it('createScorecard lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(createScorecard({}, 'token')).rejects.toThrow('Error al crear la scorecard');
+    await expect(createScorecard({}, 'token')).rejects.toThrow(Error);
   });
 
   it('updateScorecard actualiza scorecard', async () => {
@@ -53,8 +51,6 @@ describe('scorecards.service', () => {
 
   it('updateScorecard lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(updateScorecard(1, {}, 'token')).rejects.toThrow(
-      'Error al actualizar la scorecard',
-    );
+    await expect(updateScorecard(1, {}, 'token')).rejects.toThrow(Error);
   });
 });

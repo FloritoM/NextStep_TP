@@ -8,10 +8,15 @@ export async function getAuditLogs(token: string | undefined) {
         'Authorization': `Bearer ${token}`
       }
     });
-    if (!res.ok) throw new Error("Error al obtener los audit logs");
-    return res.json();
+
+    if (!res.ok) {
+      throw new Error('Error al obtener los audit logs');
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    console.error('Hubo un error:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }

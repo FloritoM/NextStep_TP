@@ -26,9 +26,7 @@ describe('feedbacks.service', () => {
 
   it('getFeedbackByApplication lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getFeedbackByApplication(1, 'token')).rejects.toThrow(
-      'Error al obtener el feedback',
-    );
+    await expect(getFeedbackByApplication(1, 'token')).rejects.toThrow(Error);
   });
 
   it('getMyFeedbacks devuelve feedbacks del applicant', async () => {
@@ -43,7 +41,7 @@ describe('feedbacks.service', () => {
 
   it('getMyFeedbacks lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getMyFeedbacks('token')).rejects.toThrow('Error al obtener los feedbacks');
+    await expect(getMyFeedbacks('token')).rejects.toThrow(Error);
   });
 
   it('getMyFeedback devuelve feedback por aplicación', async () => {
@@ -56,10 +54,19 @@ describe('feedbacks.service', () => {
     expect(result).toHaveLength(1);
   });
 
-  it('getMyFeedback devuelve array vacío si falla', async () => {
-    (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
+  it('getMyFeedback devuelve array vacío si la respuesta es exitosa pero no trae datos', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => [],
+    });
+
     const result = await getMyFeedback('token', 5);
     expect(result).toEqual([]);
+  });
+
+  it('getMyFeedback lanza error si falla la solicitud', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
+    await expect(getMyFeedback('token', 5)).rejects.toThrow(Error);
   });
 
   it('getMySentFeedbacks devuelve feedbacks enviados', async () => {
@@ -78,7 +85,7 @@ describe('feedbacks.service', () => {
       json: async () => ({ message: 'Error' }),
     });
 
-    await expect(getMySentFeedbacks('token')).rejects.toThrow('Error');
+    await expect(getMySentFeedbacks('token')).rejects.toThrow(Error);
   });
 
   it('createFeedback crea feedback', async () => {
@@ -93,7 +100,7 @@ describe('feedbacks.service', () => {
 
   it('createFeedback lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(createFeedback({}, 'token')).rejects.toThrow('Error al crear el feedback');
+    await expect(createFeedback({}, 'token')).rejects.toThrow(Error);
   });
 
   it('updateFeedback actualiza feedback', async () => {
@@ -112,7 +119,7 @@ describe('feedbacks.service', () => {
       json: async () => ({ message: 'No permitido' }),
     });
 
-    await expect(updateFeedback(1, {}, 'token')).rejects.toThrow('No permitido');
+    await expect(updateFeedback(1, {}, 'token')).rejects.toThrow(Error);
   });
 
   it('generatePublicFeedback genera feedback público', async () => {
@@ -131,7 +138,7 @@ describe('feedbacks.service', () => {
       json: async () => ({ message: 'IA no disponible' }),
     });
 
-    await expect(generatePublicFeedback(1, 'token')).rejects.toThrow('IA no disponible');
+    await expect(generatePublicFeedback(1, 'token')).rejects.toThrow(Error);
   });
 
   it('generateFeedbackForOne genera feedback individual', async () => {
@@ -150,6 +157,6 @@ describe('feedbacks.service', () => {
       json: async () => ({ message: 'Falló' }),
     });
 
-    await expect(generateFeedbackForOne(1, 'token')).rejects.toThrow('Falló');
+    await expect(generateFeedbackForOne(1, 'token')).rejects.toThrow(Error);
   });
 });

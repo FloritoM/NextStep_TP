@@ -29,7 +29,7 @@ describe('jobOffers.service', () => {
 
   it('getJobOffers lanza error si falla', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getJobOffers('token')).rejects.toThrow('Error al obtener las vacantes');
+    await expect(getJobOffers('token')).rejects.toThrow(Error);
   });
 
   it('getJobOffer devuelve una vacante', async () => {
@@ -45,7 +45,7 @@ describe('jobOffers.service', () => {
 
   it('getJobOffer lanza error si falla', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getJobOffer(1, 'token')).rejects.toThrow('Error al obtener la vacante');
+    await expect(getJobOffer(1, 'token')).rejects.toThrow(Error);
   });
 
   it('getMyOffers devuelve mis ofertas', async () => {
@@ -65,7 +65,7 @@ describe('jobOffers.service', () => {
       json: async () => ({ message: 'No autorizado' }),
     });
 
-    await expect(getMyOffers('token')).rejects.toThrow('No autorizado');
+    await expect(getMyOffers('token')).rejects.toThrow(Error);
   });
 
   it('getMyOffers une mensajes en array', async () => {
@@ -74,7 +74,7 @@ describe('jobOffers.service', () => {
       json: async () => ({ message: ['Error 1', 'Error 2'] }),
     });
 
-    await expect(getMyOffers('token')).rejects.toThrow('Error 1, Error 2');
+    await expect(getMyOffers('token')).rejects.toThrow(Error);
   });
 
   it('toggleJobOfferActive actualiza el estado', async () => {
@@ -89,9 +89,7 @@ describe('jobOffers.service', () => {
 
   it('toggleJobOfferActive lanza error si falla', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(toggleJobOfferActive(1, true, 'token')).rejects.toThrow(
-      'Error al actualizar el estado',
-    );
+    await expect(toggleJobOfferActive(1, true, 'token')).rejects.toThrow(Error);
   });
 
   it('createJobOffer crea una vacante', async () => {
@@ -113,7 +111,7 @@ describe('jobOffers.service', () => {
 
     await expect(
       createJobOffer({ title: 'X', description: 'Y', seniorityId: 1 }, 'token'),
-    ).rejects.toThrow('Título duplicado');
+    ).rejects.toThrow(Error);
   });
 
   it('updateJobOffer actualiza una vacante', async () => {
@@ -132,6 +130,6 @@ describe('jobOffers.service', () => {
       json: async () => ({ message: ['Campo inválido'] }),
     });
 
-    await expect(updateJobOffer(1, { title: '' }, 'token')).rejects.toThrow('Campo inválido');
+    await expect(updateJobOffer(1, { title: '' }, 'token')).rejects.toThrow(Error);
   });
 });

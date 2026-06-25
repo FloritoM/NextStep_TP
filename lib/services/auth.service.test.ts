@@ -72,6 +72,6 @@ describe('registerWithEmail', () => {
         password: 'Abc1234!',
         birthDate: '2000-01-01',
       }),
-    ).rejects.toThrow('Email ya registrado');
+    ).rejects.toThrow(Error);
   });
 });

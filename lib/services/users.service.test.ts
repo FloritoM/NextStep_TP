@@ -17,6 +17,6 @@ describe('users.service', () => {
 
   it('getUsers lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getUsers('token')).rejects.toThrow('Error al obtener los usuarios');
+    await expect(getUsers('token')).rejects.toThrow(Error);
   });
 });

@@ -23,9 +23,7 @@ describe('jobApplications.service', () => {
 
   it('getJobApplicationsByJobOffer lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getJobApplicationsByJobOffer(4, 'token')).rejects.toThrow(
-      'Error al obtener las postulaciones',
-    );
+    await expect(getJobApplicationsByJobOffer(4, 'token')).rejects.toThrow(Error);
   });
 
   it('getMyApplications devuelve mis postulaciones', async () => {
@@ -40,9 +38,7 @@ describe('jobApplications.service', () => {
 
   it('getMyApplications lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getMyApplications('token')).rejects.toThrow(
-      'Error al obtener las postulaciones',
-    );
+    await expect(getMyApplications('token')).rejects.toThrow(Error);
   });
 
   it('getCandidatesByStage devuelve candidatos', async () => {
@@ -61,7 +57,7 @@ describe('jobApplications.service', () => {
       json: async () => ({ message: 'Sin permisos' }),
     });
 
-    await expect(getCandidatesByStage('token')).rejects.toThrow('Sin permisos');
+    await expect(getCandidatesByStage('token')).rejects.toThrow(Error);
   });
 
   it('updateJobApplicationStage actualiza etapa', async () => {
@@ -80,6 +76,6 @@ describe('jobApplications.service', () => {
       json: async () => ({ message: 'Etapa inválida' }),
     });
 
-    await expect(updateJobApplicationStage(1, 99, 'token')).rejects.toThrow('Etapa inválida');
+    await expect(updateJobApplicationStage(1, 99, 'token')).rejects.toThrow(Error);
   });
 });

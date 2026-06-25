@@ -4,13 +4,18 @@ export async function getFeedbackByApplication(applicationId: number, token: str
   try {
     const res = await fetch(`${API_URL}/feedback?applicationId=${applicationId}`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: 'no-store',
     });
-    if (!res.ok) throw new Error("Error al obtener el feedback");
-    return res.json();
+
+    if (!res.ok) {
+      throw new Error('Error al obtener el feedback');
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    console.error('Hubo un error:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -20,11 +25,16 @@ export async function getMyFeedbacks(token: string | undefined) {
       headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store'
     });
-    if (!res.ok) throw new Error("Error al obtener los feedbacks");
-    return await res.json();
+
+    if (!res.ok) {
+      throw new Error('Error al obtener los feedbacks');
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    console.error('Hubo un error:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -34,27 +44,40 @@ export async function getMyFeedback(token: string, applicationId: number) {
       cache: 'no-store',
       headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (!res.ok) throw new Error("Error al obtener el feedback");
-    return res.json();
+
+    if (!res.ok) {
+      throw new Error('Error al obtener el feedback');
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Error trayendo feedback:", error);
-    throw new Error('Error de conexión');
+    console.error('Error trayendo feedback:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
 export async function getMySentFeedbacks(token: string | undefined) {
-  const res = await fetch(`${API_URL}/feedback/my-sent-feedbacks`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const result = await res.json();
-  if (!res.ok) {
-    throw new Error(
-      Array.isArray(result.message) ? result.message.join(", ") : result.message,
-    );
+  try {
+    const res = await fetch(`${API_URL}/feedback/my-sent-feedbacks`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (!res.ok) {
+      const result = await res.json().catch(() => ({}));
+      throw new Error(
+        Array.isArray(result.message) ? result.message.join(', ') : result.message || 'Error al obtener los feedbacks',
+      );
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error('Hubo un error:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
-  return result;
 }
 
 export async function createFeedback(data: object, token: string) {

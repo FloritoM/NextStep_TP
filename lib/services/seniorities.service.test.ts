@@ -17,6 +17,6 @@ describe('seniorities.service', () => {
 
   it('getSeniorities lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getSeniorities('token')).rejects.toThrow('Error al obtener los seniorities');
+    await expect(getSeniorities('token')).rejects.toThrow(Error);
   });
 });

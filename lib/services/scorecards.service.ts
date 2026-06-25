@@ -4,13 +4,18 @@ export async function getScorecardsByFeedback(feedbackId: number, token: string)
   try {
     const res = await fetch(`${API_URL}/scorecards/feedback/${feedbackId}`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: 'no-store',
     });
-    if (!res.ok) throw new Error("Error al obtener las scorecards");
-    return res.json();
+
+    if (!res.ok) {
+      throw new Error('Error al obtener las scorecards');
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    console.error('Hubo un error:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 

@@ -4,13 +4,18 @@ export async function getJobApplicationsByJobOffer(jobOfferId: number, token: st
   try {
     const res = await fetch(`${API_URL}/job-applications?jobOfferId=${jobOfferId}`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
+      cache: 'no-store',
     });
-    if (!res.ok) throw new Error("Error al obtener las postulaciones");
-    return res.json();
+
+    if (!res.ok) {
+      throw new Error('Error al obtener las postulaciones');
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    console.error('Hubo un error:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -18,13 +23,18 @@ export async function getMyApplications(token: string | undefined) {
   try {
     const res = await fetch(`${API_URL}/job-applications/my-applications`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: 'no-store'
+      cache: 'no-store',
     });
-    if (!res.ok) throw new Error("Error al obtener las postulaciones");
-    return res.json();
+
+    if (!res.ok) {
+      throw new Error('Error al obtener las postulaciones');
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    console.error('Hubo un error:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -63,6 +73,9 @@ export async function createJobApplication(jobOfferId: number, token: string) {
     return data;
   } catch (error) {
     console.error("Hubo un error:", error);
+    if (error instanceof Error) {
+      throw error;
+    }
     throw new Error('Error de conexión');
   }
 }

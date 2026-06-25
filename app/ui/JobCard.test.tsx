@@ -36,7 +36,10 @@ describe('JobCard', () => {
   });
 
   it('postula correctamente', async () => {
-    (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: true });
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ id: 1, message: 'ok' }),
+    });
 
     const user = userEvent.setup();
     render(<JobCard job={job} userRole="applicant" token="token" />);

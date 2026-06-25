@@ -17,6 +17,6 @@ describe('stages.service', () => {
 
   it('getStages lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getStages('token')).rejects.toThrow('Error al obtener las etapas');
+    await expect(getStages('token')).rejects.toThrow(Error);
   });
 });

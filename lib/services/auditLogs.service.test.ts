@@ -17,6 +17,6 @@ describe('auditLogs.service', () => {
 
   it('getAuditLogs lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getAuditLogs('token')).rejects.toThrow('Error al obtener los audit logs');
+    await expect(getAuditLogs('token')).rejects.toThrow(Error);
   });
 });

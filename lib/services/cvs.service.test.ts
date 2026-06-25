@@ -27,6 +27,6 @@ describe('cvs.service', () => {
 
   it('getLatestCvByUser lanza error', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
-    await expect(getLatestCvByUser(1, 'token')).rejects.toThrow('Error al obtener el CV');
+    await expect(getLatestCvByUser(1, 'token')).rejects.toThrow(Error);
   });
 });

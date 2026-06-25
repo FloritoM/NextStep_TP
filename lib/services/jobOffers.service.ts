@@ -9,11 +9,16 @@ export async function getJobOffers(token: string | undefined) {
         'Authorization': `Bearer ${token}` 
       }
     });
-    if (!res.ok) throw new Error("Error al obtener las vacantes");
-    return res.json();
+
+    if (!res.ok) {
+      throw new Error('Error al obtener las vacantes');
+    }
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    console.error('Hubo un error:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
@@ -38,16 +43,19 @@ export async function getMyOffers(token: string | undefined) {
         Authorization: `Bearer ${token}`,
       },
     });
-    const result = await res.json();
+
     if (!res.ok) {
+      const result = await res.json().catch(() => ({}));
       throw new Error(
-        Array.isArray(result.message) ? result.message.join(", ") : result.message,
+        Array.isArray(result.message) ? result.message.join(', ') : result.message || 'Error al obtener las vacantes',
       );
     }
-    return result;
+
+    const data = await res.json();
+    return Array.isArray(data) ? data : [];
   } catch (error) {
-    console.error("Hubo un error:", error);
-    throw new Error('Error de conexión');
+    console.error('Hubo un error:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
   }
 }
 
