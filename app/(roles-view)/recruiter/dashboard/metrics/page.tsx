@@ -1,5 +1,8 @@
 import { auth } from '@/auth'
 
+import { RecruiterCandidatesByStageGraph } from '@/app/ui/recruiterCandidatesByStageGraph'
+import { RecruiterFeedbacksGraph } from '@/app/ui/recuiterFeedbacksGraph'
+import { RecruiterOffersGraph } from '@/app/ui/recruiterOffersGraph'
 import { getMySentFeedbacks } from '@/lib/services/feedbacks.service'
 import { getCandidatesByStage } from '@/lib/services/jobApplications.service'
 import { getMyOffers } from '@/lib/services/jobOffers.service'
@@ -13,6 +16,7 @@ export default async function RecruiterDashboard() {
         getMyOffers(session?.accessToken),
     ])
 
+    const totalCandidatos = candidatesByStage.reduce((acc: number, item: { stage: string; count: number }) => acc + item.count, 0);
     return (
         <div className="bg-main">
 
@@ -24,16 +28,16 @@ export default async function RecruiterDashboard() {
             <section id="counters" className="mt-20">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm flex flex-col justify-center items-center">
-                        <span className="text-gray-400 font-medium mb-1">Usuarios en el sistema</span>
+                        <span className="text-gray-400 font-medium mb-1">Feedbacks enviados</span>
                         <span className="text-5xl font-bold text-amber-500">{feedbacks.length}</span>
                     </div>
                     <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm flex flex-col justify-center items-center">
-                        <span className="text-gray-400 font-medium mb-1">Logs</span>
-                        <span className="text-5xl font-bold text-blue-500">{logs.length}</span>
+                        <span className="text-gray-400 font-medium mb-1">Candidatos</span>
+                        <span className="text-5xl font-bold text-blue-500">{totalCandidatos}</span>
                     </div>
                     <div className="bg-gray-800 border border-gray-700 rounded-xl p-6 shadow-sm flex flex-col justify-center items-center">
-                        <span className="text-gray-400 font-medium mb-1">Vacantes publicadas</span>
-                        <span className="text-5xl font-bold text-yellow-500">{jobOffers.length}</span>
+                        <span className="text-gray-400 font-medium mb-1">Mis vacantes publicadas</span>
+                        <span className="text-5xl font-bold text-yellow-500">{myOffers.length}</span>
                     </div>
                 </div>
             </section>

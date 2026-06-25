@@ -1,9 +1,9 @@
 "use client"
 
-import { JobOffer } from "../lib/definitions"
+import { JobOffer } from "@/lib/definitions"
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts"
 
-const COLORS = ["#6366f1", "#374151"]
+const COLORS = ["#dd8b0f", "#acacac"]
 
 export function RecruiterOffersGraph({ offers }: { offers: JobOffer[] }) {
     const activas = offers.filter(o => o.isActive).length
@@ -32,7 +32,7 @@ export function RecruiterOffersGraph({ offers }: { offers: JobOffer[] }) {
                 <Tooltip
                     contentStyle={{ backgroundColor: "#1f2937", border: "none", borderRadius: "8px" }}
                     labelStyle={{ color: "#fff" }}
-                    itemStyle={{ color: "#a78bfa" }}
+                    itemStyle={{ color: "#eb6309" }}
                 />
                 <Legend formatter={(value) => <span style={{ color: "#9ca3af" }}>{value}</span>} />
             </PieChart>
