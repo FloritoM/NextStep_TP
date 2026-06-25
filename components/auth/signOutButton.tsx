@@ -1,4 +1,4 @@
-import { Button } from "./button";
+import { Button } from "@/app/ui/button";
 import { handleSignOut } from "@/app/lib/actions";
 
 export default function SignOutButton() {

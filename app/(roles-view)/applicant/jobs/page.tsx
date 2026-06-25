@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import HomeContent from "@/app/ui/home-content";
+import HomeContent from "@/components/applicant/home-content";
 import { User } from "@/lib/definitions";
 import { getSeniorities } from "@/lib/services/seniorities.service";
 import { getJobOffers } from "@/lib/services/jobOffers.service";

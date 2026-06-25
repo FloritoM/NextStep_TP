@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import RegisterCompleteContent from "./RegisterCompleteContent";
+import RegisterCompleteContent from "@/components/auth/RegisterCompleteContent";
 
 export default function RegisterCompletePage() {
   return (

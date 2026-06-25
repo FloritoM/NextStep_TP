@@ -4,7 +4,6 @@ import { getJobOffers } from "@/lib/services/jobOffers.service";
 import { getSeniorities } from "@/lib/services/seniorities.service";
 import JobCard from "@/components/recruiter/JobCard";
 import { JobOffer, User } from "@/lib/definitions";
-import CvUpload from "@/components/CvUpload";
 import CreateJobButton from "@/components/recruiter/CreateJobButton";
 import { canCreateJobOffer } from "@/app/lib/permissions";
 

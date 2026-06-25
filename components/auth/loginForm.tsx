@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from "./button";
+import { Button } from "@/app/ui/button";
 import { useActionState } from 'react';
 import { useState } from "react";
 import { authenticate } from '@/app/lib/actions';
 import { EyeIcon, EyeOffIcon } from '@/app/ui/passwordIcons'
 import { useSearchParams } from 'next/navigation';
-import { pacifico } from "./fonts";
+import { pacifico } from "@/app/ui/fonts";
 import Link from "next/link";
 import GoogleLoginButton from "./GoogleLoginButton";
 

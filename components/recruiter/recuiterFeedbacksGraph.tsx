@@ -1,6 +1,6 @@
 "use client"
 
-import { Feedback } from "../lib/definitions"
+import { Feedback } from "@/lib/definitions"
 
 export function RecruiterFeedbacksGraph({ feedbacks }: { feedbacks: Feedback[] }) {
     return (

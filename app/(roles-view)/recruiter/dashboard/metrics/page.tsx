@@ -1,8 +1,8 @@
 import { auth } from '@/auth'
 
-import { RecruiterCandidatesByStageGraph } from '@/app/ui/recruiterCandidatesByStageGraph'
-import { RecruiterFeedbacksGraph } from '@/app/ui/recuiterFeedbacksGraph'
-import { RecruiterOffersGraph } from '@/app/ui/recruiterOffersGraph'
+import { RecruiterCandidatesByStageGraph } from '@/components/recruiter/recruiterCandidatesByStageGraph'
+import { RecruiterFeedbacksGraph } from '@/components/recruiter/recuiterFeedbacksGraph'
+import { RecruiterOffersGraph } from '@/components/recruiter/recruiterOffersGraph'
 import { getMySentFeedbacks } from '@/lib/services/feedbacks.service'
 import { getCandidatesByStage } from '@/lib/services/jobApplications.service'
 import { getMyOffers } from '@/lib/services/jobOffers.service'

@@ -1,4 +1,4 @@
-import UserLogs from "@/app/ui/userLogs"
+import UserLogs from "@/components/admin/userLogs"
 import { auth } from '@/auth'
 import { getUsers } from '@/lib/services/users.service'
 

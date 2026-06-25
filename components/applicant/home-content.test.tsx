@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import HomeContent from './home-content';
+import HomeContent from '@/components/applicant/home-content';
 import { JobOffer, Roles, Seniority, User } from '@/lib/definitions';
 
 jest.mock('./JobCard', () => ({

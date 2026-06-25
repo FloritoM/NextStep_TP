@@ -40,7 +40,7 @@ export async function getMyFeedbacks(token: string | undefined) {
 
 export async function getMyFeedback(token: string, applicationId: number) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/feedback/my-feedback?applicationId=${applicationId}`, {
+    const res = await fetch(`${API_URL}/feedback/my-feedback?applicationId=${applicationId}`, {
       cache: 'no-store',
       headers: { 'Authorization': `Bearer ${token}` }
     });

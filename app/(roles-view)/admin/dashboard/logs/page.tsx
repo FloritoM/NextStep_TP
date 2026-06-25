@@ -1,4 +1,4 @@
-import TableLogs from "@/app/ui/tableLogs"
+import TableLogs from "@/components/admin/tableLogs"
 import { auth } from '@/auth'
 import { getAuditLogs } from '@/lib/services/auditLogs.service'
 

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { Button } from "./button";
+import { Button } from "@/app/ui/button";
 
 export default function SignInButton() {
     return (

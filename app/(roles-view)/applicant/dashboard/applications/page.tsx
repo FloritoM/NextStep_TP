@@ -1,4 +1,4 @@
-import MyApplications from "@/components/MyApplications";
+import MyApplications from "@/components/applicant/MyApplications";
 import { auth } from "@/auth";
 
 export default async function ApplicationsPage() {

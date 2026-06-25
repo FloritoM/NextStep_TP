@@ -1,5 +1,5 @@
-import SignInButton from "./ui/signInButton";
-import SignUpButton from "./ui/SignUpButton";
+import SignInButton from "@/components/auth/signInButton";
+import SignUpButton from "@/components/auth/SignUpButton";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faUserTie } from '@fortawesome/free-solid-svg-icons'
 import { faInstagram, faGithub, faYoutube } from '@fortawesome/free-brands-svg-icons'

@@ -1,4 +1,4 @@
-import SidebarLink from '@/components/SidebarLink'
+import SidebarLink from '@/app/ui/SidebarLink'
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     return (

@@ -1,4 +1,4 @@
-import SignOutButton from './signOutButton';
+import SignOutButton from '@/components/auth/signOutButton';
 import NextStepIcon from '@/components/icon';
 import { auth } from '@/auth';
 import { User } from '@/lib/definitions';

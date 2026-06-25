@@ -1,5 +1,5 @@
 import { getJobOffers } from '@/lib/services/jobOffers.service'
-import JobOffersLogs from '@/app/ui/jobOffersLogs'
+import JobOffersLogs from '@/components/admin/jobOffersLogs'
 import { auth } from '@/auth'
 
 export default async function JobOffersLogPage() {
