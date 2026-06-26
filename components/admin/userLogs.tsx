@@ -17,6 +17,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table'
+import { toggleUserActive } from '@/lib/services/users.service';
 
 export default function UserLogs({ users, token }: { users: User[], token: string }) {
 
@@ -94,11 +95,7 @@ export default function UserLogs({ users, token }: { users: User[], token: strin
                         isActive={info.getValue() as boolean}
                         entityId={info.row.original.id}
                         onToggle={async (id) => {
-                            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
-                                method: 'PATCH',
-                                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                                body: JSON.stringify({ isActive: !info.getValue() })
-                            });
+                            await toggleUserActive(id, !info.getValue() as boolean, token);
                             setData(prev => prev.map(user =>
                                 user.id === id ? { ...user, isActive: !info.getValue() as boolean } : user
                             ));

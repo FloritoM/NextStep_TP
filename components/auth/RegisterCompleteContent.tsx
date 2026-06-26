@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { UserRole } from "@/types/auth";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+import { registerWithEmail } from '@/lib/services/auth.service';
 
 export default function RegisterCompleteContent() {
   const { data: session, status } = useSession();
@@ -26,29 +25,20 @@ export default function RegisterCompleteContent() {
 
     async function completeRegistration() {
       try {
-        const res = await fetch(`${API_URL}/auth/register`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            firstName: session?.user?.name?.split(" ")[0] || "",
-            lastName: session?.user?.name?.split(" ").slice(1).join(" ") || "",
-            email: session?.user?.email,
-            password: crypto.randomUUID(),
-            roleName: role,
-          }),
+        await registerWithEmail({
+          firstName: session?.user?.name?.split(" ")[0] || "",
+          lastName: session?.user?.name?.split(" ").slice(1).join(" ") || "",
+          email: session?.user?.email || "",
+          password: crypto.randomUUID(),
+          role: role,
         });
 
-        if (!res.ok) {
-          const errorData = await res.json();
-          if (res.status === 409) {
-            router.push("/login");
-            return;
-          }
-          throw new Error(errorData.message || "Error al completar el registro");
-        }
-
         router.push("/login");
-      } catch (err) {
+      } catch (err: any) {
+        if (err?.message?.includes("409") || err?.message?.includes("ya")) {
+          router.push("/login");
+          return;
+        }
         setError(err instanceof Error ? err.message : "Ocurrió un error");
         setIsLoading(false);
       }
@@ -77,8 +67,8 @@ export default function RegisterCompleteContent() {
     <main className="min-h-screen bg-[#0a0f1a] flex items-center justify-center">
       <div className="bg-gray-800 p-8 rounded-xl text-center">
         <svg className="w-8 h-8 animate-spin text-amber-600 mx-auto mb-4" viewBox="0 0 24 24" fill="none">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
-          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
         <p className="text-white">Completando tu registro...</p>
       </div>

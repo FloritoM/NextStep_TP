@@ -1,4 +1,5 @@
-import type { NextAuthConfig} from 'next-auth';
+import type { NextAuthConfig } from 'next-auth';
+import { googleLogin } from '@/lib/services/auth.service';
 
 const publicRoutes = ['/', '/login', '/register', '/register/complete'];
 const systemRoles = ['admin', 'applicant', 'recruiter'];
@@ -17,26 +18,15 @@ export const authConfig = {
         token.role = user.role;
         token.accessToken = user.token;
       }
-      
+
       if (account?.provider === 'google' && token.email) {
         try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/google-login`,
-            {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email: token.email }),
-            }
-          );
-
-          if (res.ok) {
-            const response = await res.json();
-            token.id = response.user.id.toString();
-            token.firstName = response.user.firstName;
-            token.lastName = response.user.lastName;
-            token.role = response.user.role;
-            token.accessToken = response.token;
-          }
+          const response = await googleLogin(token.email);
+          token.id = response.user.id.toString();
+          token.firstName = response.user.firstName;
+          token.lastName = response.user.lastName;
+          token.role = response.user.role;
+          token.accessToken = response.token;
         } catch (error) {
           console.error('Error en google-login:', error);
         }
@@ -62,7 +52,7 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const role = auth?.user?.role?.name || "applicant";
-      
+
       const pathname = nextUrl.pathname;
       const isPublicRoute = publicRoutes.includes(pathname);
 
@@ -84,5 +74,5 @@ export const authConfig = {
       return true;
     },
   },
-  providers: [], 
+  providers: [],
 } satisfies NextAuthConfig;

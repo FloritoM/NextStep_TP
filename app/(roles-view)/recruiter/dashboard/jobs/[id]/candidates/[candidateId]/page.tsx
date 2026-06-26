@@ -5,6 +5,7 @@ import { getLatestCvByUser } from "@/lib/services/cvs.service";
 import { getStages } from "@/lib/services/stages.service";
 import { User } from "@/lib/definitions";
 import CandidateDetailClient from "@/components/recruiter/CandidateDetailClient";
+import { getJobApplicationById } from '@/lib/services/jobApplications.service';
 
 
 export default async function CandidateFeedbackPage({
@@ -26,18 +27,12 @@ export default async function CandidateFeedbackPage({
   const feedbacks = await getFeedbackByApplication(applicationId, token);
   const stages = await getStages(token);
 
-  const application = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/job-applications/${applicationId}`,
-    { headers: { Authorization: `Bearer ${token}` }, cache: "no-store" }
-  ).then((res) => res.json());
+  const application = await getJobApplicationById(applicationId, token);
 
-  //console.log("APPLICATION DATA:", JSON.stringify(application));
 
   const cv = application?.applicant?.id
     ? await getLatestCvByUser(application.applicant.id, token)
     : null;
-
-  //console.log("CV DATA:", JSON.stringify(cv));
 
   return (
     <div className="p-6">

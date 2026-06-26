@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faUser, faLock, faFloppyDisk, faBan } from "@fortawesome/free-solid-svg-icons";
 import { EyeIcon, EyeOffIcon } from '@/app/ui/passwordIcons'
 import { User } from "@/lib/definitions";
+import { getUserById, updateUser } from '@/lib/services/users.service';
 
 export default function EditProfile({ userId, token }: { userId: string, token: string }) {
     const [user, setUser] = useState<User>();
@@ -47,14 +48,7 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
     useEffect(() => {
         async function loadUser() {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/my-info`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                if (!res.ok) {
-                    console.error("Error al cargar el usuario:", await res.text());
-                    return;
-                }
-                const data = await res.json();
+                const data = await getUserById(token, userId);
                 setUser(data);
                 setEditForm({
                     firstName: data.firstName || "",
@@ -91,28 +85,21 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
 
             setEmailError("");
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify({
-                    firstName: editForm.firstName,
-                    lastName: editForm.lastName,
-                    email: editForm.email,
-                    password: editForm.password || undefined
-                })
+            const result = await updateUser(token, userId, {
+                firstName: editForm.firstName,
+                lastName: editForm.lastName,
+                email: editForm.email,
+                password: editForm.password || undefined
             });
-
-            if (!res.ok) {
-                if (res.status === 409) {
+            if (!result.ok) {
+                if (result.status === 409) {
                     setEmailError("Ese email ya está en uso por otro usuario");
                 } else {
                     setEmailError("Ocurrió un error al actualizar el perfil");
                 }
                 return;
             }
-
-            const updated = await res.json();
-            setUser(updated);
+            setUser(result.data);
         }
 
         setIsEditing(!isEditing);
