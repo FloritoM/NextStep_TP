@@ -18,7 +18,7 @@ export default async function JobDetailPage({
   if (!session || !session.user) redirect("/login");
 
   const user = session.user as unknown as User;
-  if (user.role?.name !== "recruiter") redirect("/home");
+  if (user.role?.name !== "recruiter") redirect("/dashboard");
 
   const token = session.accessToken ?? "";
   const { id } = await params;
