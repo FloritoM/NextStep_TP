@@ -26,6 +26,27 @@ describe('isAdult', () => {
     expect(isAdult('2008-06-01')).toBe(true);
   });
 
+  it('devuelve true si ya cumplió 18 este año (rama else)', () => {
+    // Mes anterior al actual → cae en return age >= 18 (línea 37)
+    expect(isAdult('2000-03-15')).toBe(true);
+  });
+
+  it('devuelve false si cumple 18 este año pero aún no llegó el cumpleaños (rama if)', () => {
+    // Mismo mes, día de cumpleaños posterior al "hoy" fijo (25-jun-2026)
+    expect(isAdult('2008-06-26')).toBe(false);
+  });
+
+  it('devuelve true si cumplió 18 este año y ya pasó el cumpleaños (rama else)', () => {
+    // Mismo mes, cumpleaños ya pasó
+    expect(isAdult('2008-06-01')).toBe(true);
+  });
+
+  it('devuelve false si el cumpleaños es en un mes posterior (rama if)', () => {
+    // Cumpleaños en diciembre, "hoy" es junio
+    expect(isAdult('2008-12-01')).toBe(false);
+  });
+
+
 
 });
 

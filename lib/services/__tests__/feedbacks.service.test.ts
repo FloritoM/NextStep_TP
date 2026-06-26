@@ -262,4 +262,46 @@ describe('feedbacks.service', () => {
 
 
 
+  // --- Error de conexión (catch no-Error) ---
+  it('getFeedbackByApplication lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getFeedbackByApplication(1, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('getMyFeedbacks lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getMyFeedbacks('token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('getMyFeedback lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getMyFeedback('token', 5)).rejects.toThrow('Error de conexión');
+  });
+
+  it('getMySentFeedbacks lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getMySentFeedbacks('token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('createFeedback lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(createFeedback({}, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('updateFeedback lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(updateFeedback(1, {}, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('generatePublicFeedback lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(generatePublicFeedback(1, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('generateFeedbackForOne lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(generateFeedbackForOne(1, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+
 });

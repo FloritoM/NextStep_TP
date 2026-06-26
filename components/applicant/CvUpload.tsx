@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { uploadCv } from '@/lib/services/cvs.service';
 
 export default function CvUpload({ userId, token }: { userId: number, token: string }) {
   const [file, setFile] = useState<File | null>(null);
@@ -34,24 +35,18 @@ export default function CvUpload({ userId, token }: { userId: number, token: str
 
     setStatus('loading');
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/cv/upload`,
-        { method: 'POST', body: formData, headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || 'Error al subir');
+      const data = await uploadCv(file, userId, token);
 
       setStatus('ok');
       setResult({
-        name: data.data.originalName,
-        url: `${process.env.NEXT_PUBLIC_API_URL}/${data.data.directory}/${data.data.storedName}`,
-      });
+      name: data.data.originalName,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/${data.data.directory}/${data.data.storedName}`,
+    });
     } catch (err: any) {
       setStatus('error');
       setErrorMsg(err.message);
     }
-  }
+}
 
   return (
     <div className="flex flex-col gap-4">

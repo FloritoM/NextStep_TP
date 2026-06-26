@@ -19,4 +19,18 @@ describe('seniorities.service', () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
     await expect(getSeniorities('token')).rejects.toThrow(Error);
   });
+    it('getSeniorities devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => null,
+    });
+    expect(await getSeniorities('token')).toEqual([]);
+  });
+
+  it('getSeniorities lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getSeniorities('token')).rejects.toThrow('Error de conexión');
+  });
+
+
 });

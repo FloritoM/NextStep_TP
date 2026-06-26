@@ -18,6 +18,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table'
+import { toggleJobOfferActive } from '@/lib/services/jobOffers.service';
 
 export default function JobOffersLogs({ jobOffers, token }: { jobOffers: JobOfferLog[], token: string }) {
 
@@ -98,11 +99,7 @@ export default function JobOffersLogs({ jobOffers, token }: { jobOffers: JobOffe
                         isActive={info.getValue() as boolean}
                         entityId={info.row.original.id}
                         onToggle={async (id) => {
-                            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-offers/${id}`, {
-                                method: 'PATCH',
-                                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                                body: JSON.stringify({ isActive: !info.getValue() })
-                            });
+                            await toggleJobOfferActive(Number(id), !info.getValue() as boolean, token);
                             setData(prev => prev.map(offer =>
                                 offer.id === id ? { ...offer, isActive: !info.getValue() as boolean } : offer
                             ));

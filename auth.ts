@@ -3,6 +3,7 @@ import Credentials from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
 import { z } from 'zod';
 import { authConfig } from './auth.config';
+import { loginWithCredentials } from '@/lib/services/auth.service';
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
@@ -26,29 +27,17 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
 
         const { email, password } = parsedCredentials.data;
 
-        let res: Response;
+        let result: { ok: boolean; data: any };
         try {
-          res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                email: email.toLowerCase(),
-                password,
-              }),
-            }
-          );
+          result = await loginWithCredentials(email.toLowerCase(), password);
         } catch (networkError) {
           console.error('Backend no disponible:', networkError);
           throw new Error('server_unavailable');
         }
 
-        if (!res.ok) return null;
+        if (!result.ok) return null;
 
-        const response = await res.json();
+        const response = result.data;
         const userData = response.user;
 
         if (!userData.isActive) {

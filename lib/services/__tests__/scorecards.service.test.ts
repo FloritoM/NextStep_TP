@@ -53,4 +53,27 @@ describe('scorecards.service', () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
     await expect(updateScorecard(1, {}, 'token')).rejects.toThrow(Error);
   });
+
+    it('getScorecardsByFeedback devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => null,
+    });
+    expect(await getScorecardsByFeedback(1, 'token')).toEqual([]);
+  });
+
+  it('getScorecardsByFeedback lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getScorecardsByFeedback(1, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('createScorecard lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(createScorecard({}, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('updateScorecard lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(updateScorecard(1, {}, 'token')).rejects.toThrow('Error de conexión');
+  });
 });

@@ -2,6 +2,7 @@ import {
   getJobApplicationsByJobOffer,
   getMyApplications,
   getCandidatesByStage,
+  createJobApplication,
   updateJobApplicationStage,
 } from '../jobApplications.service';
 
@@ -78,6 +79,7 @@ describe('jobApplications.service', () => {
 
     await expect(updateJobApplicationStage(1, 99, 'token')).rejects.toThrow(Error);
   });
+
     it('getJobApplicationsByJobOffer devuelve array vacío si no es array', async () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
@@ -92,6 +94,47 @@ describe('jobApplications.service', () => {
       json: async () => ({ unexpected: true }),
     });
     expect(await getMyApplications('token')).toEqual([]);
+  });
+
+  it('getCandidatesByStage une mensajes en array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({ message: ['Error 1', 'Error 2'] }),
+    });
+    await expect(getCandidatesByStage('token')).rejects.toThrow('Error 1, Error 2');
+  });
+
+  it('createJobApplication crea postulación', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ id: 10 }),
+    });
+    const result = await createJobApplication(4, 'token');
+    expect(result.id).toBe(10);
+  });
+
+  it('createJobApplication lanza error con mensaje del servidor', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({ message: 'Ya te postulaste' }),
+    });
+    await expect(createJobApplication(4, 'token')).rejects.toThrow('Ya te postulaste');
+  });
+
+  it('createJobApplication usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(createJobApplication(4, 'token')).rejects.toThrow('Error al postularse');
+  });
+
+  it('updateJobApplicationStage usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(updateJobApplicationStage(1, 99, 'token')).rejects.toThrow('Error al cambiar la etapa');
   });
 
   it('getJobApplicationsByJobOffer lanza Error de conexión', async () => {
@@ -109,10 +152,17 @@ describe('jobApplications.service', () => {
     await expect(getCandidatesByStage('token')).rejects.toThrow('Error de conexión');
   });
 
+  it('createJobApplication lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(createJobApplication(4, 'token')).rejects.toThrow('Error de conexión');
+  });
+
   it('updateJobApplicationStage lanza Error de conexión', async () => {
     (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
     await expect(updateJobApplicationStage(1, 2, 'token')).rejects.toThrow('Error de conexión');
   });
+
+
 
 
 });
