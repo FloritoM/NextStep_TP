@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor,fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CvUpload from './CvUpload';
 
@@ -20,6 +20,21 @@ describe('CvUpload', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+  it('selecciona archivo al soltarlo en la zona de drop', () => {
+    render(<CvUpload userId={1} token="token" />);
+
+    const file = new File(['contenido'], 'cv.pdf', { type: 'application/pdf' });
+    const dropZone = screen.getByText(/Arrastrá tu CV acá/i).closest('div')!;
+
+    fireEvent.drop(dropZone, {
+      dataTransfer: { files: [file] },
+    });
+
+    expect(screen.getByText('cv.pdf')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Subir CV' })).toBeEnabled();
+  });
+
+
 
   it('muestra la zona de carga inicial', () => {
     render(<CvUpload userId={1} token="token" />);

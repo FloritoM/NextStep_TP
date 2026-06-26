@@ -132,4 +132,87 @@ describe('jobOffers.service', () => {
 
     await expect(updateJobOffer(1, { title: '' }, 'token')).rejects.toThrow(Error);
   });
+
+  it('getJobOffers devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => null,
+    });
+    expect(await getJobOffers('token')).toEqual([]);
+  });
+
+  it('getMyOffers devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ unexpected: true }),
+    });
+    expect(await getMyOffers('token')).toEqual([]);
+  });
+
+  it('getMyOffers usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(getMyOffers('token')).rejects.toThrow('Error al obtener las vacantes');
+  });
+
+  it('getMyOffers maneja json inválido en error', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => { throw new Error('parse fail'); },
+    });
+    await expect(getMyOffers('token')).rejects.toThrow('Error al obtener las vacantes');
+  });
+
+  it('createJobOffer une mensajes en array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({ message: ['Campo 1', 'Campo 2'] }),
+    });
+    await expect(
+      createJobOffer({ title: 'X', description: 'Y', seniorityId: 1 }, 'token'),
+    ).rejects.toThrow('Campo 1, Campo 2');
+  });
+
+  it('updateJobOffer lanza error con mensaje string', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({ message: 'Título inválido' }),
+    });
+    await expect(updateJobOffer(1, { title: '' }, 'token')).rejects.toThrow('Título inválido');
+  });
+
+  it('getJobOffers lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getJobOffers('token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('getJobOffer lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getJobOffer(1, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('getMyOffers lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getMyOffers('token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('toggleJobOfferActive lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(toggleJobOfferActive(1, true, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('createJobOffer lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(
+      createJobOffer({ title: 'X', description: 'Y', seniorityId: 1 }, 'token'),
+    ).rejects.toThrow('Error de conexión');
+  });
+
+  it('updateJobOffer lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(updateJobOffer(1, { title: '' }, 'token')).rejects.toThrow('Error de conexión');
+  });
+
 });

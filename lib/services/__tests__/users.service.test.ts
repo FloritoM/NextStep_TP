@@ -19,4 +19,17 @@ describe('users.service', () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
     await expect(getUsers('token')).rejects.toThrow(Error);
   });
+    it('getUsers devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ unexpected: true }),
+    });
+    expect(await getUsers('token')).toEqual([]);
+  });
+
+  it('getUsers lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getUsers('token')).rejects.toThrow('Error de conexión');
+  });
+  
 });
