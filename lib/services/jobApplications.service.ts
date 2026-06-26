@@ -102,7 +102,7 @@ export async function updateJobApplicationStage(
 
 export async function getJobApplicationById(applicationId: number, token: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-applications/${applicationId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/job-applications/${applicationId}`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store',
     });
