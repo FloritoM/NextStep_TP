@@ -29,4 +29,9 @@ describe('cvs.service', () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
     await expect(getLatestCvByUser(1, 'token')).rejects.toThrow(Error);
   });
+  
+    it('getLatestCvByUser lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getLatestCvByUser(1, 'token')).rejects.toThrow('Error de conexión');
+  });
 });

@@ -159,4 +159,107 @@ describe('feedbacks.service', () => {
 
     await expect(generateFeedbackForOne(1, 'token')).rejects.toThrow(Error);
   });
+
+    // --- Array.isArray ? data : [] ---
+  it('getFeedbackByApplication devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => null,
+    });
+    expect(await getFeedbackByApplication(1, 'token')).toEqual([]);
+  });
+
+  it('getMyFeedbacks devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ unexpected: true }),
+    });
+    expect(await getMyFeedbacks('token')).toEqual([]);
+  });
+
+  it('getMyFeedback devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => null,
+    });
+    expect(await getMyFeedback('token', 5)).toEqual([]);
+  });
+
+  it('getMySentFeedbacks devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => null,
+    });
+    expect(await getMySentFeedbacks('token')).toEqual([]);
+  });
+
+  // --- getMySentFeedbacks: ramas de error ---
+  it('getMySentFeedbacks une mensajes en array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({ message: ['Error 1', 'Error 2'] }),
+    });
+    await expect(getMySentFeedbacks('token')).rejects.toThrow('Error 1, Error 2');
+  });
+
+  it('getMySentFeedbacks usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(getMySentFeedbacks('token')).rejects.toThrow('Error al obtener los feedbacks');
+  });
+
+  it('getMySentFeedbacks maneja json inválido en error', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => { throw new Error('parse fail'); },
+    });
+    await expect(getMySentFeedbacks('token')).rejects.toThrow('Error al obtener los feedbacks');
+  });
+
+  // --- mensajes por defecto ---
+  it('updateFeedback usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(updateFeedback(1, {}, 'token')).rejects.toThrow('Error al actualizar el feedback');
+  });
+
+  it('generatePublicFeedback usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(generatePublicFeedback(1, 'token')).rejects.toThrow('Error al generar el feedback');
+  });
+
+  it('generateFeedbackForOne usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(generateFeedbackForOne(1, 'token')).rejects.toThrow('Error al generar el feedback');
+  });
+
+  // --- Error de conexión ---
+  const connectionErrorCases: Array<{ name: string; fn: () => Promise<unknown> }> = [
+    { name: 'getFeedbackByApplication', fn: () => getFeedbackByApplication(1, 'token') },
+    { name: 'getMyFeedbacks', fn: () => getMyFeedbacks('token') },
+    { name: 'getMyFeedback', fn: () => getMyFeedback('token', 5) },
+    { name: 'getMySentFeedbacks', fn: () => getMySentFeedbacks('token') },
+    { name: 'createFeedback', fn: () => createFeedback({}, 'token') },
+    { name: 'updateFeedback', fn: () => updateFeedback(1, {}, 'token') },
+    { name: 'generatePublicFeedback', fn: () => generatePublicFeedback(1, 'token') },
+    { name: 'generateFeedbackForOne', fn: () => generateFeedbackForOne(1, 'token') },
+  ];
+
+  it.each(connectionErrorCases)('$name lanza Error de conexión', async ({ fn }) => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(fn()).rejects.toThrow('Error de conexión');
+  });
+
+
+
 });

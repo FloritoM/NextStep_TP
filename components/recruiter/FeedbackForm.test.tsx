@@ -95,4 +95,12 @@ describe('FeedbackForm', () => {
     expect(await screen.findByText('Error al guardar')).toBeInTheDocument();
     expect(onSuccess).not.toHaveBeenCalled();
   });
+
+    it('no agrega skill si el nombre está vacío', async () => {
+    const user = userEvent.setup();
+    render(<FeedbackForm applicationId={1} stageId={2} token="token" onSuccess={onSuccess} />);
+    await user.click(screen.getByRole('button', { name: '+ Agregar' }));
+    expect(screen.queryByText('React')).not.toBeInTheDocument();
+  });
+  
 });
