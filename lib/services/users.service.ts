@@ -23,7 +23,7 @@ export async function getUsers(token: string | undefined) {
 
 export async function getUserById(token: string, userId: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/my-info`, {
+    const res = await fetch(`${process.env.API_URL}/users/my-info`, {
       cache: 'no-store',
       headers: { 'Authorization': `Bearer ${token}` }
     });
@@ -37,7 +37,7 @@ export async function getUserById(token: string, userId: string) {
 
 export async function updateUser(token: string, userId: string, body: object) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${userId}`, {
+    const res = await fetch(`${process.env.API_URL}/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify(body)
@@ -51,7 +51,7 @@ export async function updateUser(token: string, userId: string, body: object) {
 
 export async function toggleUserActive(userId: number | string, isActive: boolean, token: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/${userId}`, {
+    const res = await fetch(`${process.env.API_URL}/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ isActive }),

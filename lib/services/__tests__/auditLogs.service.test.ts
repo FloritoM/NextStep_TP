@@ -19,4 +19,21 @@ describe('auditLogs.service', () => {
     (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
     await expect(getAuditLogs('token')).rejects.toThrow(Error);
   });
+
+    it('getAuditLogs devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ unexpected: true }),
+    });
+
+    const result = await getAuditLogs('token');
+    expect(result).toEqual([]);
+  });
+
+  it('getAuditLogs lanza Error de conexión si fetch falla', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+
+    await expect(getAuditLogs('token')).rejects.toThrow('Error de conexión');
+  });
+  
 });

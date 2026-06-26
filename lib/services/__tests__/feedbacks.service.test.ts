@@ -159,4 +159,129 @@ describe('feedbacks.service', () => {
 
     await expect(generateFeedbackForOne(1, 'token')).rejects.toThrow(Error);
   });
+    // --- Array.isArray ? data : [] ---
+  it('getFeedbackByApplication devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => null,
+    });
+    expect(await getFeedbackByApplication(1, 'token')).toEqual([]);
+  });
+
+  it('getMyFeedbacks devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ unexpected: true }),
+    });
+    expect(await getMyFeedbacks('token')).toEqual([]);
+  });
+
+  it('getMyFeedback devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => null,
+    });
+    expect(await getMyFeedback('token', 5)).toEqual([]);
+  });
+
+  it('getMySentFeedbacks devuelve array vacío si no es array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => null,
+    });
+    expect(await getMySentFeedbacks('token')).toEqual([]);
+  });
+
+  // --- getMySentFeedbacks: ramas de error ---
+  it('getMySentFeedbacks une mensajes en array', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({ message: ['Error 1', 'Error 2'] }),
+    });
+    await expect(getMySentFeedbacks('token')).rejects.toThrow('Error 1, Error 2');
+  });
+
+  it('getMySentFeedbacks usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(getMySentFeedbacks('token')).rejects.toThrow('Error al obtener los feedbacks');
+  });
+
+  it('getMySentFeedbacks maneja json inválido en error', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => { throw new Error('parse fail'); },
+    });
+    await expect(getMySentFeedbacks('token')).rejects.toThrow('Error al obtener los feedbacks');
+  });
+
+  // --- mensajes por defecto ---
+  it('updateFeedback usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(updateFeedback(1, {}, 'token')).rejects.toThrow('Error al actualizar el feedback');
+  });
+
+  it('generatePublicFeedback usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(generatePublicFeedback(1, 'token')).rejects.toThrow('Error al generar el feedback');
+  });
+
+  it('generateFeedbackForOne usa mensaje por defecto', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
+      json: async () => ({}),
+    });
+    await expect(generateFeedbackForOne(1, 'token')).rejects.toThrow('Error al generar el feedback');
+  });
+
+  // --- Error de conexión (catch no-Error) ---
+  it('getFeedbackByApplication lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getFeedbackByApplication(1, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('getMyFeedbacks lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getMyFeedbacks('token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('getMyFeedback lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getMyFeedback('token', 5)).rejects.toThrow('Error de conexión');
+  });
+
+  it('getMySentFeedbacks lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(getMySentFeedbacks('token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('createFeedback lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(createFeedback({}, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('updateFeedback lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(updateFeedback(1, {}, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('generatePublicFeedback lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(generatePublicFeedback(1, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+  it('generateFeedbackForOne lanza Error de conexión', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce('timeout');
+    await expect(generateFeedbackForOne(1, 'token')).rejects.toThrow('Error de conexión');
+  });
+
+
 });
