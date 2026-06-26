@@ -60,7 +60,7 @@ export async function getCandidatesByStage(token: string | undefined) {
 
 export async function createJobApplication(jobOfferId: number, token: string) {
   try {
-    const res = await fetch(`${process.env.API_URL}/job-applications`, {
+    const res = await fetch(`${API_URL}/job-applications`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ export async function updateJobApplicationStage(
 
 export async function getJobApplicationById(applicationId: number, token: string) {
   try {
-    const res = await fetch(`${process.env.API_URL}/job-applications/${applicationId}`, {
+    const res = await fetch(`${API_URL}/job-applications/${applicationId}`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: 'no-store',
     });
