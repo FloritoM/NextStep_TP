@@ -39,7 +39,7 @@ export function isAdult(birth_date: string): boolean {
 
 export async function googleLogin(email: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/google-login`, {
+    const res = await fetch(`${process.env.API_URL}/auth/google-login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email }),
@@ -53,7 +53,7 @@ export async function googleLogin(email: string) {
 }
 
 export async function loginWithCredentials(email: string, password: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+  const res = await fetch(`${process.env.API_URL}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
