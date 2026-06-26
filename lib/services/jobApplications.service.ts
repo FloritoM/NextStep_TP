@@ -99,3 +99,17 @@ export async function updateJobApplicationStage(
         throw error instanceof Error ? error : new Error('Error de conexión');
     }
 }
+
+export async function getJobApplicationById(applicationId: number, token: string) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/job-applications/${applicationId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: 'no-store',
+    });
+    if (!res.ok) throw new Error('Error al obtener la postulación');
+    return res.json();
+  } catch (error) {
+    console.error('Hubo un error:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
+  }
+}

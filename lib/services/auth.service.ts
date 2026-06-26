@@ -36,3 +36,27 @@ export function isAdult(birth_date: string): boolean {
   }
   return age >= 18;
 }
+
+export async function googleLogin(email: string) {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google-login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    if (!res.ok) throw new Error('Error en google-login');
+    return res.json();
+  } catch (error) {
+    console.error('Error en google-login:', error);
+    throw error instanceof Error ? error : new Error('Error de conexión');
+  }
+}
+
+export async function loginWithCredentials(email: string, password: string) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+  return { ok: res.ok, data: await res.json() };
+}
