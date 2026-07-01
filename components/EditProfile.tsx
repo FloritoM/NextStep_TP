@@ -109,6 +109,10 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
         const newPassword = e.target.value;
         setEditForm(prev => ({ ...prev, password: newPassword }));
 
+        if (newPassword.length === 0) {
+            setShowPassword(false);
+        }
+
         if (newPassword.length > 0 && newPassword.length < 4) {
             setPassErrorMsg("La contraseña debe tener mínimo 4 caracteres");
             setValidPass(false);
@@ -226,13 +230,15 @@ export default function EditProfile({ userId, token }: { userId: string, token: 
                                             value={editForm.password}
                                             onChange={handlePasswordChange}
                                         />
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPassword((v) => !v)}
-                                            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors focus:outline-none"
-                                        >
-                                            {showPassword ? <EyeOffIcon /> : <EyeIcon />}
-                                        </button>
+                                        {editForm.password.length > 0 && (
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowPassword((v) => !v)}
+                                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white transition-colors focus:outline-none"
+                                            >
+                                                {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+                                            </button>
+                                        )}
                                     </div>
                                     : <p className="text-white pl-2">••••••••</p>
                                 }
